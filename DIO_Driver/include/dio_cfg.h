@@ -49,7 +49,6 @@ typedef enum
  */
 typedef enum
 {
-    /*TODO: Populate this list based on available MCU pins*/
     PA0,        /**< PA0 */
     PA1,        /**< PA1 */
     PA2,        /**< PA2 */
@@ -77,7 +76,7 @@ typedef enum
     PB8,        /**< PB8 */
     PB9,        /**< PB9 */
     PB10,       /**< PB10*/
-    PB12 = 12,  /**< PB12 */
+    PB12 = 12,   /**< PB12 */
     PB13,       /**< PB13 */
     PB14,       /**< PB14 */
     PB15,       /**< PB15 */
@@ -95,20 +94,24 @@ typedef enum
     PC11,       /**< PC11 */
     PC12,       /**< PC12 */
     PC13,       /**< PC13 Push button*/
-    PC14,       /**< PC14 */
-    PC15,       /**< PC15 */
+    PC14,       /**< PC14 OSC32_IN*/
+    PC15,       /**< PC15 OSC32_OUT*/
     PD2 = 2,    /**< PD2 */
+    PH0 = 0,    /**< PH0 OSC_IN*/
+    PH1,        /**< PH1 OSC_OUT*/
 }DioChannel_t;
 
 /**
- * Defines the direction of the Dio pin as an input or output  
+ * Defines the mode of the Dio pin as an input, output, alternate function 
+ * and analog.
  */
 typedef enum
 {
-    /*TODO: Populate with possible direction options*/
-    DIO_INPUT,
-    DIO_OUTPUT
-}DioDirection_t;
+    DIO_INPUT,      /**Input mode*/
+    DIO_OUTPUT,     /**General purpose Output mode*/
+    DIO_FUNCTION,   /**Alternate function mode*/
+    DIO_ANALOG      /**Analog mode*/
+}DioMode_t;
 
 
 /**
@@ -119,7 +122,7 @@ typedef enum
 {
     /*TODO: Populate with possible mode options*/
     DIO_MAX_MODE
-}DioMode_t;
+}DioFunction_t;
 
 /**
  * Defines the possible states of the channel pull-ups
@@ -140,9 +143,9 @@ typedef struct
     /* TODO: Add additional members for the MCU peripheral */
     DioChannel_t Channel;       /**< The I/O pin */
     DioResistor_t Resistor;     /**< ENABLED OR DISABLED */
-    DioDirection_t Direction;   /**< Output or Input */
+    DioMode_t Mode;             /**< Output or Input */
     DioPinState_t Data;         /**< High or Low */
-    DioMode_t Function;         /**< Mux Function - Dio_Peri_Select*/
+    DioFunction_t Function;     /**< Mux Function - Dio_Peri_Select*/
 }DioConfig_t;
 
 /**
