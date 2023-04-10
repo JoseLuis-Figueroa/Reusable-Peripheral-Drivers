@@ -1,6 +1,6 @@
 /**
  * @file dio_cfg.c
- * @author Jose Luis Figueroa (you@domain.com)
+ * @author Jose Luis Figueroa
  * @brief This module contains the implementation for the digital 
  * input/output peripheral configuration.
  * @version 1.0
@@ -16,10 +16,9 @@
 * Includes
 *****************************************************************************/
 #include "dio_cfg.h"
-
+ 
 /*****************************************************************************
 * Module Preprocessor Constants
-
 *****************************************************************************/
 
 /*****************************************************************************
@@ -42,17 +41,26 @@
 */
 const DioConfig_t DioConfig[] = 
 {
-/*              Resistor                                        Initial
-* Channel       Enabled             Direction       Pin         Function
+/*                                                          
+ *Channel   Mode         Type          Speed            Resistor       Function
+ *                
 */
-   {PA0,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA1,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA2,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA3,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA4,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA5,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA6,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA7,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
+   {PA0, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA1, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA2, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA3, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA4, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA5, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA6, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA7, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA8, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
+   {PA9, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA10, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA11, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA12, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {PA13, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
+   {PA14, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
+   {PA15, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
 };
 
 /*****************************************************************************
