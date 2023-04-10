@@ -131,17 +131,7 @@ typedef enum
     DIO_MEDIUM_SPEED,   /**< Medium speed is configured on the pin */
     DIO_HIGH_SPEED,     /**< High speed is configured on the pin */
     DIO_VERY_SPEED      /**< Very speed is configured on the pin */
-}DioSlew_t;
-
-/**
- * Defines the possible DIO pin multiplexing values. The data sheet should 
- * be reviewed for proper multiplexing options.
- */
-typedef enum
-{
-    /*TODO: Populate with possible mode options*/
-    DIO_MAX_MODE
-}DioFunction_t;
+}DioSpeed_t;
 
 /**
  * Defines the possible states of the channel pull-ups
@@ -152,6 +142,31 @@ typedef enum
     DIO_PULLUP_ENABLED,     /*< Used to enable the internal pull-ups*/
     DIO_MAX_RESISTOR        /*< Resistor states should be bellow this value*/
 }DioResistor_t;
+
+/**
+ * Defines the possible DIO alternate function. A multiplexer is used to 
+ * select the alternate function
+ */
+typedef enum
+{
+    DIO_AF0,    /**< Alternate function 0 */
+    DIO_AF1,    /**< Alternate function 1 */
+    DIO_AF2,    /**< Alternate function 2 */
+    DIO_AF3,    /**< Alternate function 3 */
+    DIO_AF4,    /**< Alternate function 4 */
+    DIO_AF5,    /**< Alternate function 5 */
+    DIO_AF6,    /**< Alternate function 6 */
+    DIO_AF7,    /**< Alternate function 7 */
+    DIO_AF8,    /**< Alternate function 8 */
+    DIO_AF9,    /**< Alternate function 9 */
+    DIO_AF10,    /**< Alternate function 10 */
+    DIO_AF11,    /**< Alternate function 11 */
+    DIO_AF12,    /**< Alternate function 12 */
+    DIO_AF13,    /**< Alternate function 13 */
+    DIO_AF14,    /**< Alternate function 14 */
+    DIO_AF15,    /**< Alternate function 15 */
+    DIO_MAX_MODE
+}DioFunction_t;
 
 /**
  * Defines the digital input/output configuration table's elements that are 
