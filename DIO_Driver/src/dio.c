@@ -30,7 +30,7 @@
 * Module Variable Definitions
 *****************************************************************************/
 /**
- * Defines a table of pointers to the GPIO port mode register
+ * Defines a array of pointers to the GPIO port mode register
 */
 static uint32_t volatile * const modeReg[NUMBER_OF_PORTS] =
 {
@@ -40,47 +40,71 @@ static uint32_t volatile * const modeReg[NUMBER_OF_PORTS] =
 };
 
 /**
- * Defines a table of pointers to the GPIO port output type register.
+ * Defines a array of pointers to the GPIO port output type register.
  */
-static uint32_t volatile * const Type[NUMBER_OF_PORTS] =
+static uint32_t volatile * const typeReg[NUMBER_OF_PORTS] =
 {
-    (TYPE*)&REGISTER1, (TYPE*)&REGISTER2,
+    (uint32_t*)&GPIOA->OTYPER, (uint32_t*)&GPIOB->OTYPER,
+    (uint32_t*)&GPIOC->OTYPER, (uint32_t*)&GPIOD->OTYPER, 
+    (uint32_t*)&GPIOH->OTYPER
 };
 
 /**
- * Defines a table of pointers to the peripheral input register on the 
- * microcontroller.
+ * Define a array of pointers to the GPIO port output speed register.
+ */
+static uint32_t volatile * const speedReg[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->OSPEEDR, (uint32_t*)&GPIOB->OSPEEDR,
+    (uint32_t*)&GPIOC->OSPEEDR, (uint32_t*)&GPIOD->OSPEEDR, 
+    (uint32_t*)&GPIOH->OSPEEDR
+};
+
+/**
+ * Defines a array of pointers to the GPIO port pull-up/pull-down register.
+ */
+static uint32_t volatile * const resistorReg[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->PUPDR, (uint32_t*)&GPIOB->PUPDR,
+    (uint32_t*)&GPIOC->PUPDR, (uint32_t*)&GPIOD->PUPDR, 
+    (uint32_t*)&GPIOH->PUPDR
+};
+
+/**
+ * Defines a array of pointers to the GPIO port input data register.
 */
-static TYPE volatile * const DataIn[NUMBER_OF_PORTS] =  
+static uint32_t volatile * const inputReg[NUMBER_OF_PORTS] =  
 {
-    (TYPE*)&REGISTER1, (TYPE*)&REGISTER2,
+    (uint32_t*)&GPIOA->IDR, (uint32_t*)&GPIOB->IDR, (uint32_t*)&GPIOC->IDR,
+    (uint32_t*)&GPIOD->IDR, (uint32_t*)&GPIOH->IDR
 };
 
 /**
- * Defines a table of pointers to the peripheral latch register on the
- * microcontroller
+ * Defines a array of pointers to the GPIO port output data register.
  */
-static TYPE volatile * const DataOut[NUMBER_OF_PORTS] =
+static uint32_t volatile * const OutputReg[NUMBER_OF_PORTS] =
 {
-    (TYPE*)&REGISTER1, (TYPE*)&REGISTER2,
+    (uint32_t*)&GPIOA->ODR, (uint32_t*)&GPIOB->ODR, (uint32_t*)&GPIOC->ODR, 
+    (uint32_t*)&GPIOD->ODR, (uint32_t*)&GPIOH->ODR
 };
 
 /**
- * Defines a table of pointers to the peripheral resistor enable register on 
- * the microcontroller.
+ * Defines a array of pointers to the GPIO alternate function low register.
  */
-static TYPE volatile * const Resistor[NUMBER_OF_PORTS] =
+static uint32_t volatile * const functionLowReg[NUMBER_OF_PORTS] =
 {
-    (TYPE*)&REGISTER1, (TYPE*)&REGISTER2,
+    (uint32_t*)&GPIOA->AFR[0], (uint32_t*)&GPIOB->AFR[0], 
+    (uint32_t*)&GPIOC->AFR[0], (uint32_t*)&GPIOD->AFR[0], 
+    (uint32_t*)&GPIOH->AFR[0]
 };
 
 /**
- * Defines a table of pointers to the port's function selected register on 
- * the microcontroller.
+ * Defines a array of pointers to the GPIO alternate function low register.
  */
-static TYPE volatile * const Function[NUMBER_OF_PORTS] =
+static uint32_t volatile * const functionHighReg[NUMBER_OF_PORTS] =
 {
-    (TYPE*)&REGISTER1, (TYPE*)&REGISTER2,
+    (uint32_t*)&GPIOA->AFR[1], (uint32_t*)&GPIOB->AFR[1], 
+    (uint32_t*)&GPIOC->AFR[1], (uint32_t*)&GPIOD->AFR[1], 
+    (uint32_t*)&GPIOH->AFR[1]
 };
 
 /*****************************************************************************

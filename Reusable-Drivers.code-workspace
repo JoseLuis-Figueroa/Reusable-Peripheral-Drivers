@@ -4,5 +4,9 @@
 			"path": "DIO_Driver"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"dio_cfg.h": "c"
+		}
+	}
 }

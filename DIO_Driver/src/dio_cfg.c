@@ -98,7 +98,7 @@ const DioConfig_t DioConfig[] =
  * @see DIO_RegisterRead
  * 
 *****************************************************************************/
-const DioConfig_t * const DIO_ConfigGet(void)
+const DioConfig_t * const DIO_configGet(void)
 {
    /* The cast is performed to ensure that the address of the first element 
     * of configuration table is returned as a constant pointer and not a
