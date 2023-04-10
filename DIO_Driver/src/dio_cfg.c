@@ -104,6 +104,6 @@ const DioConfig_t * const DIO_ConfigGet(void)
     * of configuration table is returned as a constant pointer and not a
     * pointer that can be modified
    */
-  return (const *)&DioConfig[0];
+  return (const DioConfig_t*)&DioConfig[0];
 
 }
