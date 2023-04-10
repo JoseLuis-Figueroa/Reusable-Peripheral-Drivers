@@ -1,6 +1,6 @@
 /**
  * @file dio_cfg.h
- * @author Jose Luis Figueroa (you@domain.com)
+ * @author Jose Luis Figueroa
  * @brief This module contains interface definitions for the Dio 
  * configuration. This is the header file for the definition of the
  * interface for retrieving the digital input/output configuration table.
@@ -32,6 +32,16 @@
 /*****************************************************************************
 * Typedefs
 *****************************************************************************/
+/**
+ * Defines the possible states for a digital output pin
+*/
+typedef enum
+{
+    DIO_LOW,            /**Defines digital state ground*/
+    DIO_HIGH,           /**Defines digital state power*/
+    DIO_PIN_STATE_MAX   /**Defines the Maximum digital state*/
+}DioPinState_t;
+
 /**
  * Defines a enumerated list of all the channels (pins) on the MCU device.
  * The last element is used to specify the maximum number of enumerated 
@@ -90,16 +100,6 @@ typedef enum
     PH0 = 0,    /**< PH0 OSC_IN*/
     PH1,        /**< PH1 OSC_OUT*/
 }DioPin_t;
-
-/**
- * Defines the possible states for a digital output pin
-*/
-typedef enum
-{
-    DIO_LOW,            /**Defines digital state ground*/
-    DIO_HIGH,           /**Defines digital state power*/
-    DIO_PIN_STATE_MAX   /**Defines the Maximum digital state*/
-}DioPinState_t;
 
 /**
  * Defines the mode of the Dio pin as an input, output, alternate function 
@@ -175,7 +175,6 @@ typedef enum
 typedef struct 
 {
     DioPin_t Pin;               /**< The I/O pin */
-    DioPinState_t Data;         /**< High or Low */
     DioMode_t Mode;             /**< Input, Output, Function, or Analog */
     DioType_t Type;             /**< Push-pull or Open-drain */
     DioSpeed_t Speed;           /**< Low, Medium, High, very */
