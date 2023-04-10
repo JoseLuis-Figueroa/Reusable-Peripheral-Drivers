@@ -12,7 +12,7 @@
 * Includes
 *****************************************************************************/
 #include "dio.h"        /*For this modules definitions*/
-#include "stm32f4xx.h"  /*Microcontroller family header*/
+#include "stm32f4xx.h"  /*Microcontroller family header*/                                          
 
 /*****************************************************************************
 * Module Preprocessor Constants
@@ -30,19 +30,28 @@
 * Module Variable Definitions
 *****************************************************************************/
 /**
- * Defines a table of pointers to the peripheral input register on the 
- * microcontroller.
+ * Defines a table of pointers to the GPIO port mode register
 */
-static TYPE volatile * const DataIn[NUMBER_OF_PORTS] =  
+static uint32_t volatile * const modeReg[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->MODER, (uint32_t*)&GPIOB->MODER, 
+    (uint32_t*)&GPIOC->MODER, (uint32_t*)&GPIOD->MODER,
+    (uint32_t*)&GPIOH->MODER
+};
+
+/**
+ * Defines a table of pointers to the GPIO port output type register.
+ */
+static uint32_t volatile * const Type[NUMBER_OF_PORTS] =
 {
     (TYPE*)&REGISTER1, (TYPE*)&REGISTER2,
 };
 
 /**
- * Defines a table of pointers to the peripheral data direction register on 
- * on the microcontroller.
- */
-static TYPE volatile * const DataDirection[NUMBER_OF_PORTS] =
+ * Defines a table of pointers to the peripheral input register on the 
+ * microcontroller.
+*/
+static TYPE volatile * const DataIn[NUMBER_OF_PORTS] =  
 {
     (TYPE*)&REGISTER1, (TYPE*)&REGISTER2,
 };
@@ -82,7 +91,7 @@ static TYPE volatile * const Function[NUMBER_OF_PORTS] =
 * Function Definitions
 *****************************************************************************/
 /*****************************************************************************
- * Function: DIO_Init()
+ * Function: DIO_init()
 *//**
 *\b Description:
  * This function is used to initialize the Dio based on the configuration  
@@ -103,26 +112,26 @@ static TYPE volatile * const Function[NUMBER_OF_PORTS] =
  * 
  * \b Example:
  * @code
- *  const DioConfig_t * DioConfig = DIO_ConfigGet();
- *  DIO_Init(DioConfig);
+ *  const DioConfig_t * DioConfig = DIO_configGet();
+ *  DIO_init(DioConfig);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
- * @see DIO_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackRegister
  * 
 *****************************************************************************/
-void DIO_Init(const DioConfig_t * Config)
+void DIO_init(const DioConfig_t * Config)
 {
     /*TODO: Define implementation*/
 }
 
 /*****************************************************************************
- * Function: DIO_ChannelRead()
+ * Function: DIO_channelRead()
 *//**
  *\b Description:
  * This function is used to read the state of a dio channel (pin)
@@ -139,25 +148,25 @@ void DIO_Init(const DioConfig_t * Config)
  * 
  * \b Example:
  * @code
- *  uint8_t pin = DIO_ReadChannel(PORT1_0);
+ *  uint8_t pin = DIO_readChannel(PORT1_0);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
- * @see DIO_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackRegister
  * 
 **********************************************************************/
-DioPinState_t DIO_ChannelRead(DioChannel_t Channel)
+DioPinState_t DIO_channelRead(DioPin_t Channel)
 {
 
 }
 
 /**********************************************************************
- * Function: DIO_ChannelWrite()
+ * Function: DIO_channelWrite()
 *//**
  *\b Description:
  * This function is used to write the state of a channel (pin) as either
@@ -179,26 +188,26 @@ DioPinState_t DIO_ChannelRead(DioChannel_t Channel)
  * 
  * \b Example:
  * @code
- *  DIO_WriteChannel(PORT1_0, LOW);  //Set the PORT pin low
- *  DIO_WriteChannel(PORT1_0, HIGH); //Set the PORT pin high
+ *  DIO_writeChannel(PORT1_0, LOW);  //Set the PORT pin low
+ *  DIO_writeChannel(PORT1_0, HIGH); //Set the PORT pin high
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
- * @see DIO_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackRegister
  * 
  **********************************************************************/
-void DIO_ChannelWrite(DioChannel_t Channel, DioPinState_t State)
+void DIO_channelWrite(DioPin_t Channel, DioPinState_t State)
 {
 
 }
 
 /**********************************************************************
- * Function: DIO_ChannelToggle()
+ * Function: DIO_channelToggle()
 *//**
  *\b Description:
  * This function is used to toggle the current state of a channel (pin).
@@ -217,27 +226,27 @@ void DIO_ChannelWrite(DioChannel_t Channel, DioPinState_t State)
  * 
  * \b Example:
  * @code
- *  DIO_ChannelToggle(PORTA_1);
+ *  DIO_channelToggle(PORTA_1);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
- * @see DIO_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackRegister
  * 
  * <br><b> - HISTORY OF CHANGES - </b>
  * 
  **********************************************************************/
-void DIO_ChannelToggle(DioChannel_t Channel)
+void DIO_channelToggle(DioPin_t Channel)
 {
 
 }
 
 /**********************************************************************
- * Function: DIO_RegisterWrite()
+ * Function: DIO_registerWrite()
 *//**
  *\b Description:
  * This function is used to directly address and modify a Dio register.
@@ -258,25 +267,25 @@ void DIO_ChannelToggle(DioChannel_t Channel)
  * 
  * \b Example
  * @code
- *  DIO_RegisterWrite(0x1000, 0x15);
+ *  DIO_registerWrite(0x1000, 0x15);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
- * @see DIO_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackRegister
  * 
 **********************************************************************/ 
-void DIO_RegisterWrite(uint32_t address, TYPE value)
+void DIO_registerWrite(uint32_t address, uint32_t value)
 {
 
 }
 
 /**********************************************************************
- * Function: DIO_RegisterRead()
+ * Function: DIO_registerRead()
 *//**
  *\b Description:
  * This function is used  to directly address a Dio register. The 
@@ -295,25 +304,25 @@ void DIO_RegisterWrite(uint32_t address, TYPE value)
  * 
  * \b Example:
  * @code
- *  DioValue = DIO_RegisterRead(0x1000);
+ *  dioValue = DIO_registerRead(0x1000);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
- * @see DIO_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackRegister
  *
  **********************************************************************/ 
-TYPE DIO_RegisterRead(uint32_t address)
+uint32_t DIO_registerRead(uint32_t address)
 {
 
 }
 
 /**********************************************************************
- * Function: DIO_CallbackRegister()
+ * Function: DIO_callbackRegister()
 *//**
  *\b Description:
  * This function is used to set the callback function of the dio driver.
@@ -336,19 +345,19 @@ TYPE DIO_RegisterRead(uint32_t address)
  * \b Example:
  * @code
  *  DioCallback_t Dio_Function = DIO_SAMPLE_COMPLETE;
- *  DIO_CallbackRegister(Dio_Function, Dio_SampleAverage);
+ *  DIO_callbackRegister(Dio_Function, Dio_SampleAverage);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
- * @see DIO_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackRegister
  * 
  **********************************************************************/ 
-void DIO_CallbackRegister(DioCallback_t Function, TYPE (*CallbackFunction)(type))
+/*void DIO_CallbackRegister(DioCallback_t Function, TYPE (*CallbackFunction)(type))
 {
     
-}
+}*/

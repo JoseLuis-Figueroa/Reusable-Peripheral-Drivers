@@ -23,11 +23,11 @@
 /**
  * Defines the number of pins on each processor port.
  */
-#define NUMBER_OF_PIN_PER_PORT 8U
+#define NUMBER_OF_PIN_PER_PORT 16U
 /**
  * Defines the number of ports on the processor.
  */
-#define NUMBER_OF_PORTS 8U
+#define NUMBER_OF_PORTS 5U
 
 /*****************************************************************************
 * Typedefs
@@ -194,7 +194,7 @@ typedef struct
 extern "C"{
 #endif
 
-const DioConfig_t * const DIO_ConfigGet(void);
+const DioConfig_t * const DIO_configGet(void);
 
 #ifdef __cplusplus
 } //extern "C"
