@@ -33,16 +33,6 @@
 * Typedefs
 *****************************************************************************/
 /**
- * Defines the possible states for a digital output pin
-*/
-typedef enum
-{
-    DIO_LOW,            /**Defines digital state ground*/
-    DIO_HIGH,           /**Defines digital state power*/
-    DIO_PIN_STATE_MAX   /**Defines the Maximum digital state*/
-}DioPinState_t;
-
-/**
  * Defines a enumerated list of all the channels (pins) on the MCU device.
  * The last element is used to specify the maximum number of enumerated 
  * labels.
@@ -102,6 +92,16 @@ typedef enum
 }DioChannel_t;
 
 /**
+ * Defines the possible states for a digital output pin
+*/
+typedef enum
+{
+    DIO_LOW,            /**Defines digital state ground*/
+    DIO_HIGH,           /**Defines digital state power*/
+    DIO_PIN_STATE_MAX   /**Defines the Maximum digital state*/
+}DioPinState_t;
+
+/**
  * Defines the mode of the Dio pin as an input, output, alternate function 
  * and analog.
  */
@@ -116,7 +116,7 @@ typedef enum
 /**
  * Define the output type of the Input/output port. 
  */
-typedef struct
+typedef enum
 {
     DIO_PUSH_PULL,      /**< Enable output push-pull */        
     DIO_OPEN_DRAIN      /**< Enable output open-drain */
@@ -174,12 +174,13 @@ typedef enum
  */
 typedef struct 
 {
-    /* TODO: Add additional members for the MCU peripheral */
     DioChannel_t Channel;       /**< The I/O pin */
-    DioResistor_t Resistor;     /**< ENABLED OR DISABLED */
-    DioMode_t Mode;             /**< Output or Input */
     DioPinState_t Data;         /**< High or Low */
-    DioFunction_t Function;     /**< Mux Function - Dio_Peri_Select*/
+    DioMode_t Mode;             /**< Input, Output, Function, or Analog */
+    DioType_t Type;             /**< Push-pull or Open-drain */
+    DioSpeed_t Speed;           /**< Low, Medium, High, very */
+    DioResistor_t Resistor;     /**< Enabled or Disabled */
+    DioFunction_t Function;     /**< Mux Function - Dio_Peri_Select */
 }DioConfig_t;
 
 
