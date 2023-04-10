@@ -49,56 +49,57 @@ typedef enum
  */
 typedef enum
 {
-    PA0,        /**< PA0 */
-    PA1,        /**< PA1 */
-    PA2,        /**< PA2 */
-    PA3,        /**< PA3 */
-    PA4,        /**< PA4 */
-    PA5,        /**< PA5 */
-    PA6,        /**< PA6 */
-    PA7,        /**< PA7 */
-    PA8,        /**< PA8 */
-    PA9,        /**< PA9 */
-    PA10,       /**< PA10 */
-    PA11,       /**< PA11 */
-    PA12,       /**< PA12 */
-    PA13,       /**< PA13 SWD (NC)*/
-    PA14,       /**< PA14 SWD (NC)*/
-    PA15,       /**< PA15 */
-    PB0 = 0,    /**< PB0 */
-    PB1,        /**< PB1 */
-    PB2,        /**< PB2 */
-    PB3,        /**< PB3 */
-    PB4,        /**< PB4 */
-    PB5,        /**< PB5 */
-    PB6,        /**< PB6 */
-    PB7,        /**< PB7 */
-    PB8,        /**< PB8 */
-    PB9,        /**< PB9 */
-    PB10,       /**< PB10*/
-    PB12 = 12,   /**< PB12 */
-    PB13,       /**< PB13 */
-    PB14,       /**< PB14 */
-    PB15,       /**< PB15 */
-    PC0 = 0,    /**< PC0 */
-    PC1,        /**< PC1 */
-    PC2,        /**< PC2 */
-    PC3,        /**< PC3 */
-    PC4,        /**< PC4 */
-    PC5,        /**< PC5 */
-    PC6,        /**< PC6 */
-    PC7,        /**< PC7 */
-    PC8,        /**< PC8 */
-    PC9,        /**< PC9 */
-    PC10,       /**< PC10*/
-    PC11,       /**< PC11 */
-    PC12,       /**< PC12 */
-    PC13,       /**< PC13 Push button*/
-    PC14,       /**< PC14 OSC32_IN*/
-    PC15,       /**< PC15 OSC32_OUT*/
-    PD2 = 2,    /**< PD2 */
-    PH0 = 0,    /**< PH0 OSC_IN*/
-    PH1,        /**< PH1 OSC_OUT*/
+    DIO_PA0,        /**< PA0 */
+    DIO_PA1,        /**< PA1 */
+    DIO_PA2,        /**< PA2 */
+    DIO_PA3,        /**< PA3 */
+    DIO_PA4,        /**< PA4 */
+    DIO_PA5,        /**< PA5 */
+    DIO_PA6,        /**< PA6 */
+    DIO_PA7,        /**< PA7 */
+    DIO_PA8,        /**< PA8 */
+    DIO_PA9,        /**< PA9 */
+    DIO_PA10,       /**< PA10 */
+    DIO_PA11,       /**< PA11 */
+    DIO_PA12,       /**< PA12 */
+    DIO_PA13,       /**< PA13 SWD (NC)*/
+    DIO_PA14,       /**< PA14 SWD (NC)*/
+    DIO_PA15,       /**< PA15 */
+    DIO_PB0 = 0,    /**< PB0 */
+    DIO_PB1,        /**< PB1 */
+    DIO_PB2,        /**< PB2 */
+    DIO_PB3,        /**< PB3 */
+    DIO_PB4,        /**< PB4 */
+    DIO_PB5,        /**< PB5 */
+    DIO_PB6,        /**< PB6 */
+    DIO_PB7,        /**< PB7 */
+    DIO_PB8,        /**< PB8 */
+    DIO_PB9,        /**< PB9 */
+    DIO_PB10,       /**< PB10*/
+    DIO_PB12 = 12,   /**< PB12 */
+    DIO_PB13,       /**< PB13 */
+    DIO_PB14,       /**< PB14 */
+    DIO_PB15,       /**< PB15 */
+    DIO_PC0 = 0,    /**< PC0 */
+    DIO_PC1,        /**< PC1 */
+    DIO_PC2,        /**< PC2 */
+    DIO_PC3,        /**< PC3 */
+    DIO_PC4,        /**< PC4 */
+    DIO_PC5,        /**< PC5 */
+    DIO_PC6,        /**< PC6 */
+    DIO_PC7,        /**< PC7 */
+    DIO_PC8,        /**< PC8 */
+    DIO_PC9,        /**< PC9 */
+    DIO_PC10,       /**< PC10*/
+    DIO_PC11,       /**< PC11 */
+    DIO_PC12,       /**< PC12 */
+    DIO_PC13,       /**< PC13 Push button*/
+    DIO_PC14,       /**< PC14 OSC32_IN*/
+    DIO_PC15,       /**< PC15 OSC32_OUT*/
+    DIO_PD2 = 2,    /**< PD2 */
+    DIO_PH0 = 0,    /**< PH0 OSC_IN*/
+    DIO_PH1,        /**< PH1 OSC_OUT*/
+    DIO_MAX_PIN = 16
 }DioPin_t;
 
 /**
@@ -110,7 +111,8 @@ typedef enum
     DIO_INPUT,      /**< Input mode */
     DIO_OUTPUT,     /**< General purpose Output mode */
     DIO_FUNCTION,   /**< Alternate function mode */
-    DIO_ANALOG      /**< Analog mode */
+    DIO_ANALOG,     /**< Analog mode */
+    DIO_MAX_MODE
 }DioMode_t;
 
 /**
@@ -119,7 +121,8 @@ typedef enum
 typedef enum
 {
     DIO_PUSH_PULL,      /**< Enable output push-pull */        
-    DIO_OPEN_DRAIN      /**< Enable output open-drain */
+    DIO_OPEN_DRAIN,     /**< Enable output open-drain */
+    DIO_MAX_TYPE
 }DioType_t;
 
 /**
@@ -130,7 +133,8 @@ typedef enum
     DIO_LOW_SPEED,      /**< Low speed is configured on the pin */
     DIO_MEDIUM_SPEED,   /**< Medium speed is configured on the pin */
     DIO_HIGH_SPEED,     /**< High speed is configured on the pin */
-    DIO_VERY_SPEED      /**< Very speed is configured on the pin */
+    DIO_VERY_SPEED,     /**< Very speed is configured on the pin */
+    DIO_MAX_SPEED
 }DioSpeed_t;
 
 /**
@@ -165,7 +169,7 @@ typedef enum
     DIO_AF13,    /**< Alternate function 13 */
     DIO_AF14,    /**< Alternate function 14 */
     DIO_AF15,    /**< Alternate function 15 */
-    DIO_MAX_MODE
+    DIO_MAX_FUNCTION
 }DioFunction_t;
 
 /**
