@@ -107,12 +107,20 @@ typedef enum
  */
 typedef enum
 {
-    DIO_INPUT,      /**Input mode*/
-    DIO_OUTPUT,     /**General purpose Output mode*/
-    DIO_FUNCTION,   /**Alternate function mode*/
-    DIO_ANALOG      /**Analog mode*/
+    DIO_INPUT,      /**< Input mode */
+    DIO_OUTPUT,     /**< General purpose Output mode */
+    DIO_FUNCTION,   /**< Alternate function mode */
+    DIO_ANALOG      /**< Analog mode */
 }DioMode_t;
 
+/**
+ * Define the output type of the Input/output port. 
+ */
+typedef struct
+{
+    DIO_PUSH_PULL,      /**< Enable output push-pull */        
+    DIO_OPEN_DRAIN      /**< Enable output open-drain */
+}DioType_t;
 
 /**
  * Defines the possible DIO pin multiplexing values. The data sheet should 
