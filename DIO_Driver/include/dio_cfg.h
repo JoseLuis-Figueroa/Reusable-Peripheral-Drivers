@@ -123,6 +123,17 @@ typedef struct
 }DioType_t;
 
 /**
+ * Defines the output speed settings available
+ */
+typedef enum
+{
+    DIO_LOW_SPEED,      /**< Low speed is configured on the pin */
+    DIO_MEDIUM_SPEED,   /**< Medium speed is configured on the pin */
+    DIO_HIGH_SPEED,     /**< High speed is configured on the pin */
+    DIO_VERY_SPEED      /**< Very speed is configured on the pin */
+}DioSlew_t;
+
+/**
  * Defines the possible DIO pin multiplexing values. The data sheet should 
  * be reviewed for proper multiplexing options.
  */
@@ -156,14 +167,6 @@ typedef struct
     DioFunction_t Function;     /**< Mux Function - Dio_Peri_Select*/
 }DioConfig_t;
 
-/**
- * Defines the slew rate settings available
- */
-typedef enum
-{
-    Fast,   /**< Fast slew rate is configured on the corresponding pin, */
-    Slow,   /**< Slow slew rate is configured on the corresponding pin, */
-}DioSlew_t;
 
 /*****************************************************************************
 * Function Prototypes
