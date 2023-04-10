@@ -47,12 +47,12 @@ extern "C"{
 #endif
 
 void DIO_Init(const DioConfig_t * const Config);
-DioPinState_t DIO_ChannelRead(DioChannel_t Channel);
-void DIO_ChannelWrite(DioChannel_t Channel, DioPinState_t State);
-void DIO_ChannelToggle(DioChannel_t Channel);
-void DIO_RegisterWrite(uint32_t address, TYPE value);
-TYPE DIO_RegisterRead(uint32_t address);
-void DIO_CallbackRegister(DioCallback_t Funtion, TYPE(*CallbackFunction)(type));
+DioPinState_t DIO_ChannelRead(DioPin_t Channel);
+void DIO_ChannelWrite(DioPin_t Channel, DioPinState_t State);
+void DIO_ChannelToggle(DioPin_t Channel);
+void DIO_RegisterWrite(uint32_t address, uint32_t value);
+uint32_t DIO_RegisterRead(uint32_t address);
+/*void DIO_CallbackRegister(DioCallback_t Function, TYPE(*CallbackFunction)(type));*/
 
 #ifdef __cplusplus
 } // extern C
