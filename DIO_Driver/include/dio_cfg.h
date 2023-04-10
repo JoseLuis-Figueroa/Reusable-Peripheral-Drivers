@@ -23,7 +23,7 @@
 /**
  * Defines the number of pins on each processor port.
  */
-#define NUMBER_OF_CHANNELS_PER_PORT 8U
+#define NUMBER_OF_PIN_PER_PORT 8U
 /**
  * Defines the number of ports on the processor.
  */
@@ -89,7 +89,7 @@ typedef enum
     PD2 = 2,    /**< PD2 */
     PH0 = 0,    /**< PH0 OSC_IN*/
     PH1,        /**< PH1 OSC_OUT*/
-}DioChannel_t;
+}DioPin_t;
 
 /**
  * Defines the possible states for a digital output pin
@@ -174,7 +174,7 @@ typedef enum
  */
 typedef struct 
 {
-    DioChannel_t Channel;       /**< The I/O pin */
+    DioPin_t Pin;               /**< The I/O pin */
     DioPinState_t Data;         /**< High or Low */
     DioMode_t Mode;             /**< Input, Output, Function, or Analog */
     DioType_t Type;             /**< Push-pull or Open-drain */
