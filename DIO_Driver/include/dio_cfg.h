@@ -33,7 +33,7 @@
 * Typedefs
 *****************************************************************************/
 /**
- * Defines the possible states for a digital output pin
+ * Defines the possible states for a digital output pin.
 */
 typedef enum
 {
@@ -43,9 +43,23 @@ typedef enum
 }DioPinState_t;
 
 /**
- * Defines a enumerated list of all the channels (pins) on the MCU device.
- * The last element is used to specify the maximum number of enumerated 
- * labels.
+ * Define the ports contained on the MCU device. It is used to identify the
+ * specific port GPIO to configure the register map.
+ */
+typedef enum
+{
+    DIO_PA,
+    DIO_PB,
+    DIO_PC,
+    DIO_PD,
+    DIO_PH,
+    DIO_MAX_PORT
+}DioPort_t;
+
+
+/**
+ * Defines all the pins contained on the MCU device. It is used to set a 
+ * specific bit on the ports.
  */
 typedef enum
 {
@@ -138,7 +152,7 @@ typedef enum
 }DioSpeed_t;
 
 /**
- * Defines the possible states of the channel pull-ups
+ * Defines the possible states of the channel pull-ups.
  */
 typedef enum
 {
@@ -178,6 +192,7 @@ typedef enum
  */
 typedef struct 
 {
+    DioPort_t Port;             /** The I/O port*/
     DioPin_t Pin;               /**< The I/O pin */
     DioMode_t Mode;             /**< Input, Output, Function, or Analog */
     DioType_t Type;             /**< Push-pull or Open-drain */

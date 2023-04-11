@@ -42,25 +42,25 @@
 const DioConfig_t DioConfig[] = 
 {
 /*                                                          
- *Channel   Mode         Type          Speed            Resistor       Function
+ *  Port    Pin      Mode        Type           Speed          Resistor             Function
  *                
 */
-   {DIO_PA0, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA1, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA2, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA3, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA4, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA5, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA6, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA7, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA8, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
-   {DIO_PA9, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA10, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA11, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA12, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
-   {DIO_PA13, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
-   {DIO_PA14, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
-   {DIO_PA15, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
+   {DIO_PA, DIO_PA0, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA1, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA2, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA3, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA4, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA5, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA6, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA7, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA8, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
+   {DIO_PA, DIO_PA9, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA10, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA11, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA12, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF0},
+   {DIO_PA, DIO_PA13, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
+   {DIO_PA, DIO_PA14, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
+   {DIO_PA, DIO_PA15, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_PULLUP_DISABLED, DIO_AF9},
 };
 
 /*****************************************************************************
@@ -71,7 +71,7 @@ const DioConfig_t DioConfig[] =
 * Function Definitions
 *****************************************************************************/
 /*****************************************************************************
- * Function: DIO_ConfigGet()
+ * Function: DIO_configGet()
 */
 /**
 *\b Description:
@@ -85,17 +85,17 @@ const DioConfig_t DioConfig[] =
  * 
  * \b Example: 
  * @code
- * const Dio_ConfigType_t * const DioConfig = DIO_GetConfig();
+ * const Dio_ConfigType_t * const DioConfig = DIO_configGet();
  * 
  * DIO_Init(DioConfig);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
  * 
 *****************************************************************************/
 const DioConfig_t * const DIO_configGet(void)
