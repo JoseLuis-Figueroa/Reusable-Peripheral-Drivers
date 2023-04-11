@@ -29,19 +29,15 @@
 /*****************************************************************************
 * Module Variable Definitions
 *****************************************************************************/
-/**
- * Defines a array of pointers to the GPIO port mode register
-*/
-static uint32_t volatile * const modeReg[NUMBER_OF_PORTS] =
+/** Defines a array of pointers to the GPIO port mode register */
+static uint32_t volatile * const moderRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->MODER, (uint32_t*)&GPIOB->MODER, 
     (uint32_t*)&GPIOC->MODER, (uint32_t*)&GPIOD->MODER,
     (uint32_t*)&GPIOH->MODER
 };
 
-/**
- * Defines a array of pointers to the GPIO port output type register.
- */
+/** Defines a array of pointers to the GPIO port output type register. */
 static uint32_t volatile * const typeReg[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->OTYPER, (uint32_t*)&GPIOB->OTYPER,
@@ -49,9 +45,7 @@ static uint32_t volatile * const typeReg[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->OTYPER
 };
 
-/**
- * Define a array of pointers to the GPIO port output speed register.
- */
+/** Define a array of pointers to the GPIO port output speed register. */
 static uint32_t volatile * const speedReg[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->OSPEEDR, (uint32_t*)&GPIOB->OSPEEDR,
@@ -59,9 +53,7 @@ static uint32_t volatile * const speedReg[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->OSPEEDR
 };
 
-/**
- * Defines a array of pointers to the GPIO port pull-up/pull-down register.
- */
+/** Defines a array of pointers to the GPIO port pull-up/pull-down register.*/
 static uint32_t volatile * const resistorReg[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->PUPDR, (uint32_t*)&GPIOB->PUPDR,
@@ -78,18 +70,14 @@ static uint32_t volatile * const inputReg[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOD->IDR, (uint32_t*)&GPIOH->IDR
 };
 
-/**
- * Defines a array of pointers to the GPIO port output data register.
- */
+/** Defines a array of pointers to the GPIO port output data register. */
 static uint32_t volatile * const OutputReg[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->ODR, (uint32_t*)&GPIOB->ODR, (uint32_t*)&GPIOC->ODR, 
     (uint32_t*)&GPIOD->ODR, (uint32_t*)&GPIOH->ODR
 };
 
-/**
- * Defines a array of pointers to the GPIO alternate function low register.
- */
+/** Defines a array of pointers to the GPIO alternate function low register.*/
 static uint32_t volatile * const functionLowReg[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->AFR[0], (uint32_t*)&GPIOB->AFR[0], 
@@ -97,9 +85,7 @@ static uint32_t volatile * const functionLowReg[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->AFR[0]
 };
 
-/**
- * Defines a array of pointers to the GPIO alternate function low register.
- */
+/** Defines a array of pointers to the GPIO alternate function low register.*/
 static uint32_t volatile * const functionHighReg[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->AFR[1], (uint32_t*)&GPIOB->AFR[1], 
@@ -151,7 +137,42 @@ static uint32_t volatile * const functionHighReg[NUMBER_OF_PORTS] =
 *****************************************************************************/
 void DIO_init(const DioConfig_t * Config)
 {
-    /*TODO: Define implementation*/
+    /** Loop through all the elements of the configuration table. */
+    for(uint8_t i=0; i<=sizeof(Config); i++)
+    {
+        /** 
+         * Set the mode of the Dio pin on the GPIO port mode register. 
+         * Multiply the pin number (Config[i].Pin) by two as MODER uses two 
+         * bits to configure the one pin.
+        */
+        if(Config[i].Mode == DIO_INPUT)
+        {
+            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin * 2));
+
+        }
+        else if (Config[i].Mode == DIO_OUTPUT)
+        {
+            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin * 2));
+        }
+        else if (Config[i].Mode == DIO_FUNCTION)
+        {
+            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin * 2));
+        }
+        else if (Config[i].Mode == DIO_ANALOG)
+        {
+            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin * 2));
+        }
+        else
+        {
+            printf("This Mode does not exist\n");
+        }
+
+
+    }
 }
 
 /*****************************************************************************
