@@ -38,7 +38,7 @@ static uint32_t volatile * const moderRegister[NUMBER_OF_PORTS] =
 };
 
 /** Defines a array of pointers to the GPIO port output type register. */
-static uint32_t volatile * const typeReg[NUMBER_OF_PORTS] =
+static uint32_t volatile * const otyperReg[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->OTYPER, (uint32_t*)&GPIOB->OTYPER,
     (uint32_t*)&GPIOC->OTYPER, (uint32_t*)&GPIOD->OTYPER, 
@@ -169,6 +169,23 @@ void DIO_init(const DioConfig_t * Config)
         else
         {
             printf("This Mode does not exist\n");
+        }
+
+        /**
+         * Set the output type of the Dio pin on the GPIO port output type 
+         * register.
+         */
+        if(Config[i].Type == DIO_PUSH_PULL)
+        {
+            *otyperReg[Config[i].Port] &= ~(1UL<<Config[i].Pin);
+        }
+        else if (Config[i].Type == DIO_OPEN_DRAIN)
+        {
+            *otyperReg[Config[i].Port] |= (1UL<<Config[i].Pin);
+        }
+        else
+        {
+            printf("This output type does not exist");
         }
 
 
