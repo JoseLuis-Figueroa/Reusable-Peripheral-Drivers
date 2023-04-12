@@ -38,7 +38,7 @@ static uint32_t volatile * const moderRegister[NUMBER_OF_PORTS] =
 };
 
 /** Defines a array of pointers to the GPIO port output type register. */
-static uint32_t volatile * const otyperReg[NUMBER_OF_PORTS] =
+static uint32_t volatile * const otyperRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->OTYPER, (uint32_t*)&GPIOB->OTYPER,
     (uint32_t*)&GPIOC->OTYPER, (uint32_t*)&GPIOD->OTYPER, 
@@ -46,7 +46,7 @@ static uint32_t volatile * const otyperReg[NUMBER_OF_PORTS] =
 };
 
 /** Define a array of pointers to the GPIO port output speed register. */
-static uint32_t volatile * const speedReg[NUMBER_OF_PORTS] =
+static uint32_t volatile * const ospeedrRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->OSPEEDR, (uint32_t*)&GPIOB->OSPEEDR,
     (uint32_t*)&GPIOC->OSPEEDR, (uint32_t*)&GPIOD->OSPEEDR, 
@@ -147,24 +147,24 @@ void DIO_init(const DioConfig_t * Config)
         */
         if(Config[i].Mode == DIO_INPUT)
         {
-            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin * 2));
-            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin*2));
 
         }
         else if (Config[i].Mode == DIO_OUTPUT)
         {
-            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin * 2));
-            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin*2));
         }
         else if (Config[i].Mode == DIO_FUNCTION)
         {
-            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin * 2));
-            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
         }
         else if (Config[i].Mode == DIO_ANALOG)
         {
-            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin * 2));
-            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin * 2));
+            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
         }
         else
         {
@@ -177,15 +177,43 @@ void DIO_init(const DioConfig_t * Config)
          */
         if(Config[i].Type == DIO_PUSH_PULL)
         {
-            *otyperReg[Config[i].Port] &= ~(1UL<<Config[i].Pin);
+            *otyperRegister[Config[i].Port] &= ~(1UL<<Config[i].Pin);
         }
         else if (Config[i].Type == DIO_OPEN_DRAIN)
         {
-            *otyperReg[Config[i].Port] |= (1UL<<Config[i].Pin);
+            *otyperRegister[Config[i].Port] |= (1UL<<Config[i].Pin);
         }
         else
         {
-            printf("This output type does not exist");
+            printf("This output type does not exist\n");
+        }
+
+        /**
+         * Set the speed of the Dio pin on the GPIO port output speed register. 
+         */
+        if(Config[i].Speed == DIO_LOW_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+        }
+        else if (Config[i].Speed == DIO_MEDIUM_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+        }
+        else if (Config[i].Speed == DIO_HIGH_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+        }
+        else if(Config[i].Speed == DIO_VERY_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+        }
+        else
+        {
+            printf("The output speed does not exist\n");
         }
 
 
