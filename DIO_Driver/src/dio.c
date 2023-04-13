@@ -54,7 +54,7 @@ static uint32_t volatile * const ospeedrRegister[NUMBER_OF_PORTS] =
 };
 
 /** Defines a array of pointers to the GPIO port pull-up/pull-down register.*/
-static uint32_t volatile * const resistorReg[NUMBER_OF_PORTS] =
+static uint32_t volatile * const pupdrRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->PUPDR, (uint32_t*)&GPIOB->PUPDR,
     (uint32_t*)&GPIOC->PUPDR, (uint32_t*)&GPIOD->PUPDR, 
@@ -64,33 +64,27 @@ static uint32_t volatile * const resistorReg[NUMBER_OF_PORTS] =
 /**
  * Defines a array of pointers to the GPIO port input data register.
 */
-static uint32_t volatile * const inputReg[NUMBER_OF_PORTS] =  
+static uint32_t volatile * const idrRegister[NUMBER_OF_PORTS] =  
 {
     (uint32_t*)&GPIOA->IDR, (uint32_t*)&GPIOB->IDR, (uint32_t*)&GPIOC->IDR,
     (uint32_t*)&GPIOD->IDR, (uint32_t*)&GPIOH->IDR
 };
 
 /** Defines a array of pointers to the GPIO port output data register. */
-static uint32_t volatile * const OutputReg[NUMBER_OF_PORTS] =
+static uint32_t volatile * const odrRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->ODR, (uint32_t*)&GPIOB->ODR, (uint32_t*)&GPIOC->ODR, 
     (uint32_t*)&GPIOD->ODR, (uint32_t*)&GPIOH->ODR
 };
 
-/** Defines a array of pointers to the GPIO alternate function low register.*/
-static uint32_t volatile * const functionLowReg[NUMBER_OF_PORTS] =
+/** Defines a array of pointers to the GPIO alternate function low register.
+ * This is compound for two 32 bits registers.
+*/
+static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->AFR[0], (uint32_t*)&GPIOB->AFR[0], 
     (uint32_t*)&GPIOC->AFR[0], (uint32_t*)&GPIOD->AFR[0], 
     (uint32_t*)&GPIOH->AFR[0]
-};
-
-/** Defines a array of pointers to the GPIO alternate function low register.*/
-static uint32_t volatile * const functionHighReg[NUMBER_OF_PORTS] =
-{
-    (uint32_t*)&GPIOA->AFR[1], (uint32_t*)&GPIOB->AFR[1], 
-    (uint32_t*)&GPIOC->AFR[1], (uint32_t*)&GPIOD->AFR[1], 
-    (uint32_t*)&GPIOH->AFR[1]
 };
 
 /*****************************************************************************
@@ -216,6 +210,145 @@ void DIO_init(const DioConfig_t * Config)
             printf("The output speed does not exist\n");
         }
 
+        /** 
+         * Set the internal resistor of the Dio pin on the GPIO port 
+         * pull-up/pull-down register
+        */
+       if(Config[i].Resistor == DIO_NO_RESISTOR)
+       {
+            *pupdrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *pupdrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+       }
+       else if (Config[i].Resistor == DIO_PULLUP)
+       {
+            *pupdrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *pupdrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+       }
+       else if (Config[i].Resistor == DIO_PULLDOWN)
+       {
+            *pupdrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *pupdrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+       }
+       else
+       {
+            printf("The port register does not exist");
+       }
+
+        /** Set the alternate function of the Dio pin on the GPIO alternate 
+         * function
+        */
+       if(Config[i].Function == DIO_AF0)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF1)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF2)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF3)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF4)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF5)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF6)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF7)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF8)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF9)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF10)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF11)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF12)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF13)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF14)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF15)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       } 
 
     }
 }
