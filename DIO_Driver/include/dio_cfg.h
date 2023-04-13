@@ -156,9 +156,10 @@ typedef enum
  */
 typedef enum
 {
-    DIO_PULLUP_DISABLED,    /*< Used to disable the internal pull-ups*/
-    DIO_PULLUP_ENABLED,     /*< Used to enable the internal pull-ups*/
-    DIO_MAX_RESISTOR        /*< Resistor states should be bellow this value*/
+    DIO_NO_RESISTOR,    /** Used to disable the internal resistor*/
+    DIO_PULLUP,         /*< Used to enable the internal pull-up*/
+    DIO_PULLDOWN,       /*< Used to enable the internal pull-down*/
+    DIO_MAX_RESISTOR    /*< Resistor states should be bellow this value*/
 }DioResistor_t;
 
 /**
