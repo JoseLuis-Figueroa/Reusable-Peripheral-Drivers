@@ -361,12 +361,14 @@ void DIO_init(const DioConfig_t * Config)
  * 
  * PRE-CONDITION: The channel is configured as INPUT <br>
  * PRE-CONDITION: The channel is configured as GPIO <br>
- * PRE-CONDITION: The channel is within the maximum DioChannel_t 
+ * PRE-CONDITION: The Port is within the maximum DioPort_t
+ * PRE-CONDITION: The Pin is within the maximum DioPin_t 
  * definition.
  * 
  * POST-CONDITION: The channel state is returned.
  * 
- * @param   Channel is the DioChannel_t that represents a pin.
+ * @param   Port is the DioPort_t that represents a port.
+ * @param   Pin is the DioPin_t that represents a pin.
  * @return  The state of the channel as HIGH or LOW.
  * 
  * \b Example:
@@ -383,9 +385,14 @@ void DIO_init(const DioConfig_t * Config)
  * @see DIO_callbackRegister
  * 
 **********************************************************************/
-DioPinState_t DIO_channelRead(DioPin_t Channel)
+DioPinState_t DIO_channelRead(DioPort_t Port, DioPin_t Pin)
 {
+    /** Read the port associated with the desired pin */
+    DioPinState_t portState = (DioPinState_t)*idrRegister[Port];
+    /** Determinate the Port bit associated with this pin*/
+    DioPinState_t pinMask = (DioPinState_t)(1UL<<(Pin));
 
+    return ((portState & pinMask) ? DIO_HIGH : DIO_LOW); 
 }
 
 /**********************************************************************

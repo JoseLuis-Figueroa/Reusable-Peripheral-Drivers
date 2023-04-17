@@ -48,7 +48,7 @@ extern "C"{
 #endif
 
 void DIO_init(const DioConfig_t * const Config);
-DioPinState_t DIO_channelRead(DioPin_t Channel);
+DioPinState_t DIO_channelRead(DioPort_t Port, DioPin_t Pin);
 void DIO_channelWrite(DioPin_t Channel, DioPinState_t State);
 void DIO_channelToggle(DioPin_t Channel);
 void DIO_registerWrite(uint32_t address, uint32_t value);
