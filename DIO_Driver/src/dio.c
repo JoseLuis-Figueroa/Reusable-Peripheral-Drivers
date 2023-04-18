@@ -435,11 +435,11 @@ void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State)
 {
     if(State == DIO_HIGH)
     {
-        *odrRegister[Port] |= (1<<(Pin));
+        *odrRegister[Port] |= (1UL<<(Pin));
     }
     else if (State == DIO_LOW)
     {
-        *odrRegister[Port] &= ~(1<<Pin);
+        *odrRegister[Port] &= ~(1UL<<Pin);
     }
     else
     {
@@ -460,14 +460,14 @@ void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State)
  *
  * POST-CONDITION:
  * 
- * @param   Channel is the pin from the DioChannel_t that is to be 
- *          modified.
+ * @param   Port is the GPIO to write using the DioPort_t enum.
+ * @param   Pin is the bit from the DioPin_t that is to be modified.
  * 
  * @return  void
  * 
  * \b Example:
  * @code
- *  DIO_channelToggle(PORTA_1);
+ *  DIO_pinToggle(DIO_PA, DIO_PA3);
  * @endcode
  * 
  * @see DIO_init
@@ -481,9 +481,9 @@ void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State)
  * <br><b> - HISTORY OF CHANGES - </b>
  * 
  **********************************************************************/
-void DIO_channelToggle(DioPin_t Channel)
+void DIO_pinToggle(DioPort_t Port, DioPin_t Pin)
 {
-
+    *odrRegister[Port] ^= (1UL<<Pin);
 }
 
 /**********************************************************************
