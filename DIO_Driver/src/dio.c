@@ -102,9 +102,8 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * table defined in dio_cfg module.
  * 
  * PRE-CONDITION: Configuration table needs to be populated (sizeof > 0) <br>
- * PRE-CONDITION: NUMBER_OF_CHANNELS_PER_PORT > 0 <br>
  * PRE-CONDITION: NUMBER_OF_PORTS > 0 <br>
- * PRE-CONDITION: The MCU clocks must be configured and enable.
+ * PRE-CONDITION: The MCU clocks must be configured and enabled.
  * 
  * POST-CONDITION: The DIO peripheral is set up with the configuration 
  * settings.
@@ -116,14 +115,14 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * 
  * \b Example:
  * @code
- *  const DioConfig_t * DioConfig = DIO_configGet();
+ *  const DioConfig_t * const DioConfig = DIO_configGet();
  *  DIO_init(DioConfig);
  * @endcode
  * 
  * @see DIO_init
- * @see DIO_channelRead
- * @see DIO_channelWrite
- * @see DIO_channelToggle
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
  * @see DIO_callbackRegister
@@ -354,15 +353,15 @@ void DIO_init(const DioConfig_t * Config)
 }
 
 /*****************************************************************************
- * Function: DIO_channelRead()
+ * Function: DIO_pinRead()
 *//**
  *\b Description:
- * This function is used to read the state of a dio channel (pin)
+ * This function is used to read the state of a dio pin.
  * 
- * PRE-CONDITION: The channel is configured as INPUT <br>
- * PRE-CONDITION: The channel is configured as GPIO <br>
- * PRE-CONDITION: The Port is within the maximum DioPort_t
- * PRE-CONDITION: The Pin is within the maximum DioPin_t 
+ * PRE-CONDITION: The pin is configured as INPUT <br>
+ * PRE-CONDITION: The pin is configured as GPIO <br>
+ * PRE-CONDITION: The Port is within the maximum DioPort_t.
+ * PRE-CONDITION: The Pin is within the maximum DioPin_t. 
  * definition.
  * 
  * POST-CONDITION: The channel state is returned.
@@ -373,19 +372,19 @@ void DIO_init(const DioConfig_t * Config)
  * 
  * \b Example:
  * @code
- *  uint8_t pin = DIO_readChannel(PORT1_0);
+ *  uint8_t pin = DIO_pinRead(DIO_PC, DIO_PC5);
  * @endcode
  * 
  * @see DIO_init
- * @see DIO_channelRead
- * @see DIO_channelWrite
- * @see DIO_channelToggle
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
  * @see DIO_callbackRegister
  * 
 **********************************************************************/
-DioPinState_t DIO_channelRead(DioPort_t Port, DioPin_t Pin)
+DioPinState_t DIO_pinRead(DioPort_t Port, DioPin_t Pin)
 {
     /** Read the port associated with the desired pin */
     DioPinState_t portState = (DioPinState_t)*idrRegister[Port];
@@ -396,51 +395,63 @@ DioPinState_t DIO_channelRead(DioPort_t Port, DioPin_t Pin)
 }
 
 /**********************************************************************
- * Function: DIO_channelWrite()
+ * Function: DIO_pinWrite()
 *//**
  *\b Description:
- * This function is used to write the state of a channel (pin) as either
- * logic high or low through the use of the DioChannel_t enum to select 
- * the channel and the DioPinState_t to define the desired state.
+ * This function is used to write the state of a pin as either logic 
+ * high or low through the use of the DioChannel_t enum to select the 
+ * channel and the DioPinState_t to define the desired state.
  * 
- * PRE-CONDITION: The channel is configured as OUTPUT <br>
- * PRE-CONDITION: The channel is configured as GPIO <br>
- * PRE-CONDITION: The channel is within the maximum DioChannel_t 
+ * PRE-CONDITION: The pin is configured as OUTPUT <br>
+ * PRE-CONDITION: The pin is configured as GPIO <br>
+ * PRE-CONDITION: The pin is within the maximum DioChannel_t .
  * definition.
  * 
- * POST-CONDITION: The channel state will be State.
+ * POST-CONDITION: The channel state will be Stated.
  * 
- * @param   Channel is the pin to write using the DioChannel_t enum
- *          definition State is HIGH or LOW as defined in the 
- *          DioPinState_t enum
+ * @param   Port is the GPIO to write using the DioPort_t enum.
+ * @param   Pin is the bit to write using the DioPin_t enum definition.
+ * @param   State is HIGH or LOW as defined in the DioPinState_t enum. 
+ *          
  * 
  * @return  void
  * 
  * \b Example:
  * @code
- *  DIO_writeChannel(PORT1_0, LOW);  //Set the PORT pin low
- *  DIO_writeChannel(PORT1_0, HIGH); //Set the PORT pin high
+ *  DIO_pinWrite(DIO_PA, DIO_PA1, LOW);  //Set the PORT pin low
+ *  DIO_pinWrite(DIO_PB, DIO_PB3, HIGH); //Set the PORT pin high
  * @endcode
  * 
  * @see DIO_init
- * @see DIO_channelRead
- * @see DIO_channelWrite
- * @see DIO_channelToggle
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
  * @see DIO_callbackRegister
  * 
  **********************************************************************/
-void DIO_channelWrite(DioPin_t Channel, DioPinState_t State)
+void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State)
 {
-
+    if(State == DIO_HIGH)
+    {
+        *odrRegister[Port] |= (1<<(Pin));
+    }
+    else if (State == DIO_LOW)
+    {
+        *odrRegister[Port] &= ~(1<<Pin);
+    }
+    else
+    {
+        printf("This option does not exist");
+    }
 }
 
 /**********************************************************************
- * Function: DIO_channelToggle()
+ * Function: DIO_pinToggle()
 *//**
  *\b Description:
- * This function is used to toggle the current state of a channel (pin).
+ * This function is used to toggle the current state of a pin.
  * 
  * PRE-CONDITION: The channel is configured as output <br>
  * PRE-CONDITION: The channel is configured as GPIO <br>
@@ -460,9 +471,9 @@ void DIO_channelWrite(DioPin_t Channel, DioPinState_t State)
  * @endcode
  * 
  * @see DIO_init
- * @see DIO_channelRead
- * @see DIO_channelWrite
- * @see DIO_channelToggle
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
  * @see DIO_callbackRegister
