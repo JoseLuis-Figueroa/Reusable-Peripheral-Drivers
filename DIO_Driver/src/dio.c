@@ -522,7 +522,8 @@ void DIO_pinToggle(DioPort_t Port, DioPin_t Pin)
 **********************************************************************/ 
 void DIO_registerWrite(uint32_t address, uint32_t value)
 {
-
+    volatile uint32_t * const registerPointer = (uint32_t*)address;
+    *registerPointer = value;
 }
 
 /**********************************************************************
