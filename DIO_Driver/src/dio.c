@@ -530,9 +530,10 @@ void DIO_registerWrite(uint32_t address, uint32_t value)
  * Function: DIO_registerRead()
 *//**
  *\b Description:
- * This function is used  to directly address a Dio register. The 
- * function should be used to access specialized functionality in the Dio
- * peripheral that is not exposed by any other function of the interface
+ * This function is used to directly address a Dio register. The 
+ * function should be used to access specialized functionality in the 
+ * Dio peripheral that is not exposed by any other function of the 
+ * interface.
  * 
  * PRE-CONDITION: Address is within the boundaries of the Dio register 
  * address space.
@@ -560,7 +561,9 @@ void DIO_registerWrite(uint32_t address, uint32_t value)
  **********************************************************************/ 
 uint32_t DIO_registerRead(uint32_t address)
 {
+    volatile uint32_t * const registerPointer = (uint32_t*)address;
 
+    return *registerPointer;
 }
 
 /**********************************************************************
