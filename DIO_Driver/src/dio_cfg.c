@@ -1,6 +1,6 @@
 /**
  * @file dio_cfg.c
- * @author Jose Luis Figueroa (you@domain.com)
+ * @author Jose Luis Figueroa
  * @brief This module contains the implementation for the digital 
  * input/output peripheral configuration.
  * @version 1.0
@@ -16,7 +16,7 @@
 * Includes
 *****************************************************************************/
 #include "dio_cfg.h"
-
+ 
 /*****************************************************************************
 * Module Preprocessor Constants
 *****************************************************************************/
@@ -41,17 +41,26 @@
 */
 const DioConfig_t DioConfig[] = 
 {
-/*              Resistor                                        Initial
-* Channel       Enabled             Direction       Pin         Function
+/*                                                          
+ *  Port    Pin      Mode        Type           Speed          Resistor         Function
+ *                
 */
-   {PA0,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA1,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA2,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA3,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA4,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA5,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA6,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
-   {PA7,    DIO_PULLUP_DISABLED,    DIO_OUTPUT,    DIO_HIGH,     /*TBD*/},
+   {DIO_PA, DIO_PA0, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA1, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA2, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA3, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA4, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA5, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA6, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA7, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA8, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF9},
+   {DIO_PA, DIO_PA9, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA10, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA11, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA12, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA13, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF9},
+   {DIO_PA, DIO_PA14, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF9},
+   {DIO_PA, DIO_PA15, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF9},
 };
 
 /*****************************************************************************
@@ -62,7 +71,7 @@ const DioConfig_t DioConfig[] =
 * Function Definitions
 *****************************************************************************/
 /*****************************************************************************
- * Function: DIO_ConfigGet()
+ * Function: DIO_configGet()
 */
 /**
 *\b Description:
@@ -76,25 +85,25 @@ const DioConfig_t DioConfig[] =
  * 
  * \b Example: 
  * @code
- * const Dio_ConfigType_t * const DioConfig = DIO_GetConfig();
+ * const Dio_ConfigType_t * const DioConfig = DIO_configGet();
  * 
  * DIO_Init(DioConfig);
  * @endcode
  * 
- * @see DIO_Init
- * @see DIO_ChannelRead
- * @see DIO_ChannelWrite
- * @see DIO_ChannelToggle
- * @see DIO_RegisterWrite
- * @see DIO_RegisterRead
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
  * 
 *****************************************************************************/
-const DioConfig_t * const DIO_ConfigGet(void)
+const DioConfig_t * const DIO_configGet(void)
 {
    /* The cast is performed to ensure that the address of the first element 
     * of configuration table is returned as a constant pointer and not a
     * pointer that can be modified
    */
-  return (const *)&DioConfig[0];
+  return (const DioConfig_t*)&DioConfig[0];
 
 }

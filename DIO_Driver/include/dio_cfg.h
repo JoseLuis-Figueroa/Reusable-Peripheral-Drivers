@@ -1,6 +1,6 @@
 /**
  * @file dio_cfg.h
- * @author Jose Luis Figueroa (you@domain.com)
+ * @author Jose Luis Figueroa
  * @brief This module contains interface definitions for the Dio 
  * configuration. This is the header file for the definition of the
  * interface for retrieving the digital input/output configuration table.
@@ -21,19 +21,15 @@
 * Preprocessor Constants
 *****************************************************************************/
 /**
- * Defines the number of pins on each processor port.
- */
-#define NUMBER_OF_CHANNELS_PER_PORT 8U
-/**
  * Defines the number of ports on the processor.
  */
-#define NUMBER_OF_PORTS 8U
+#define NUMBER_OF_PORTS 5U
 
 /*****************************************************************************
 * Typedefs
 *****************************************************************************/
 /**
- * Defines the possible states for a digital output pin
+ * Defines the possible states for a digital output pin.
 */
 typedef enum
 {
@@ -43,77 +39,149 @@ typedef enum
 }DioPinState_t;
 
 /**
- * Defines a enumerated list of all the channels (pins) on the MCU device.
- * The last element is used to specify the maximum number of enumerated 
- * labels.
+ * Define the ports contained on the MCU device. It is used to identify the
+ * specific port GPIO to configure the register map.
  */
 typedef enum
 {
-    /*TODO: Populate this list based on available MCU pins*/
-    PA0,        /**< PA0 */
-    PA1,        /**< PA1 */
-    PA2,        /**< PA2 */
-    PA3,        /**< PA3 */
-    PA4,        /**< PA4 */
-    PA5,        /**< PA5 */
-    PA6,        /**< PA6 */
-    PA7,        /**< PA7 */
-    PA8,        /**< PA8 */
-    PA9,        /**< PA9 */
-    PA10,       /**< PA10 */
-    PA11,       /**< PA11 */
-    PA12,       /**< PA12 */
-    PA13,       /**< PA13 */
-    PA14,       /**< PA14 */
-    PA15,       /**< PA15 */
-    PB0 = 0,    /**< PB0 */
-    PB1,        /**< PB1 */
-    PB2,        /**< PB2 */
-    PB3,        /**< PB3 */
-    PB4,        /**< PB4 */
-    PB5,        /**< PB5 */
-    PB6,        /**< PB6 */
-    PB7,        /**< PB7 */
-    PB8,        /**< PB8 */
-    PB9,        /**< PB9 */
-    P10,        /**< PB10 */
-    P11,        /**< P11 */
-    P12,        /**< P12 */
-    P13,        /**< P13 */
-    P14,        /**< P14 */
-    P15,        /**< P15 */
-}DioChannel_t;
-
-/**
- * Defines the direction of the Dio pin as an input or output  
- */
-typedef enum
-{
-    /*TODO: Populate with possible direction options*/
-    DIO_INPUT,
-    DIO_OUTPUT
-}DioDirection_t;
+    DIO_PA,
+    DIO_PB,
+    DIO_PC,
+    DIO_PD,
+    DIO_PH,
+    DIO_MAX_PORT
+}DioPort_t;
 
 
 /**
- * Defines the possible DIO pin multiplexing values. The data sheet should 
- * be reviewed for proper multiplexing options.
+ * Defines all the pins contained on the MCU device. It is used to set a 
+ * specific bit on the ports.
  */
 typedef enum
 {
-    /*TODO: Populate with possible mode options*/
+    DIO_PA0,        /**< PA0 */
+    DIO_PA1,        /**< PA1 */
+    DIO_PA2,        /**< PA2 */
+    DIO_PA3,        /**< PA3 */
+    DIO_PA4,        /**< PA4 */
+    DIO_PA5,        /**< PA5 */
+    DIO_PA6,        /**< PA6 */
+    DIO_PA7,        /**< PA7 */
+    DIO_PA8,        /**< PA8 */
+    DIO_PA9,        /**< PA9 */
+    DIO_PA10,       /**< PA10 */
+    DIO_PA11,       /**< PA11 */
+    DIO_PA12,       /**< PA12 */
+    DIO_PA13,       /**< PA13 SWD (NC)*/
+    DIO_PA14,       /**< PA14 SWD (NC)*/
+    DIO_PA15,       /**< PA15 */
+    DIO_PB0 = 0,    /**< PB0 */
+    DIO_PB1,        /**< PB1 */
+    DIO_PB2,        /**< PB2 */
+    DIO_PB3,        /**< PB3 */
+    DIO_PB4,        /**< PB4 */
+    DIO_PB5,        /**< PB5 */
+    DIO_PB6,        /**< PB6 */
+    DIO_PB7,        /**< PB7 */
+    DIO_PB8,        /**< PB8 */
+    DIO_PB9,        /**< PB9 */
+    DIO_PB10,       /**< PB10*/
+    DIO_PB12 = 12,   /**< PB12 */
+    DIO_PB13,       /**< PB13 */
+    DIO_PB14,       /**< PB14 */
+    DIO_PB15,       /**< PB15 */
+    DIO_PC0 = 0,    /**< PC0 */
+    DIO_PC1,        /**< PC1 */
+    DIO_PC2,        /**< PC2 */
+    DIO_PC3,        /**< PC3 */
+    DIO_PC4,        /**< PC4 */
+    DIO_PC5,        /**< PC5 */
+    DIO_PC6,        /**< PC6 */
+    DIO_PC7,        /**< PC7 */
+    DIO_PC8,        /**< PC8 */
+    DIO_PC9,        /**< PC9 */
+    DIO_PC10,       /**< PC10*/
+    DIO_PC11,       /**< PC11 */
+    DIO_PC12,       /**< PC12 */
+    DIO_PC13,       /**< PC13 Push button*/
+    DIO_PC14,       /**< PC14 OSC32_IN*/
+    DIO_PC15,       /**< PC15 OSC32_OUT*/
+    DIO_PD2 = 2,    /**< PD2 */
+    DIO_PH0 = 0,    /**< PH0 OSC_IN*/
+    DIO_PH1,        /**< PH1 OSC_OUT*/
+    DIO_MAX_PIN = 16
+}DioPin_t;
+
+/**
+ * Defines the mode of the Dio pin as an input, output, alternate function 
+ * and analog.
+ */
+typedef enum
+{
+    DIO_INPUT,      /**< Input mode */
+    DIO_OUTPUT,     /**< General purpose Output mode */
+    DIO_FUNCTION,   /**< Alternate function mode */
+    DIO_ANALOG,     /**< Analog mode */
     DIO_MAX_MODE
 }DioMode_t;
 
 /**
- * Defines the possible states of the channel pull-ups
+ * Define the output type of the Input/output port. 
  */
 typedef enum
 {
-    DIO_PULLUP_DISABLED,    /*< Used to disable the internal pull-ups*/
-    DIO_PULLUP_ENABLED,     /*< Used to enable the internal pull-ups*/
-    DIO_MAX_RESISTOR        /*< Resistor states should be bellow this value*/
+    DIO_PUSH_PULL,      /**< Enable output push-pull */        
+    DIO_OPEN_DRAIN,     /**< Enable output open-drain */
+    DIO_MAX_TYPE
+}DioType_t;
+
+/**
+ * Defines the output speed settings available
+ */
+typedef enum
+{
+    DIO_LOW_SPEED,      /**< Low speed is configured on the pin */
+    DIO_MEDIUM_SPEED,   /**< Medium speed is configured on the pin */
+    DIO_HIGH_SPEED,     /**< High speed is configured on the pin */
+    DIO_VERY_SPEED,     /**< Very speed is configured on the pin */
+    DIO_MAX_SPEED
+}DioSpeed_t;
+
+/**
+ * Defines the possible states of the channel pull-ups.
+ */
+typedef enum
+{
+    DIO_NO_RESISTOR,    /** Used to disable the internal resistor*/
+    DIO_PULLUP,         /*< Used to enable the internal pull-up*/
+    DIO_PULLDOWN,       /*< Used to enable the internal pull-down*/
+    DIO_MAX_RESISTOR    /*< Resistor states should be bellow this value*/
 }DioResistor_t;
+
+/**
+ * Defines the possible DIO alternate function. A multiplexer is used to 
+ * select the alternate function
+ */
+typedef enum
+{
+    DIO_AF0,    /**< Alternate function 0 */
+    DIO_AF1,    /**< Alternate function 1 */
+    DIO_AF2,    /**< Alternate function 2 */
+    DIO_AF3,    /**< Alternate function 3 */
+    DIO_AF4,    /**< Alternate function 4 */
+    DIO_AF5,    /**< Alternate function 5 */
+    DIO_AF6,    /**< Alternate function 6 */
+    DIO_AF7,    /**< Alternate function 7 */
+    DIO_AF8,    /**< Alternate function 8 */
+    DIO_AF9,    /**< Alternate function 9 */
+    DIO_AF10,    /**< Alternate function 10 */
+    DIO_AF11,    /**< Alternate function 11 */
+    DIO_AF12,    /**< Alternate function 12 */
+    DIO_AF13,    /**< Alternate function 13 */
+    DIO_AF14,    /**< Alternate function 14 */
+    DIO_AF15,    /**< Alternate function 15 */
+    DIO_MAX_FUNCTION
+}DioFunction_t;
 
 /**
  * Defines the digital input/output configuration table's elements that are 
@@ -121,22 +189,15 @@ typedef enum
  */
 typedef struct 
 {
-    /* TODO: Add additional members for the MCU peripheral */
-    DioChannel_t Channel;       /**< The I/O pin */
-    DioResistor_t Resistor;     /**< ENABLED OR DISABLED */
-    DioDirection_t Direction;   /**< Output or Input */
-    DioPinState_t Data;         /**< High or Low */
-    DioMode_t Function;         /**< Mux Function - Dio_Peri_Select*/
+    DioPort_t Port;             /** The I/O port*/
+    DioPin_t Pin;               /**< The I/O pin */
+    DioMode_t Mode;             /**< Input, Output, Function, or Analog */
+    DioType_t Type;             /**< Push-pull or Open-drain */
+    DioSpeed_t Speed;           /**< Low, Medium, High, very */
+    DioResistor_t Resistor;     /**< Enabled or Disabled */
+    DioFunction_t Function;     /**< Mux Function - Dio_Peri_Select */
 }DioConfig_t;
 
-/**
- * Defines the slew rate settings available
- */
-typedef enum
-{
-    Fast,   /**< Fast slew rate is configured on the corresponding pin, */
-    Slow,   /**< Slow slew rate is configured on the corresponding pin, */
-}DioSlew_t;
 
 /*****************************************************************************
 * Function Prototypes
@@ -145,7 +206,7 @@ typedef enum
 extern "C"{
 #endif
 
-const DioConfig_t * const DIO_ConfigGet(void);
+const DioConfig_t * const DIO_configGet(void);
 
 #ifdef __cplusplus
 } //extern "C"

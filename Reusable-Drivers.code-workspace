@@ -4,5 +4,10 @@
 			"path": "DIO_Driver"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"dio_cfg.h": "c",
+			"stm32f4xx.h": "c"
+		}
+	}
 }
