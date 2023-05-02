@@ -21,10 +21,6 @@
 * Preprocessor Constants
 *****************************************************************************/
 /**
- * Defines the number of pins on each processor port.
- */
-#define NUMBER_OF_PIN_PER_PORT 16U
-/**
  * Defines the number of ports on the processor.
  */
 #define NUMBER_OF_PORTS 5U

@@ -53,7 +53,6 @@ void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State);
 void DIO_pinToggle(DioPort_t Port, DioPin_t Pin);
 void DIO_registerWrite(uint32_t address, uint32_t value);
 uint32_t DIO_registerRead(uint32_t address);
-/*void DIO_CallbackRegister(DioCallback_t Function, TYPE(*CallbackFunction)(type));*/
 
 #ifdef __cplusplus
 } // extern C
