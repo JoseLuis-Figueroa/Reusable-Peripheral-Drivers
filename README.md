@@ -1,5 +1,5 @@
 # Reusable-Drivers
-This repository contains a personal project based on the _“Reusable Firmware Development: A Practical Approach to APIs, HALs, and Drivers”_ book where the objective is to create reusable firmware development that can be used across multiple microcontroller platforms and software products.  This is achieved through embedded C (bare-metal) code that works directly with the register map of the MCU. The project is focused on creating reusable drivers and HALs for MCU.
+This repository contains a personal project based on the _“Reusable Firmware Development: A Practical Approach to APIs, HALs, and Drivers”_ book where the objective is to create reusable firmware development that can be used across multiple microcontroller platforms and software products.  This is achieved through embedded C (bare-metal) code that works directly with the register map of the MCU, following industry-standard coding practices as MISRA-C. The project is focused on creating reusable drivers and HALs for MCU.
 
 This repository currently contains the GPIO driver. The current tooling being used for this project includes:
 * Development Board: _Nucleo-F401RE._
