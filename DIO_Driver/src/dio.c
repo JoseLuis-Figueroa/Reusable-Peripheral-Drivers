@@ -9,7 +9,7 @@
  * 
  */
 /*****************************************************************************
-* Includes
+* Module Includes
 *****************************************************************************/
 #include "dio.h"        /*For this modules definitions*/
 #include "stm32f4xx.h"  /*Microcontroller family header*/                                          
@@ -128,10 +128,10 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * @see DIO_callbackRegister
  * 
 *****************************************************************************/
-void DIO_init(const DioConfig_t * Config)
+void DIO_init(const DioConfig_t * const Config)
 {
     /** Loop through all the elements of the configuration table. */
-    for(uint8_t i=0; i<=sizeof(Config); i++)
+    for(uint8_t i=0; i<=sizeof(*Config)-1; i++)
     {
         /** 
          * Set the mode of the Dio pin on the GPIO port mode register. 
@@ -387,9 +387,9 @@ void DIO_init(const DioConfig_t * Config)
 DioPinState_t DIO_pinRead(DioPort_t Port, DioPin_t Pin)
 {
     /** Read the port associated with the desired pin */
-    DioPinState_t portState = (DioPinState_t)*idrRegister[Port];
+    uint16_t portState = *idrRegister[Port];
     /** Determinate the Port bit associated with this pin*/
-    DioPinState_t pinMask = (DioPinState_t)(1UL<<(Pin));
+    uint16_t pinMask = (1UL<<(Pin));
 
     return ((portState & pinMask) ? DIO_HIGH : DIO_LOW); 
 }
