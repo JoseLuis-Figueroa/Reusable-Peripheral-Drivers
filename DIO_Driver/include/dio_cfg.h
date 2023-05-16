@@ -33,9 +33,9 @@
 */
 typedef enum
 {
-    DIO_LOW,            /**Defines digital state ground*/
-    DIO_HIGH,           /**Defines digital state power*/
-    DIO_PIN_STATE_MAX   /**Defines the Maximum digital state*/
+    DIO_LOW,            /**<Defines digital state ground*/
+    DIO_HIGH,           /**<Defines digital state power*/
+    DIO_PIN_STATE_MAX   /**<Defines the Maximum digital state*/
 }DioPinState_t;
 
 /**
@@ -44,11 +44,11 @@ typedef enum
  */
 typedef enum
 {
-    DIO_PA,
-    DIO_PB,
-    DIO_PC,
-    DIO_PD,
-    DIO_PH,
+    DIO_PA,         /**< Port A*/
+    DIO_PB,         /**< Port B*/
+    DIO_PC,         /**< Port C*/
+    DIO_PD,         /**< Port D*/
+    DIO_PH,         /**< Port H*/
     DIO_MAX_PORT
 }DioPort_t;
 

@@ -9,6 +9,13 @@
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. All rights reserved.
  * 
+ * <br><b> - HISTORY OF CHANGES - </b>
+ * 
+ * <table align="left" style="width:800px">
+ * <tr><td> Date    </td><td> Version </td><td> Description       </td></tr> 
+ * <tr><td> 5/16/23 </td><td> 1.0     </td><td> Interface created </td></tr> 
+ * </table><br><br>
+ * 
  */
 #ifndef DIO_H_
 #define DIO_H_
