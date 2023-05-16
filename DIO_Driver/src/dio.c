@@ -108,8 +108,8 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * POST-CONDITION: The DIO peripheral is set up with the configuration 
  * settings.
  * 
- * @param   Config is a pointer to the configuration table that contains the 
- *                 initialization for the peripheral.
+ * @param[in]   Config is a pointer to the configuration table that contains 
+ *               the initialization for the peripheral.
  * 
  * @return  void
  * 
@@ -125,7 +125,6 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
- * @see DIO_callbackRegister
  * 
 *****************************************************************************/
 void DIO_init(const DioConfig_t * const Config)
@@ -366,13 +365,13 @@ void DIO_init(const DioConfig_t * const Config)
  * 
  * POST-CONDITION: The channel state is returned.
  * 
- * @param   Port is the DioPort_t that represents a port.
- * @param   Pin is the DioPin_t that represents a pin.
- * @return  The state of the channel as HIGH or LOW.
+ * @param[in]   Port is the DioPort_t that represents a port.
+ * @param[in]   Pin is the DioPin_t that represents a pin.
+ * @return      The state of the channel as HIGH or LOW.
  * 
  * \b Example:
  * @code
- *  uint8_t pin = DIO_pinRead(DIO_PC, DIO_PC5);
+ *  bool pin = DIO_pinRead(DIO_PC, DIO_PC5);
  * @endcode
  * 
  * @see DIO_init
@@ -381,7 +380,6 @@ void DIO_init(const DioConfig_t * const Config)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
- * @see DIO_callbackRegister
  * 
 **********************************************************************/
 DioPinState_t DIO_pinRead(DioPort_t Port, DioPin_t Pin)
@@ -409,9 +407,11 @@ DioPinState_t DIO_pinRead(DioPort_t Port, DioPin_t Pin)
  * 
  * POST-CONDITION: The channel state will be Stated.
  * 
- * @param   Port is the GPIO to write using the DioPort_t enum.
- * @param   Pin is the bit to write using the DioPin_t enum definition.
- * @param   State is HIGH or LOW as defined in the DioPinState_t enum. 
+ * @param[in]   Port is the GPIO to write using the DioPort_t enum.
+ * @param[in]   Pin is the bit to write using the DioPin_t enum 
+ *              definition.
+ * @param[in]   State is HIGH or LOW as defined in the DioPinState_t 
+ *              enum. 
  *          
  * 
  * @return  void
@@ -428,7 +428,6 @@ DioPinState_t DIO_pinRead(DioPort_t Port, DioPin_t Pin)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
- * @see DIO_callbackRegister
  * 
  **********************************************************************/
 void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State)
@@ -460,8 +459,8 @@ void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State)
  *
  * POST-CONDITION:
  * 
- * @param   Port is the GPIO to write using the DioPort_t enum.
- * @param   Pin is the bit from the DioPin_t that is to be modified.
+ * @param[in]   Port is the GPIO to write using the DioPort_t enum.
+ * @param[in]   Pin is the bit from the DioPin_t that is to be modified
  * 
  * @return  void
  * 
@@ -476,9 +475,6 @@ void DIO_pinWrite(DioPort_t Port, DioPin_t Pin, DioPinState_t State)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
- * @see DIO_callbackRegister
- * 
- * <br><b> - HISTORY OF CHANGES - </b>
  * 
  **********************************************************************/
 void DIO_pinToggle(DioPort_t Port, DioPin_t Pin)
@@ -501,8 +497,9 @@ void DIO_pinToggle(DioPort_t Port, DioPin_t Pin)
  * POST-CONDITION: The register located at address with be updated with
  * value.
  * 
- * @param   address is a register address within the Dio peripheral map.
- * @param   value is the value to set the Dio register. 
+ * @param[in]   address is a register address within the Dio peripheral
+ *              map.
+ * @param[in]   value is the value to set the Dio register. 
  * 
  * @return void
  * 
@@ -517,7 +514,6 @@ void DIO_pinToggle(DioPort_t Port, DioPin_t Pin)
  * @see DIO_channelToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
- * @see DIO_callbackRegister
  * 
 **********************************************************************/ 
 void DIO_registerWrite(uint32_t address, uint32_t value)
@@ -541,13 +537,13 @@ void DIO_registerWrite(uint32_t address, uint32_t value)
  * POST-CONDITION: The value stored in the register is returned to the 
  * caller.
  * 
- * @param   address is the address of the Dio register to read.
+ * @param[in]   address is the address of the Dio register to read.
  * 
  * @return  The current value of the Dio register.
  * 
  * \b Example:
  * @code
- *  dioValue = DIO_registerRead(0x1000);
+ * type dioValue = DIO_registerRead(0x1000);
  * @endcode
  * 
  * @see DIO_init
@@ -556,7 +552,6 @@ void DIO_registerWrite(uint32_t address, uint32_t value)
  * @see DIO_channelToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
- * @see DIO_callbackRegister
  *
  **********************************************************************/ 
 uint32_t DIO_registerRead(uint32_t address)

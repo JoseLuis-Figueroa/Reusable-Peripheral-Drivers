@@ -29,7 +29,7 @@ int main()
     const DioConfig_t * const DioConfig = DIO_configGet();
     /** Initialize the GPIO according to the configuration table*/
     DIO_init(DioConfig);
-
+    
     while(1)
     {
         /** Review PC13 pin (User button). A pull-up resistor circuit is
