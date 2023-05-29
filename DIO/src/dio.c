@@ -5,7 +5,7 @@
  * @version 1.0
  * @date 2023-03-19
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. All rights reserved.
+ * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
  */
 /*****************************************************************************
@@ -28,7 +28,7 @@
 /*****************************************************************************
 * Module Variable Definitions
 *****************************************************************************/
-/** Defines a array of pointers to the GPIO port mode register */
+/* Defines a array of pointers to the GPIO port mode register */
 static uint32_t volatile * const moderRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->MODER, (uint32_t*)&GPIOB->MODER, 
@@ -36,7 +36,7 @@ static uint32_t volatile * const moderRegister[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->MODER
 };
 
-/** Defines a array of pointers to the GPIO port output type register. */
+/* Defines a array of pointers to the GPIO port output type register. */
 static uint32_t volatile * const otyperRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->OTYPER, (uint32_t*)&GPIOB->OTYPER,
@@ -44,7 +44,7 @@ static uint32_t volatile * const otyperRegister[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->OTYPER
 };
 
-/** Define a array of pointers to the GPIO port output speed register. */
+/* Define a array of pointers to the GPIO port output speed register. */
 static uint32_t volatile * const ospeedrRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->OSPEEDR, (uint32_t*)&GPIOB->OSPEEDR,
@@ -52,7 +52,7 @@ static uint32_t volatile * const ospeedrRegister[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->OSPEEDR
 };
 
-/** Defines a array of pointers to the GPIO port pull-up/pull-down register.*/
+/* Defines a array of pointers to the GPIO port pull-up/pull-down register.*/
 static uint32_t volatile * const pupdrRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->PUPDR, (uint32_t*)&GPIOB->PUPDR,
@@ -60,7 +60,7 @@ static uint32_t volatile * const pupdrRegister[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->PUPDR
 };
 
-/**
+/*
  * Defines a array of pointers to the GPIO port input data register.
 */
 static uint32_t volatile * const idrRegister[NUMBER_OF_PORTS] =  
@@ -69,14 +69,14 @@ static uint32_t volatile * const idrRegister[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOD->IDR, (uint32_t*)&GPIOH->IDR
 };
 
-/** Defines a array of pointers to the GPIO port output data register. */
+/* Defines a array of pointers to the GPIO port output data register. */
 static uint32_t volatile * const odrRegister[NUMBER_OF_PORTS] =
 {
     (uint32_t*)&GPIOA->ODR, (uint32_t*)&GPIOB->ODR, (uint32_t*)&GPIOC->ODR, 
     (uint32_t*)&GPIOD->ODR, (uint32_t*)&GPIOH->ODR
 };
 
-/** Defines a array of pointers to the GPIO alternate function low register.
+/* Defines a array of pointers to the GPIO alternate function low register.
  * This is compound for two 32 bits registers.
 */
 static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
@@ -128,10 +128,10 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
 *****************************************************************************/
 void DIO_init(const DioConfig_t * const Config)
 {
-    /** Loop through all the elements of the configuration table. */
+    /* Loop through all the elements of the configuration table. */
     for(uint8_t i=0; i<=NUMBER_DIGITAL_PINS; i++)
     {
-        /** 
+        /* 
          * Set the mode of the Dio pin on the GPIO port mode register. 
          * Multiply the pin number (Config[i].Pin) by two as MODER uses two 
          * bits to configure one pin.
@@ -162,7 +162,7 @@ void DIO_init(const DioConfig_t * const Config)
             printf("This Mode does not exist\n");
         }
 
-        /**
+        /*
          * Set the output type of the Dio pin on the GPIO port output type 
          * register.
          */
@@ -179,7 +179,7 @@ void DIO_init(const DioConfig_t * const Config)
             printf("This output type does not exist\n");
         }
 
-        /**
+        /*
          * Set the speed of the Dio pin on the GPIO port output speed 
          * register. Multiply the pin number (Config[i].Pin) by two as 
          * OSPEEDR uses two bits to configure one pin. 
@@ -209,7 +209,7 @@ void DIO_init(const DioConfig_t * const Config)
             printf("The output speed does not exist\n");
         }
 
-        /** 
+        /*
          * Set the internal resistor of the Dio pin on the GPIO port 
          * pull-up/pull-down register. Multiply the pin number 
          * (Config[i].Pin) by two as PUPDR uses two bits to configure 
@@ -235,7 +235,8 @@ void DIO_init(const DioConfig_t * const Config)
             printf("The port register does not exist");
        }
 
-        /** Set the alternate function of the Dio pin on the GPIO alternate 
+        /*
+         * Set the alternate function of the Dio pin on the GPIO alternate 
          * function. Multiply the pin number (Config[i].Pin) by four as AFR 
          * uses four bits to configure one pin. 
         */
@@ -388,9 +389,9 @@ void DIO_init(const DioConfig_t * const Config)
 **********************************************************************/
 DioPinState_t DIO_pinRead(DioPort_t Port, DioPin_t Pin)
 {
-    /** Read the port associated with the desired pin */
+    /* Read the port associated with the desired pin */
     uint16_t portState = *idrRegister[Port];
-    /** Determinate the Port bit associated with this pin*/
+    /* Determinate the Port bit associated with this pin*/
     uint16_t pinMask = (1UL<<(Pin));
 
     return ((portState & pinMask) ? DIO_HIGH : DIO_LOW); 
