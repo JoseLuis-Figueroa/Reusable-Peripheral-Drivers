@@ -4,6 +4,7 @@
  * @brief Implement the DIO driver. 
  * @version 1.0
  * @date 2023-04-10
+ * @note 
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
