@@ -24,13 +24,13 @@
 /** 
  * Defines the number of ports on the processor.
  */
-#define NUMBER_OF_PORTS 4U
+#define SPI_PORTS_NUMBER 4U
 
 /** 
  * Set the value according with the number of Serial Peripheral 
  * interface channels to be used.
 */
-#define NUMBER_DIGITAL_PINS 1
+#define SPI_CHANNELS_NUMBER 1
 
 /**********************************************************************
 * Typedefs

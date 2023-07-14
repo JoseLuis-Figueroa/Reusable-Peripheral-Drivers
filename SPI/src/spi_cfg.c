@@ -35,17 +35,15 @@
  * Peripheral Interface. Each row represent a single SPI configuration.
  * Each column is representing a member of the SpiConfig_t structure. This 
  * table is read in by SPI_Init, where each channel is then set up based on 
- * this table. The NUMBER_DIGITAL_PINS constant should be agreed with the 
+ * this table. The SPI_CHANNELS_NUMBER constant should be agreed with the 
  * number of row.
 */
 const SpiConfig_t SpiConfig[] = 
 {
-   /** TODO: Populate according to the SPI configuration and number of pins*/
 /*                                                          
  *  Mode       Hierarchy   Baud rate   Frame    Type             Size               
 */
-   {SPI_MODE3, SPI_MASTER, SPI_FPCKL4, SPI_MSB, SPI_FULL_DUPLEX, SPI_8BITS},
-
+   {SPI_MODE3, SPI_MASTER, SPI_FPCLK4, SPI_MSB, SPI_FULL_DUPLEX, SPI_8BITS},
 };
 
 /*****************************************************************************
