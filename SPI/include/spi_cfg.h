@@ -24,14 +24,12 @@
 /** 
  * Defines the number of ports on the processor.
  */
-/** TODO: Populate with the number of PSI ports on the microcontroller*/
 #define NUMBER_OF_PORTS 4U
 
 /** 
- * Set the value according with the number of digital input/output 
- * peripheral channel (pins) used.
+ * Set the value according with the number of Serial Peripheral 
+ * interface channels to be used.
 */
-/** TODO: Populate with the number of SPI channels that will be used*/
 #define NUMBER_DIGITAL_PINS 1
 
 /**********************************************************************
@@ -42,7 +40,6 @@
  */
 typedef enum
 {
-    /** TODO: Populate this list based on available MCU baud rate*/
     SPI_MODE0,      /**< Mode 0 (CPOL=0 and CPHA=0)*/      
     SPI_MODE1,      /**< Mode 1 (CPOL=0 and CPHA=1)*/ 
     SPI_MODE2,      /**< Mode 2 (CPOL=1 and CPHA=0)*/ 
@@ -67,7 +64,6 @@ typedef enum
 */
 typedef enum
 {
-    /** TODO: Populate this list based on available MCU baud rate*/
     SPI_FPCLK2,     /**< Baud rate divided by 2*/
     SPI_FPCLK4,     /**< Baud rate divided by 4*/
     SPI_FPCLK8,     /**< Baud rate divided by 8*/
@@ -84,7 +80,6 @@ typedef enum
  */
 typedef enum
 {
-    /** TODO: Populate this list based on available MCU frame format*/
     SPI_MSB,    /**< Most significant bit transmitted first*/
     SPI_LSB,    /**< Less significant bit transmitted first*/
     SPI_MAX_FF  /**< Maximum frame format*/
@@ -95,7 +90,6 @@ typedef enum
  */
 typedef enum
 {
-    /** TODO: Populate this list based on available MCU type transfer*/
     SPI_FULL_DUPLEX,    /**< Set full duplex communication*/
     SPI_RECEIVE_MODE,   /**< Set Receive only communication*/
     SPI_MAX_DF          /**< Set the maximum data transfer*/
@@ -106,7 +100,6 @@ typedef enum
  */
 typedef enum
 {
-    /** TODO: Populate this list based on available MCU data size*/
     SPI_8BITS,  /**< 8 bits data is selected for communication*/
     SPI_16BITS  /**< 16 bits data is selected for communication*/
 }SpiDataSize_t;
@@ -117,7 +110,6 @@ typedef enum
  */
 typedef struct
 {
-    /** TODO: Add additional members for the MCU peripheral if needed */
     SpiMode_t Mode;
     SpiHierarchy_t Hierarchy;
     SpiBaudRate_t BaudRate;
@@ -135,7 +127,6 @@ extern "C"{
 #endif
 
 const SpiConfig_t * const SPI_ConfigGet(void);
-
 
 #ifdef __cplusplus
 } //extern "C"
