@@ -28,12 +28,33 @@
 /*****************************************************************************
 * Module Variable Definitions
 *****************************************************************************/
-/** TODO: Populate all the peripheral register with the proper instances*/
-/**
- * Defines a table of pointers to the peripheral input register on the 
- * microcontroller.
-*/
+/** Defines a array of pointers to the SPI control register 1*/
+static uint16_t volatile * const controlRegister1[SPI_PORTS_NUMBER] = 
+{
+    (uint16_t*)&SPI1->CR1, (uint16_t*)&SPI2->CR1, (uint16_t*)&SPI3->CR1,
+    (uint16_t*)&SPI4->CR1
+};
 
+/** Define a array of pointers to the SPI control register 2*/
+static uint16_t volatile * const controlRegister2[SPI_PORTS_NUMBER] =
+{
+    (uint16_t*)&SPI1->CR2, (uint16_t*)&SPI2->CR2, (uint16_t*)&SPI3->CR2,
+    (uint16_t*)&SPI4->CR2 
+};
+
+/** Define a array of pointers to the SPI status register*/
+static uint16_t volatile * const statusRegister[SPI_PORTS_NUMBER] =
+{
+    (uint16_t*)&SPI1->SR, (uint16_t*)&SPI2->SR, (uint16_t*)&SPI3->SR,
+    (uint16_t*)&SPI4->SR
+};
+
+/** Define a array of pointers to the SPI data register*/
+static uint16_t volatile * const dataRegister[SPI_PORTS_NUMBER] =
+{
+    (uint16_t*)&SPI1->DR, (uint16_t*)&SPI2->DR, (uint16_t*)&SPI3->DR,
+    (uint16_t*)&SPI4->DR
+};
 
 /*****************************************************************************
 * Function Prototypes
@@ -74,9 +95,150 @@
  * @see SPI_CallbackRegister
  * 
 *****************************************************************************/
-void SPI_Init(SpiConfig_t const * const Config)
+void SPI_Init(const SpiConfig_t * const Config)
 {
-    /** TODO: Define implementation*/
+    /**Loop through all the elements of the configuration table.*/
+    for(uint8_t i=0; i<SPI_CHANNELS_NUMBER; i++)
+    {
+        /**Set the configuration of the SPI on the control register 1*/
+        /**Set the Clock phase and polarity modes*/
+        if(Config[i].Mode == SPI_MODE0)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_CPHA;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_CPOL;
+        } 
+        else if(Config[i].Mode == SPI_MODE1)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_CPHA;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_CPOL;
+        }
+        else if(Config[i].Mode == SPI_MODE2)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_CPHA;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_CPOL;
+        }
+        else if(Config[i].Mode == SPI_MODE3)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_CPHA;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_CPOL;
+        }
+        else
+        {
+            printf("This mode does not exist\n");
+        }
+
+        /**Set the hierarchy of the device*/
+        if(Config[i].Hierarchy == SPI_MASTER)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_MSTR;
+        }
+        else if(Config[i].Hierarchy == SPI_SLAVE)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_MSTR;
+        } 
+        else
+        {
+            printf("This hierarchy does not exist\n");
+        }
+
+        /**Set the baud rate of the device*/
+        if(Config[i].BaudRate == SPI_FPCLK2)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_2;
+        }
+        else if(Config[i].BaudRate == SPI_FPCLK4)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_2;
+        }
+        else if(Config[i].BaudRate == SPI_FPCLK8)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_2;
+        }
+        else if(Config[i].BaudRate == SPI_FPCLK16)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_2;
+        }
+        else if(Config[i].BaudRate == SPI_FPCLK32)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_2;
+        }
+        else if(Config[i].BaudRate == SPI_FPCLK64)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_2;
+        }
+        else if(Config[i].BaudRate == SPI_FPCLK128)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_2;
+        }
+        else if(Config[i].BaudRate == SPI_FPCLK256)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_0;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_1;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_BR_2;
+        }
+        else
+        {
+            printf("This baud rate does not exist\n");
+        }
+
+        /**Set the frame format of the device*/
+        if(Config[i].FrameFormat == SPI_MSB)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_LSBFIRST;
+        }
+        else if(Config[i].FrameFormat == SPI_LSB)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_LSBFIRST;
+        }
+        else
+        {
+            printf("This frame format does not exist\n");
+        }
+
+        /**Set the data transfer type of the device*/
+        if(Config[i].TypeTransfer == SPI_RECEIVE_MODE)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_RXONLY;
+        }
+        else if(Config[i].TypeTransfer == SPI_FULL_DUPLEX)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_RXONLY;
+        }
+        else
+        {
+            printf("This data transfer type does not exist");
+        }
+
+        /**Set the data frame format (size) of the device*/
+        if(Config[i].DataSize == SPI_8BITS)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_DFF;
+        }
+        else if(Config[i].DataSize == SPI_16BITS)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_DFF;
+        }
+        else
+        {
+            printf("This data size does not exist\n");
+        }
+
+    }
+
 }
 
 /**********************************************************************

@@ -18,8 +18,8 @@
 *****************************************************************************/
 #include <stdint.h>
 #include <stdio.h>
-#include "spi_cfg.h"    /*For dio configuration*/
-#include "stm32f4xx.h"  /** TODO: Microcontroller family header*/ 
+#include "spi_cfg.h"    /*SPI configuration*/
+#include "stm32f4xx.h"   
 
 /*****************************************************************************
 * Preprocessor Constants
@@ -48,7 +48,7 @@
 extern "C"{
 #endif
 
-void SPI_Init(SpiConfig_t const * const Config);
+void SPI_Init(const SpiConfig_t * const Config);
 void SPI_Transfer(uint16_t *data, uint16_t size);
 void SPI_RegisterWrite(uint32_t address, TYPE value);
 TYPE SPI_RegisterRead(uint32_t address);
