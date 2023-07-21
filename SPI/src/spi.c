@@ -384,9 +384,10 @@ void SPI_Receive(SpiChannel_t Channel, uint16_t *data, uint16_t size)
  * @see SPI_CallbackRegister
  * 
 **********************************************************************/  
-void SPI_RegisterWrite(uint32_t address, TYPE value)
+void SPI_RegisterWrite(uint32_t address, uint16_t value)
 {
-    /** TODO: define implementation*/
+    volatile uint16_t * const registerPointer = (uint32_t*)address;
+    *registerPointer = value;
 }
 
 /**********************************************************************
@@ -421,7 +422,9 @@ void SPI_RegisterWrite(uint32_t address, TYPE value)
  * @see SPI_CallbackRegister
  *
  **********************************************************************/
-TYPE SPI_RegisterRead(uint32_t address)
+uint16_t SPI_RegisterRead(uint32_t address)
 {
-    /** TODO: Define implementation*/
+    volatile uint16_t * const registerPointer = (uint16_t *)address;
+
+    return *registerPointer;
 }
