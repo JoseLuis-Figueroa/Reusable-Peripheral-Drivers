@@ -49,7 +49,8 @@ extern "C"{
 #endif
 
 void SPI_Init(const SpiConfig_t * const Config);
-void SPI_Transfer(uint16_t *data, uint16_t size);
+void SPI_Transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size);
+void SPI_Receive(SpiChannel_t Channel, uint16_t *data, uint16_t size)
 void SPI_RegisterWrite(uint32_t address, TYPE value);
 TYPE SPI_RegisterRead(uint32_t address);
 

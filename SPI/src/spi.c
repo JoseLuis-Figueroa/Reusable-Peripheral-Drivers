@@ -248,20 +248,20 @@ void SPI_Init(const SpiConfig_t * const Config)
  * This function is used to initialize a data transfer on the SPI bus. 
  * 
  * PRE-CONDITION: SPI_Init must be called with valid configuration data.
- * PRE-CONDITION: SpiTransfer_t must be configured for the device.
+ * TODO: Review if using a struct is better than variables.
+ * PRE-CONDITION: SpiTransfer_t needs to be populated.
  * PRE-CONDITION: The MCU clocks must be configured and enabled.
  * 
  * POST-CONDITION: Data transferred based on configuration.
  * 
- * @param[in]   Config is a configured structure describing the data  
- * transfer that occurs.
- *
+ * @param[in]   data(pointer) is the information to be sent.
+ * @param[in]   size is data size.
  * 
  * @return  void
  * 
  * \b Example:
  * @code
- *  const SpiConfig_t * const SpiConfig = SPI_ConfigGet();
+ *  SPI_Transfer(*data, size);
  * @endcode
  * 
  * @see SPI_ConfigGet
@@ -272,9 +272,82 @@ void SPI_Init(const SpiConfig_t * const Config)
  * @see SPI_CallbackRegister
  * 
  **********************************************************************/
-void SPI_Transfer(uint16_t *data, uint16_t size)
+void SPI_Transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
 {
-    /** TODO: define implementation*/
+    for(uint16_t i=0; i<size; i++)
+    {
+        /* Wait until TXE is set (buffer empty)*/
+        while(!(statusRegister[Channel] & SPI_SR_TXE))
+        {
+            asm("nop");
+        }
+        dataRegister[Channel] = data[i];
+    }
+
+    /* Wait until TXE is set to ensure the bus is empty*/
+    while(!(statusRegister[Channel] & SPI_SR_TXE))
+    {
+        asm("nop");
+    }
+
+    /* Wait until bus is not busy to reset*/
+    while(statusRegister[Channel] & SPI_SR_BSY)
+    {
+        asm("nop");
+    }
+
+    /* Clear OVR bit (Overrun flag) in case of error*/
+    uint16_t clearingFlag;
+    clearingFlag = dataRegister[Channel];
+    clearingFlag = statusRegister[Channel];
+}
+
+/**********************************************************************
+ * Function: SPI_Receive()
+*//**
+ *\b Description:
+ * This function is used to initialize a data reception on the SPI bus. 
+ * 
+ * PRE-CONDITION: SPI_Init must be called with valid configuration data.
+ * TODO: Review if using a struct is better than variables.
+ * PRE-CONDITION: SpiTransfer_t needs to be populated.
+ * PRE-CONDITION: The MCU clocks must be configured and enabled.
+ * 
+ * POST-CONDITION: Data transferred based on configuration.
+ * 
+ * @param[in]   data(pointer) is the information to be sent.
+ * @param[in]   size is data size.
+ * 
+ * @return  void
+ * 
+ * \b Example:
+ * @code
+ *  SPI_Receive(*data, size);
+ * @endcode
+ * 
+ * @see SPI_ConfigGet
+ * @see SPI_Init
+ * @see SPI_Transfer
+ * @see SPI_RegisterWrite
+ * @see SPI_RegisterRead
+ * @see SPI_CallbackRegister
+ * 
+ **********************************************************************/
+void SPI_Receive(SpiChannel_t Channel, uint16_t *data, uint16_t size)
+{
+    while(size)
+    {
+        /* Send dummy data (Recommended).*/
+        *dataRegister[Channel] = 0;
+        /* Wait for RXEN flag to be sent*/
+        while(!(*statusRegister[Channel] & SPI_SR_RXNE))
+        {
+            asm("nop");
+        }
+        /* Read the data*/
+        *data = *dataRegister[Channel];
+        size--;
+    }
 }
 
 /**********************************************************************
