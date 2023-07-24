@@ -11,8 +11,8 @@
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
  */
-#ifndef SPI_H_
-#define SPI_H_
+#ifndef SPI_CFG_H_
+#define SPI_CFG_H_
 
 /**********************************************************************
 * Includes

@@ -70,10 +70,10 @@ static uint16_t volatile * const dataRegister[SPI_PORTS_NUMBER] =
  * This function is used to initialize the spi based on the configuration  
  * table defined in spi_cfg module.
  * 
- * PRE-CONDITION: Configuration table needs to be populated (sizeof > 0) <br>
- * PRE-CONDITION: SPI pins should be configured using GPIO driver.
  * PRE-CONDITION: The MCU clocks must be configured and enabled.
- * 
+ * PRE-CONDITION: SPI pins should be configured using GPIO driver.
+ * PRE-CONDITION: Configuration table needs to be populated (sizeof > 0) <br>
+ *
  * POST-CONDITION: The peripheral is set up with the configuration settings.
  * 
  * @param[in]   Config is a pointer to the configuration table that contains 
@@ -277,21 +277,21 @@ void SPI_Transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
     for(uint16_t i=0; i<size; i++)
     {
         /* Wait until TXE is set (buffer empty)*/
-        while(!(statusRegister[Channel] & SPI_SR_TXE))
+        while(!(*statusRegister[Channel] & SPI_SR_TXE))
         {
             asm("nop");
         }
-        dataRegister[Channel] = data[i];
+        *dataRegister[Channel] = data[i];
     }
 
     /* Wait until TXE is set to ensure the bus is empty*/
-    while(!(statusRegister[Channel] & SPI_SR_TXE))
+    while(!(*statusRegister[Channel] & SPI_SR_TXE))
     {
         asm("nop");
     }
 
     /* Wait until bus is not busy to reset*/
-    while(statusRegister[Channel] & SPI_SR_BSY)
+    while(*statusRegister[Channel] & SPI_SR_BSY)
     {
         asm("nop");
     }
