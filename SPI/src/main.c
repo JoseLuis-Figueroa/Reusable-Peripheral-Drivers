@@ -30,8 +30,16 @@ int main(void)
     /* Initialize the SPI channel according to the configuration table*/
     SPI_Init(SpiConfig);
 
+    /* Data to be sent*/
+    uint16_t data = 0x9090;
+
     while(1)
     {
-
+        /* Pull cs line low to enable slave*/
+        DIO_pinWrite(DIO_PA, DIO_PA9, DIO_LOW);
+        /* Transmit data*/
+        SPI_Transfer(SPI1, data, 1);
+        /* Pull cs line high to disable slave*/
+        DIO_pinWrite(DIO_PA, DIO_PA9, DIO_HIGH);
     }
 }
