@@ -41,9 +41,9 @@
 const SpiConfig_t SpiConfig[] = 
 {
 /*                                                          
- *Channel Mode       Hierarchy   Baud rate   Frame    Type             Size               
+ * Channel        Mode       Hierarchy   Baud rate   Frame    Type             Size               
 */
-   {SPI1, SPI_MODE3, SPI_MASTER, SPI_FPCLK4, SPI_MSB, SPI_FULL_DUPLEX, SPI_8BITS},
+   {SPI_CHANNEL1, SPI_MODE3, SPI_MASTER, SPI_FPCLK4, SPI_MSB, SPI_FULL_DUPLEX, SPI_8BITS},
 };
 
 /*****************************************************************************

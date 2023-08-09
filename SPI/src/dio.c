@@ -129,7 +129,7 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
 void DIO_init(const DioConfig_t * const Config)
 {
     /* Loop through all the elements of the configuration table. */
-    for(uint8_t i=0; i<=NUMBER_DIGITAL_PINS; i++)
+    for(uint8_t i=0; i<NUMBER_DIGITAL_PINS; i++)
     {
         /* 
          * Set the mode of the Dio pin on the GPIO port mode register. 

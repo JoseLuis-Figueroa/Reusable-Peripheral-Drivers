@@ -95,7 +95,7 @@ static uint16_t volatile * const dataRegister[SPI_PORTS_NUMBER] =
  * @see SPI_CallbackRegister
  * 
 *****************************************************************************/
-void SPI_Init(const SpiConfig_t * const Config)
+void SPI_init(const SpiConfig_t * const Config)
 {
     /**Loop through all the elements of the configuration table.*/
     for(uint8_t i=0; i<SPI_CHANNELS_NUMBER; i++)
@@ -237,6 +237,11 @@ void SPI_Init(const SpiConfig_t * const Config)
             printf("This data size does not exist\n");
         }
 
+        /**Enable the SPI module*/
+        *controlRegister1[Config[i].Channel] |= SPI_CR1_SSM;
+        *controlRegister1[Config[i].Channel] |= SPI_CR1_SSI;
+        *controlRegister1[Config[i].Channel] |= SPI_CR1_SPE;
+
     }
 
 }
@@ -272,7 +277,7 @@ void SPI_Init(const SpiConfig_t * const Config)
  * @see SPI_CallbackRegister
  * 
  **********************************************************************/
-void SPI_Transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
+void SPI_transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
 {
     for(uint16_t i=0; i<size; i++)
     {
@@ -298,8 +303,8 @@ void SPI_Transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
 
     /* Clear OVR bit (Overrun flag) in case of error*/
     uint16_t clearingFlag;
-    clearingFlag = dataRegister[Channel];
-    clearingFlag = statusRegister[Channel];
+    clearingFlag = *dataRegister[Channel];
+    clearingFlag = *statusRegister[Channel];
 }
 
 /**********************************************************************
@@ -333,7 +338,7 @@ void SPI_Transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
  * @see SPI_CallbackRegister
  * 
  **********************************************************************/
-void SPI_Receive(SpiChannel_t Channel, uint16_t *data, uint16_t size)
+void SPI_receive(SpiChannel_t Channel, uint16_t *data, uint16_t size)
 {
     while(size)
     {
@@ -384,9 +389,9 @@ void SPI_Receive(SpiChannel_t Channel, uint16_t *data, uint16_t size)
  * @see SPI_CallbackRegister
  * 
 **********************************************************************/  
-void SPI_RegisterWrite(uint32_t address, uint16_t value)
+void SPI_registerWrite(uint32_t address, uint32_t value)
 {
-    volatile uint16_t * const registerPointer = (uint32_t*)address;
+    volatile uint32_t * const registerPointer = (uint32_t*)address;
     *registerPointer = value;
 }
 
@@ -422,7 +427,7 @@ void SPI_RegisterWrite(uint32_t address, uint16_t value)
  * @see SPI_CallbackRegister
  *
  **********************************************************************/
-uint16_t SPI_RegisterRead(uint32_t address)
+uint16_t SPI_registerRead(uint32_t address)
 {
     volatile uint16_t * const registerPointer = (uint16_t *)address;
 

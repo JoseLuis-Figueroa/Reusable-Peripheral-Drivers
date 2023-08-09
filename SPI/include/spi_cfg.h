@@ -41,10 +41,10 @@
 */
 typedef enum
 {
-    SPI1,   /**< SPI Channel 1*/
-    SPI2,   /**< SPI Channel 2*/
-    SPI3,   /**< SPI Channel 3*/
-    SPI4    /**< SPI Channel 4*/
+    SPI_CHANNEL1,   /**< SPI Channel 1*/
+    SPI_CHANNEL2,   /**< SPI Channel 2*/
+    SPI_CHANNEL3,   /**< SPI Channel 3*/
+    SPI_CHANNEL4    /**< SPI Channel 4*/
 }SpiChannel_t;
 
 /**
