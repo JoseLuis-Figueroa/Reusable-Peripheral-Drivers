@@ -11,8 +11,8 @@
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
  */
-#ifndef SPI_H_
-#define SPI_H_
+#ifndef SPI_CFG_H_
+#define SPI_CFG_H_
 
 /**********************************************************************
 * Includes
@@ -36,6 +36,18 @@
 * Typedefs
 **********************************************************************/
 /**
+ * Define the SPI channels on the MCU device. It is used to specify
+ * SPI channel to configure the register map.
+*/
+typedef enum
+{
+    SPI_CHANNEL1,   /**< SPI Channel 1*/
+    SPI_CHANNEL2,   /**< SPI Channel 2*/
+    SPI_CHANNEL3,   /**< SPI Channel 3*/
+    SPI_CHANNEL4    /**< SPI Channel 4*/
+}SpiChannel_t;
+
+/**
  * Define the bus mode according to clock polarity and clock phase.
  */
 typedef enum
@@ -53,7 +65,6 @@ typedef enum
  */
 typedef enum
 {
-    /** TODO: Populate this list based on available MCU hierarchy mode*/
     SPI_SLAVE,          /**< Slave configuration*/
     SPI_MASTER,         /**< Master configuration*/
     SPI_MAX_HIERARCHY   /**< Maximum hierarchy*/
@@ -69,6 +80,7 @@ typedef enum
     SPI_FPCLK8,     /**< Baud rate divided by 8*/
     SPI_FPCLK16,    /**< Baud rate divided by 16*/
     SPI_FPCLK32,    /**< Baud rate divided by 32*/
+    SPI_FPCLK64,    /**< Baud rate divided by 64*/
     SPI_FPCLK128,   /**< Baud rate divided by 128*/
     SPI_FPCLK256,   /**< Baud rate divided by 256*/
     SPI_MAX_FPCLK   /**< Maximum baud rate*/
@@ -110,12 +122,13 @@ typedef enum
  */
 typedef struct
 {
-    SpiMode_t Mode;
-    SpiHierarchy_t Hierarchy;
-    SpiBaudRate_t BaudRate;
-    SpiFrameFormat_t FrameFormat;
-    SpiTypeTransfer_t TypeTransfer;
-    SpiDataSize_t DataSize;
+    SpiChannel_t Channel;           /**< The SPI channel */
+    SpiMode_t Mode;                 /**< Mode 0,1,2, and 3 */
+    SpiHierarchy_t Hierarchy;       /**< Slave and Master */
+    SpiBaudRate_t BaudRate;         /**< FPCLK2 - Max FPCLK */
+    SpiFrameFormat_t FrameFormat;   /**< MSB and LSB */
+    SpiTypeTransfer_t TypeTransfer; /**< Full duplex and Receive mode*/
+    SpiDataSize_t DataSize;         /**< 8 bits and 16 bits*/
 }SpiConfig_t;
 
 

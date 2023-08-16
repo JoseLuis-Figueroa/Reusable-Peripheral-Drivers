@@ -1,20 +1,20 @@
 /**
- * @file spi_cfg.c
- * @author Jose Luis Figueroa.
- * @brief This module contains the implementation for the Serial Peripheral
- * Interface (SPI).
+ * @file dio_cfg.c
+ * @author Jose Luis Figueroa
+ * @brief This module contains the implementation for the digital 
+ * input/output peripheral configuration.
  * @version 1.0
- * @date 2023-07-14
+ * @date 2023-03-17
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
  */
 
 /*****************************************************************************
-* Includes
+* Module Includes
 *****************************************************************************/
-#include "spi_cfg.h"
-
+#include "dio_cfg.h"
+ 
 /*****************************************************************************
 * Module Preprocessor Constants
 *****************************************************************************/
@@ -31,19 +31,22 @@
 * Module Variable Definitions
 *****************************************************************************/
 /**
- * The following array contains the configuration data for each Serial 
- * Peripheral Interface. Each row represent a single SPI configuration.
- * Each column is representing a member of the SpiConfig_t structure. This 
- * table is read in by SPI_Init, where each channel is then set up based on 
- * this table. The SPI_CHANNELS_NUMBER constant should be agreed with the 
- * number of row.
+ * The following array contains the configuration data for each digital
+ * input/output peripheral channel (pin). Each row represent a single pin.
+ * Each column is representing a member of the DioConfig_t structure. This 
+ * table is read in by Dio_Init, where each channel is then set up based on 
+ * this table.
 */
-const SpiConfig_t SpiConfig[] = 
+const DioConfig_t DioConfig[] = 
 {
 /*                                                          
- * Channel        Mode       Hierarchy   Baud rate   Frame    Type             Size               
+ *  Port    Pin      Mode        Type           Speed          Resistor         Function
+ *                
 */
-   {SPI_CHANNEL1, SPI_MODE3, SPI_MASTER, SPI_FPCLK4, SPI_MSB, SPI_FULL_DUPLEX, SPI_8BITS},
+   {DIO_PA, DIO_PA5, DIO_FUNCTION, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF5},
+   {DIO_PA, DIO_PA6, DIO_FUNCTION, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF5},
+   {DIO_PA, DIO_PA7, DIO_FUNCTION, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF5},
+   {DIO_PA, DIO_PA9, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
 };
 
 /*****************************************************************************
@@ -54,12 +57,12 @@ const SpiConfig_t SpiConfig[] =
 * Function Definitions
 *****************************************************************************/
 /*****************************************************************************
- * Function: SPI_ConfigGet()
+ * Function: DIO_configGet()
 */
 /**
 *\b Description:
- * This function is used to initialize the SPI based on the configuration
- * table defined in spi_cfg module.
+ * This function is used to initialize the DIO based on the configuration
+ * table defined in dio_cfg module.
  * 
  * PRE-CONDITION: configuration table needs to be populated (sizeof > 0)
  * POST-CONDITION: A constant pointer to the first member of the  
@@ -68,25 +71,25 @@ const SpiConfig_t SpiConfig[] =
  * 
  * \b Example: 
  * @code
- * const SpiConfig_t * const SpiConfig = SPI_ConfigGet();
+ * const Dio_ConfigType_t * const DioConfig = DIO_configGet();
  * 
- * SPI_Init(SpiConfig);
+ * DIO_Init(DioConfig);
  * @endcode
  * 
- * @see SPI_ConfigGet
- * @see SPI_Init
- * @see SPI_Transfer
- * @see SPI_RegisterWrite
- * @see SPI_RegisterRead
- * @see SPI_CallbackRegister
+ * @see DIO_init
+ * @see DIO_channelRead
+ * @see DIO_channelWrite
+ * @see DIO_channelToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
  * 
 *****************************************************************************/
-const SpiConfig_t * const SPI_ConfigGet(void)
+const DioConfig_t * const DIO_configGet(void)
 {
    /* The cast is performed to ensure that the address of the first element 
     * of configuration table is returned as a constant pointer and not a
     * pointer that can be modified
    */
-  return (const SpiConfig_t*)&SpiConfig[0];
+  return (const DioConfig_t*)&DioConfig[0];
 
 }
