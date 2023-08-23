@@ -1,22 +1,37 @@
-# Reusable-Drivers
+# Reusable Drivers
 
 **Introduction.**
 
-This repository contains a personal project based on the _“Reusable Firmware Development: A Practical Approach to APIs, HALs, and Drivers”_ book where the objective is to create reusable firmware development that can be used across multiple microcontroller platforms and software products.  This is achieved through embedded C (Bare-metal) code that works directly with the microcontrollers (MCU) register map, following industry-standard coding practices such as MISRA-C. The project is focused on creating reusable drivers and HALs for MCU.
+This personal project was performed with the acquired knowledge based on the _“Reusable Firmware Development: A Practical Approach to APIs, HALs, and Drivers”_ book where the objective is to create reusable firmware development that can be used across multiple microcontroller platforms and software products.  This is achieved through embedded C (Bare-metal) code that works directly with the microcontroller (MCU) register map, following industry-standard coding practices such as MISRA-C.
 
 **Project Overview.**
 
-This repository currently contains the GPIO driver. The main code consists of configuring the user button (PC13 pin) as an input. When the button is pressed, it turns on the embedded led (PA5) on the board and turns off the yellow led (PB0 pin) by writing directly to the ORD register. Conversely, when the button is released, the embedded led is turned off, and the yellow led is turned on. The red led (PA0 pin) is set to toggle, although this behavior may not be apparent as a delay is not currently implemented (it will be implemented later), but it can be seen in debug mode. Additionally, the value of PC13 is obtained by reading directly from the IDR register, and if the user button is pressed, a corresponding message is printed on the console. The main purpose of this code is to implement and test the GPIO driver. The video shows the implementation in a development board. 
+The repository consists of creating reusable drivers, and HALs for MCU. The current tooling being used for this project includes:
+* Development Board: _Nucleo-F401RE._
+* IDE/Debugger: _Visual Studio Code (PlatformIO extension)._
+* Compiler Toolchain: _GNU ARM Embedded Toolchain._
+
+**General Propose Input/Output (GPIO).**
+
+The main code consists of configuring the user button (PC13 pin) as an input. When pressed, the button turns on the embedded led (PA5) on the board and turns off the yellow led (PB0 pin) by writing directly to the ORD register. Conversely, when the button is released, the embedded led is turned off, and the yellow led is turned on. The red led (PA0 pin) is set to toggle, although this behavior may not be apparent as a delay is not currently implemented (it will be implemented later), but it can be seen in debug mode. Additionally, the value of PC13 is obtained by reading directly from the IDR register, and if the user button is pressed, a corresponding message is printed on the console. The main purpose of this code is to implement and test the GPIO driver. The video shows the implementation in a development board. 
 
 <p align="center">
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/assets/113542682/7324bd6a-fac1-4b3b-a10d-abe7818b59bd" alt="DIO_Implementation">
 </p>
 
-The current tooling being used for this project includes:
-* Development Board: _Nucleo-F401RE._
-* IDE/Debugger: _Visual Studio Code (PlatformIO extension)._
-* Compiler Toolchain: _GNU ARM Embedded Toolchain._
+**Serial Peripheral Interface (SPI).**
 
-Note that this repository is a work in progress, and additional peripherical drivers such as SPI, Timer, I2C, and more will be added in the future. Each driver will be well documented automatically using Doxygen and implemented in a development board. The project documentation can be found in [Reusable drivers.](https://joseluis-figueroa.github.io/Reusable-Drivers/)
+The code involves the configuration of a Serial Peripheral Interface. The GPIO driver is employed to set up the SPI1 pins as follows: PA5 for SCK, PA6 for MISO, PA7 for MOSI, and PA9 for SS. The SPI driver is used to configure the SPI1 as a master device. The setting includes a baud rate = 4KHz, full duplex communication, an 8 bits data frame format, and most significant bit transmission.
+A KY-57 logic analyzer is connected to the master device for data reception and analysis. The main code continuously transmits data to the logic analyzer, with the current involving the transmission of 0x56. A video showcases the physical implementation of the SPI driver for a visual demonstration, while an accompanying image displays the data captured and analyzed on the logic analyzer. 
+
+<p align="center">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/assets/113542682/f02b5172-8913-499b-b7c0-ef087a645344" alt="[SPI_Implementation">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/assets/113542682/ef6faf3b-7ace-4b0e-bc80-12c7f1c6ecbe" alt="[SPI Protocol" width="100%">
+</p>
+
+Note that this repository is a work in progress, and additional peripherical drivers such as Timer, I2C, and more will be added in the future. Each driver will be well documented automatically using Doxygen and implemented in a development board. The project documentation can be found in [Reusable drivers.](https://joseluis-figueroa.github.io/Reusable-Drivers/)
 
 _Thank you for visiting my project repository, and I hope you find it useful!_
