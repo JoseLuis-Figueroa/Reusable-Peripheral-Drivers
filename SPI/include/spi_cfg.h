@@ -98,6 +98,20 @@ typedef enum
 }SpiFrameFormat_t;
 
 /**
+ * Define the slave select pin management (NSS input). The slave  
+ * selector could be configured by software or hardware.
+ * SW_NSS: Slave select is driven internally. NSS pin remains free.
+ * HW_NSS_ENABLED: Device operates in master mode (NSS pin is used).
+ * HW_NSS_DISABLED: Device operates in slave mode (NSS pin is used).
+ */
+typedef enum
+{
+    SOFTWARE_NSS,           /**< Software NSS pin management*/
+    HARDWARE_NSS_ENABLED,   /**< Hardware NSS pin management (Master)*/
+    HARDWARE_NSS_DISABLED   /**< Hardware NSS pin management (slave)*/
+}SpiSlaveSelect_t;
+
+/**
  * Define the type of data transfer.  
  */
 typedef enum
@@ -126,6 +140,7 @@ typedef struct
     SpiMode_t Mode;                 /**< Mode 0,1,2, and 3 */
     SpiHierarchy_t Hierarchy;       /**< Slave and Master */
     SpiBaudRate_t BaudRate;         /**< FPCLK2 - Max FPCLK */
+    SpiSlaveSelect_t SlaveSelect;   /**< NSS pin management */
     SpiFrameFormat_t FrameFormat;   /**< MSB and LSB */
     SpiTypeTransfer_t TypeTransfer; /**< Full duplex and Receive mode*/
     SpiDataSize_t DataSize;         /**< 8 bits and 16 bits*/

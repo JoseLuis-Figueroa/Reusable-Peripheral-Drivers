@@ -195,6 +195,27 @@ void SPI_init(const SpiConfig_t * const Config)
             printf("This baud rate does not exist\n");
         }
 
+        /**Set the slave select pin management for the device*/
+        if(Config[i].SlaveSelect == SOFTWARE_NSS)
+        {
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_SSM;
+            *controlRegister1[Config[i].Channel] |= SPI_CR1_SSI;
+        }
+        else if(Config[i].SlaveSelect == HARDWARE_NSS_ENABLED)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_SSM;
+            *controlRegister2[Config[i].Channel] |= SPI_CR2_SSOE;
+        }
+        else if(Config[i].SlaveSelect == HARDWARE_NSS_DISABLED)
+        {
+            *controlRegister1[Config[i].Channel] &=~ SPI_CR1_SSM;
+            *controlRegister2[Config[i].Channel] &=~ SPI_CR2_SSOE;
+        }
+        else
+        {
+            printf("This slave select pin option does not exist\n");
+        }
+
         /**Set the frame format of the device*/
         if(Config[i].FrameFormat == SPI_MSB)
         {
@@ -238,10 +259,7 @@ void SPI_init(const SpiConfig_t * const Config)
         }
 
         /**Enable the SPI module*/
-        *controlRegister1[Config[i].Channel] |= SPI_CR1_SSM;
-        *controlRegister1[Config[i].Channel] |= SPI_CR1_SSI;
         *controlRegister1[Config[i].Channel] |= SPI_CR1_SPE;
-
     }
 
 }
