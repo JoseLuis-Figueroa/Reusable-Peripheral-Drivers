@@ -1,9 +1,10 @@
 /**
  * @file main.c
  * @author Jose Luis Figueroa
- * @brief Implement the master SPI driver using Nucleo-F401RE. 
+ * @brief Implement the slave SPI driver using Nucleo-F401RE. Send a value to 
+ * the master continuously.
  * @version 1.0
- * @date 2023-07-24
+ * @date 2023-08-30
  * @note The microcontroller internal system clock is 16MHz.
  * The baud rate is divided by 4, then, baud rate = 4MHz.
  * 
@@ -33,15 +34,11 @@ int main(void)
     SPI_init(SpiConfig);
 
     /* Data to be sent*/
-    uint16_t data = 0x56;
+    uint16_t data = 0x66;
 
     while(1)
     {
-        /* Pull cs line low to enable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA9, DIO_LOW);
         /* Transmit data*/
         SPI_transfer(SPI_CHANNEL1, &data, 1);
-        /* Pull cs line high to disable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA9, DIO_HIGH);
     }
 }

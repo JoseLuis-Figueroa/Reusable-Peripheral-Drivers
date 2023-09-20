@@ -1,11 +1,20 @@
 {
 	"folders": [
 		{
+			"name": "DIO",
 			"path": "DIO"
 		},
 		{
 			"name": "SPI",
 			"path": "SPI"
+		},
+		{
+			"name": "SPI_Master",
+			"path": "SPI_Master"
+		},
+		{
+			"name": "SPI slave",
+			"path": "SPI slave"
 		}
 	],
 	"settings": {}
