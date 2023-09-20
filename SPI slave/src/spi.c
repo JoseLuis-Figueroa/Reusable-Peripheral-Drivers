@@ -297,8 +297,6 @@ void SPI_init(const SpiConfig_t * const Config)
  **********************************************************************/
 void SPI_transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
 {
-    uint16_t clearingFlag;
-    
     for(uint16_t i=0; i<size; i++)
     {
         /* Wait until TXE is set (buffer empty)*/
@@ -322,6 +320,7 @@ void SPI_transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
     }
 
     /* Clear OVR bit (Overrun flag) in case of error*/
+    uint16_t clearingFlag;
     clearingFlag = *dataRegister[Channel];
     clearingFlag = *statusRegister[Channel];
 }
@@ -369,7 +368,7 @@ void SPI_receive(SpiChannel_t Channel, uint16_t *data, uint16_t size)
             asm("nop");
         }
         /* Read the data*/
-        *data = *dataRegister[Channel];
+        *data++ = *dataRegister[Channel];
         size--;
     }
 }
