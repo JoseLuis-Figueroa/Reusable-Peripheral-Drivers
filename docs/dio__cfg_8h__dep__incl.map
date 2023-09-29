@@ -1,7 +1,0 @@
-<map id="C:/Users/figue/Documents/2.Electronics/1.Embedded_Systems/STM32/Bare_Metal/Boards/Nucleo_F401RE/Reusable&#45;Drivers/DIO/include/dio_cfg.h" name="C:/Users/figue/Documents/2.Electronics/1.Embedded_Systems/STM32/Bare_Metal/Boards/Nucleo_F401RE/Reusable&#45;Drivers/DIO/include/dio_cfg.h">
-<area shape="rect" id="node1" title="This module contains interface definitions for the Dio configuration. This is the header file for the..." alt="" coords="251,5,473,89"/>
-<area shape="rect" id="node2" href="$dio_8h.html" title="The interface definition for the dio. This is the header file for the definition of the interface for..." alt="" coords="128,137,351,221"/>
-<area shape="rect" id="node5" href="$dio__cfg_8c.html" title="This module contains the implementation for the digital input/output peripheral configuration." alt="" coords="375,137,597,221"/>
-<area shape="rect" id="node3" href="$dio_8c.html" title="The implementation for the dio." alt="" coords="5,269,228,353"/>
-<area shape="rect" id="node4" href="$main_8c.html" title="Implement the DIO driver." alt="" coords="252,269,475,353"/>
-</map>
