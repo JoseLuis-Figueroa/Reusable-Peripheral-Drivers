@@ -1,0 +1,75 @@
+/**
+ * @mainpage Serial Peripheral Interface (Master-Slave)
+ *
+ * @section intro Introduction
+ * This project is a personal endeavor focused on developing reusable firmware for microcontroller platforms. The goal is to create a modular and efficient SPI reusable driver that can be easily adapted to various microcontrollers. The project communicates two boars (Master-Slave) between them. The DIO driver is used to configure the selected SPI port. 
+ *
+ * @section version Version Log
+ * - [Version 1.0] - Initial release
+ *
+ * @section architecture Software Architecture Overview
+ * The software architecture follows a layered approach. This design pattern separates low-level code (drivers or HALs), and application-specific code. A layered architecture promotes reusability and simplifies the portability between different applications or microcontrollers.
+ * The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
+ * 
+ * <center>
+ * <table>
+ *   <tr>
+ *     <td style="background-color: #eaf2ff; text-align: center;">Application Code</td>
+ *   </tr>
+ *   <tr>
+ *     <td style="background-color: #e8f8e8; text-align: center;">Drivers</td>
+ *   </tr>
+ *   <tr>
+ *     <td style="background-color: #fffbe6; text-align: center;">Hardware</td>
+ *   </tr>
+ * </table>
+ * Figure 1. Two-Layer Software Architecture.
+ * </center>
+ * 
+ * The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. 
+ * The application code (main) contains no driver code but has access to the low-level hardware through a driver-layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.
+ *
+ * @section coding-standards Coding Standards
+ * This project is developed as bare-metal firmware and adheres to industry-standard coding practices, following the MISRA-C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.
+ *
+ * @section description Project Description
+ * In this setup, the Serial Peripheral Interface (SPI) driver is configuring two Nucleo-F401RE boards, designating one as the master and the other as the slave, employing the SPI1 channel on both boards.
+ * The SPI configuration includes a baud rate = 4kHz, enabling full duplex communication, employing an 8-bit data frame format, and prioritizing the most significant bit transmission.  
+ * To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among the master board, slave board, and the KY-57 logic analyzer:
+ *
+ * <center>
+ * @tableofcontents
+ * 
+ * | SPI Connection | Master | Slave | Logic Analyzer |
+ * |----------------|--------|-------|----------------|
+ * | NSS            | PA4    | PA4   | CH4            |
+ * | SCK            | PA5    | PA5   | CH1            |
+ * | MISO           | PA6    | PA6   | CH2            |
+ * | MOSI           | PA7    | PA7   | CH3            |
+ * Table 1. SPI Pin Connections.
+ * </center>
+ * 
+ *In operation, the slave continually transmits a 0x66 value to the master device, which receives it and sends it back to the slave. The KY-57 logic analyzer is connected to capture and analyze the data exchanged between the two of them.
+ *
+ *Please refer to the Doxygen documentation available in the “Serial Peripheral Interface Reusable Driver” for detailed documentation. Additionally, a video demonstration provides a visual representation of the master-slave SPI driver’s physical implementation, while an accompanying image showcases the data captured and analyzed on the logic analyzer.
+ *
+ * @section requirements Project Requirements
+ * The project aims to meet the following requirements:
+ * - Provide a set of reusable functions for microcontroller SPI.
+ * - Maintain portability across different microcontroller platforms.
+ * - Follow industry-standard coding practices and guidelines.
+ *
+ * @section tools Tools
+ * The current tooling used for this project includes:
+ * - Development Board: Nucleo-F401RE
+ * - IDE/Debugger: Visual Studio Code (PlatformIO extension)
+ * - Compiler Toolchain: GNU ARM Embedded Toolchain
+ *
+ * @section usage Usage
+ * The project is well-documented using Doxygen. Inline comments are used extensively to provide detailed explanations of code functionality, usage, and limitations. The Doxygen-generated documentation provides an easy-to-navigate reference for all project components.
+ *
+ * @section acronyms Acronyms
+ * - SPI: Serial Peripheral Interface
+ * - DIO: Digital Input/Output
+ *
+*/
