@@ -24,8 +24,16 @@
 */
 var NAVTREE =
 [
-  [ "General Purpose Input/Output Reusable Driver", "index.html", [
-    [ "Digital Input/Output Reusable Driver", "index.html", "index" ],
+  [ "Digital Input/Output Reusable Driver", "index.html", [
+    [ "Introduction", "index.html#intro", null ],
+    [ "Version Log", "index.html#version", null ],
+    [ "Software Architecture Overview", "index.html#architecture", null ],
+    [ "Coding Standards", "index.html#coding-standards", null ],
+    [ "Project Description", "index.html#description", null ],
+    [ "Project Requirements", "index.html#requirements", null ],
+    [ "Tools", "index.html#tools", null ],
+    [ "Usage", "index.html#usage", null ],
+    [ "Acronyms", "index.html#acronyms", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
