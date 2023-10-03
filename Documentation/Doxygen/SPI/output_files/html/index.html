@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Serial Peripheral Interface Reusable Driver: Serial Peripheral Interface Reusable Driver</title>
+<title>Serial Peripheral Interface Reusable Driver: Serial Peripheral Interface (Master)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,9 +90,21 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Serial Peripheral Interface Reusable Driver </div></div>
+  <div class="headertitle"><div class="title">Serial Peripheral Interface (Master) </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#intro">Introduction</a></li>
+<li class="level1"><a href="#version">Version Log</a></li>
+<li class="level1"><a href="#architecture">Software Architecture Overview</a></li>
+<li class="level1"><a href="#coding-standards">Coding Standards</a></li>
+<li class="level1"><a href="#description">Project Description</a></li>
+<li class="level1"><a href="#requirements">Project Requirements</a></li>
+<li class="level1"><a href="#tools">Tools</a></li>
+<li class="level1"><a href="#usage">Usage</a></li>
+<li class="level1"><a href="#acronyms">Acronyms</a></li>
+</ul>
+</div>
 <div class="textblock"><h1><a class="anchor" id="intro"></a>
 Introduction</h1>
 <p>This project is a personal endeavor focused on developing reusable firmware for microcontroller platforms. The goal is to create a modular and efficient SPI reusable driver that can be easily adapted to various microcontrollers. The DIO driver is used to configure the selected SPI port.</p>
@@ -113,12 +125,25 @@ Software Architecture Overview</h1>
 <td style="background-color: #fffbe6; text-align: center;">Hardware  </td></tr>
 </table>
 Figure 1. Two-Layer Software Architecture. </center><p>The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. The application code (main) contains no driver code but has access to the low-level hardware through a driver-layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.</p>
-<h1><a class="anchor" id="os"></a>
-OS Information</h1>
-<p>This project is developed as bare-metal firmware without an underlying operating system.</p>
 <h1><a class="anchor" id="coding-standards"></a>
 Coding Standards</h1>
-<p>The project adheres to industry-standard coding practices, following the MISRA-C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.</p>
+<p>This project is developed as bare-metal firmware and adheres to industry-standard coding practices, following the MISRA-C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.</p>
+<h1><a class="anchor" id="description"></a>
+Project Description</h1>
+<p>The code involves the configuration of a Serial Peripheral Interface. The SPI driver is used to configure the SPI1 as a master device. The setting includes a baud rate = 4KHz, full duplex communication, an 8-bit data frame format, and most significant bit transmission. To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among Nucleo board, and KY-57 logic analyzer:</p>
+<center></center><center><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">SPI Connection   </th><th class="markdownTableHeadNone">Master   </th><th class="markdownTableHeadNone">Logic Analyzer    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">NSS   </td><td class="markdownTableBodyNone">PA9   </td><td class="markdownTableBodyNone">CH4    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">SCK   </td><td class="markdownTableBodyNone">PA5   </td><td class="markdownTableBodyNone">CH1    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">MISO   </td><td class="markdownTableBodyNone">PA6   </td><td class="markdownTableBodyNone">CH2    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">MOSI   </td><td class="markdownTableBodyNone">PA7   </td><td class="markdownTableBodyNone">CH3   </td></tr>
+</table>
+Table 1. SPI Pin Connections. </center><p>In operation, the master continuously transmits data to the KY-57 logic analyzer for data reception and analysis, with the current involving the transmission of 0x56.</p>
 <h1><a class="anchor" id="requirements"></a>
 Project Requirements</h1>
 <p>The project aims to meet the following requirements:</p><ul>
@@ -140,11 +165,8 @@ Usage</h1>
 Acronyms</h1>
 <ul>
 <li>SPI: Serial Peripheral Interface</li>
-<li>DIO: Digital Input/Output</li>
+<li>DIO: Digital Input/Output </li>
 </ul>
-<h1><a class="anchor" id="work-in-progress"></a>
-Work in Progress</h1>
-<p>Please note that this repository is an ongoing project, and additional peripheral drivers and HALs will be added in the future. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

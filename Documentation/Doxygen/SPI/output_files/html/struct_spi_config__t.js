@@ -6,5 +6,6 @@ var struct_spi_config__t =
     [ "FrameFormat", "struct_spi_config__t.html#a1bd6757ba477e3bd20b2829e49b04e85", null ],
     [ "Hierarchy", "struct_spi_config__t.html#a8d2bf715b889882728d44105ee67ba96", null ],
     [ "Mode", "struct_spi_config__t.html#a4aa637f9662875e082b754682f334020", null ],
+    [ "SlaveSelect", "struct_spi_config__t.html#accae91a66acc25a5decc4708d33d3b9f", null ],
     [ "TypeTransfer", "struct_spi_config__t.html#ae0bf2ae2988b2136e52d7c69750a3bb8", null ]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['digital_20input_2foutput_20reusable_20drivers_0',['Digital Input/Output Reusable Drivers',['../index.html',1,'']]],
+  ['digital_20input_2foutput_20reusable_20driver_0',['Digital Input/Output Reusable Driver',['../index.html',1,'']]],
   ['dio_2ec_1',['dio.c',['../dio_8c.html',1,'']]],
   ['dio_2eh_2',['dio.h',['../dio_8h.html',1,'']]],
   ['dio_5faf0_3',['DIO_AF0',['../dio__cfg_8h.html#a9bba5b3e13a5bd739085ab0b0b03876da2d771fc3f2564a097aa23c9bf314b22e',1,'dio_cfg.h']]],
