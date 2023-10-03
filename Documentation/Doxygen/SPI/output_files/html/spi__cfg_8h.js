@@ -41,6 +41,11 @@ var spi__cfg_8h =
       [ "SPI_MODE3", "spi__cfg_8h.html#af7fd666f01e1a2fe00c42b85eaa3bf4dad9636eac0759655110aa77dd6c22da6c", null ],
       [ "SPI_MAX_MODE", "spi__cfg_8h.html#af7fd666f01e1a2fe00c42b85eaa3bf4da0b45ed1f5218bc73fa94541b4aac2ae8", null ]
     ] ],
+    [ "SpiSlaveSelect_t", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34", [
+      [ "SOFTWARE_NSS", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a9f2f0be2769400d90f74adacbc3db246", null ],
+      [ "HARDWARE_NSS_ENABLED", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a21040ae68209a0a22c86e627d17b7778", null ],
+      [ "HARDWARE_NSS_DISABLED", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a354f1da6f400e644c45ba8b28d26df16", null ]
+    ] ],
     [ "SpiTypeTransfer_t", "spi__cfg_8h.html#ad62f9d63a1ab4982d18a733bec771326", [
       [ "SPI_FULL_DUPLEX", "spi__cfg_8h.html#ad62f9d63a1ab4982d18a733bec771326ab90ebf6910c1da04cfe4fe611b46866f", null ],
       [ "SPI_RECEIVE_MODE", "spi__cfg_8h.html#ad62f9d63a1ab4982d18a733bec771326abc167d862cc6ea23a7b5ac40730b6e5f", null ],

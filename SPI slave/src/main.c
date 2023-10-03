@@ -1,7 +1,7 @@
 /**
  * @file main.c
  * @author Jose Luis Figueroa
- * @brief Implement the slave SPI driver using Nucleo-F401RE. Send a value to 
+ * @brief Implement a slave SPI driver using Nucleo-F401RE. Send a value to 
  * the master continuously.
  * @version 1.0
  * @date 2023-08-30

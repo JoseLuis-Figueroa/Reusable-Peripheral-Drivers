@@ -1,7 +1,7 @@
 /**
  * @file main.c
  * @author Jose Luis Figueroa
- * @brief Implement the master SPI driver using Nucleo-F401RE. Receive a 
+ * @brief Implement a master SPI driver using Nucleo-F401RE. Receive a 
  * a value and send back to the receiver.
  * @version 1.0
  * @date 2023-07-24

@@ -1,0 +1,60 @@
+\hypertarget{index_intro}{}\doxysection{Introduction}\label{index_intro}
+This project is a personal endeavor focused on developing reusable firmware for microcontroller platforms. The goal is to create a modular and efficient SPI reusable driver that can be easily adapted to various microcontrollers. The project communicates two boars (Master-\/\+Slave) between them. The DIO driver is used to configure the selected SPI port.\hypertarget{index_version}{}\doxysection{Version Log}\label{index_version}
+
+\begin{DoxyItemize}
+\item \mbox{[}Version 1.\+0\mbox{]} -\/ Initial release
+\end{DoxyItemize}\hypertarget{index_architecture}{}\doxysection{Software Architecture Overview}\label{index_architecture}
+The software architecture follows a layered approach. This design pattern separates low-\/level code (drivers or HALs), and application-\/specific code. A layered architecture promotes reusability and simplifies the portability between different applications or microcontrollers. The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
+
+\begin{center} \tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{1}{|X[-1]}|}
+\hline
+Application Code  \\\cline{1-1}
+Drivers  \\\cline{1-1}
+Hardware  \\\cline{1-1}
+\end{longtabu}
+Figure 1. Two-\/\+Layer Software Architecture. \end{center} 
+
+The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. The application code (main) contains no driver code but has access to the low-\/level hardware through a driver-\/layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.\hypertarget{index_coding-standards}{}\doxysection{Coding Standards}\label{index_coding-standards}
+This project is developed as bare-\/metal firmware and adheres to industry-\/standard coding practices, following the MISRA-\/C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.\hypertarget{index_description}{}\doxysection{Project Description}\label{index_description}
+In this setup, the Serial Peripheral Interface (SPI) driver is configuring two Nucleo-\/\+F401\+RE boards, designating one as the master and the other as the slave, employing the SPI1 channel on both boards. The SPI configuration includes a baud rate = 4k\+Hz, enabling full duplex communication, employing an 8-\/bit data frame format, and prioritizing the most significant bit transmission. ~\newline
+ To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among the master board, slave board, and the KY-\/57 logic analyzer\+:
+
+\begin{center}\end{center} 
+
+\begin{center}\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ SPI Connection   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Master   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Slave   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Logic Analyzer    }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ SPI Connection   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Master   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Slave   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Logic Analyzer    }\\\cline{1-4}
+\endhead
+NSS   &PA4   &PA4   &CH4    \\\cline{1-4}
+SCK   &PA5   &PA5   &CH1    \\\cline{1-4}
+MISO   &PA6   &PA6   &CH2    \\\cline{1-4}
+MOSI   &PA7   &PA7   &CH3   \\\cline{1-4}
+\end{longtabu}
+Table 1. SPI Pin Connections. \end{center} 
+
+In operation, the slave continually transmits a 0x66 value to the master device, which receives it and sends it back to the slave. The KY-\/57 logic analyzer is connected to capture and analyze the data exchanged between the two of them.\hypertarget{index_requirements}{}\doxysection{Project Requirements}\label{index_requirements}
+The project aims to meet the following requirements\+:
+\begin{DoxyItemize}
+\item Provide a set of reusable functions for microcontroller SPI.
+\item Maintain portability across different microcontroller platforms.
+\item Follow industry-\/standard coding practices and guidelines.
+\end{DoxyItemize}\hypertarget{index_tools}{}\doxysection{Tools}\label{index_tools}
+The current tooling used for this project includes\+:
+\begin{DoxyItemize}
+\item Development Board\+: Nucleo-\/\+F401\+RE
+\item IDE/\+Debugger\+: Visual Studio Code (Platform\+IO extension)
+\item Compiler Toolchain\+: GNU ARM Embedded Toolchain
+\end{DoxyItemize}\hypertarget{index_usage}{}\doxysection{Usage}\label{index_usage}
+The project is well-\/documented using Doxygen. Inline comments are used extensively to provide detailed explanations of code functionality, usage, and limitations. The Doxygen-\/generated documentation provides an easy-\/to-\/navigate reference for all project components.\hypertarget{index_acronyms}{}\doxysection{Acronyms}\label{index_acronyms}
+
+\begin{DoxyItemize}
+\item SPI\+: Serial Peripheral Interface
+\item DIO\+: Digital Input/\+Output 
+\end{DoxyItemize}

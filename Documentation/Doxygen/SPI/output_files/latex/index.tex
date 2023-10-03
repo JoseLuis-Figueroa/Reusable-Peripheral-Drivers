@@ -15,9 +15,30 @@ Hardware  \\\cline{1-1}
 \end{longtabu}
 Figure 1. Two-\/\+Layer Software Architecture. \end{center} 
 
-The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. The application code (main) contains no driver code but has access to the low-\/level hardware through a driver-\/layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.\hypertarget{index_os}{}\doxysection{OS Information}\label{index_os}
-This project is developed as bare-\/metal firmware without an underlying operating system.\hypertarget{index_coding-standards}{}\doxysection{Coding Standards}\label{index_coding-standards}
-The project adheres to industry-\/standard coding practices, following the MISRA-\/C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.\hypertarget{index_requirements}{}\doxysection{Project Requirements}\label{index_requirements}
+The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. The application code (main) contains no driver code but has access to the low-\/level hardware through a driver-\/layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.\hypertarget{index_coding-standards}{}\doxysection{Coding Standards}\label{index_coding-standards}
+This project is developed as bare-\/metal firmware and adheres to industry-\/standard coding practices, following the MISRA-\/C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.\hypertarget{index_description}{}\doxysection{Project Description}\label{index_description}
+The code involves the configuration of a Serial Peripheral Interface. The SPI driver is used to configure the SPI1 as a master device. The setting includes a baud rate = 4KHz, full duplex communication, an 8-\/bit data frame format, and most significant bit transmission. To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among Nucleo board, and KY-\/57 logic analyzer\+:
+
+\begin{center}\end{center} 
+
+\begin{center}\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ SPI Connection   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Master   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Logic Analyzer    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ SPI Connection   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Master   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Logic Analyzer    }\\\cline{1-3}
+\endhead
+NSS   &PA9   &CH4    \\\cline{1-3}
+SCK   &PA5   &CH1    \\\cline{1-3}
+MISO   &PA6   &CH2    \\\cline{1-3}
+MOSI   &PA7   &CH3   \\\cline{1-3}
+\end{longtabu}
+Table 1. SPI Pin Connections. \end{center} 
+
+In operation, the master continuously transmits data to the KY-\/57 logic analyzer for data reception and analysis, with the current involving the transmission of 0x56.\hypertarget{index_requirements}{}\doxysection{Project Requirements}\label{index_requirements}
 The project aims to meet the following requirements\+:
 \begin{DoxyItemize}
 \item Provide a set of reusable functions for microcontroller SPI.
@@ -34,6 +55,5 @@ The project is well-\/documented using Doxygen. Inline comments are used extensi
 
 \begin{DoxyItemize}
 \item SPI\+: Serial Peripheral Interface
-\item DIO\+: Digital Input/\+Output
-\end{DoxyItemize}\hypertarget{index_work-in-progress}{}\doxysection{Work in Progress}\label{index_work-in-progress}
-Please note that this repository is an ongoing project, and additional peripheral drivers and HALs will be added in the future. 
+\item DIO\+: Digital Input/\+Output 
+\end{DoxyItemize}
