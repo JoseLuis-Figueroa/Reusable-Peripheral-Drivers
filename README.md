@@ -28,21 +28,93 @@ Please refer to the Doxygen documentation available in [Digital Input/Output Reu
 The code involves the configuration of a Serial Peripheral Interface. The SPI driver is used to configure the SPI1 as a master device. The setting includes a baud rate = 4KHz, full duplex communication, an 8-bit data frame format, and most significant bit transmission.
 A KY-57 logic analyzer is connected to the master device for data reception and analysis. To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among the Nucleo board, and KY-57 logic analyzer:
 
-| SPI Connection | Master  | Logic Analyzer |
-|----------------|---------|----------------|
-| NSS            | PA9     | CH4            |
-| SCK            | PA5     | CH1            |
-| MISO           | PA6     | CH2            |
-| MOSI           | PA7     | CH3            |
+<div align="center">
+<table>
+  <tr>
+    <th>SPI Connection</th>
+    <th>Master</th>
+    <th>Logic Analyzer</th>
+  </tr>
+  <tr>
+    <td>NSS</td>
+    <td>PA9</td>
+    <td>CH4</td>
+  </tr>
+  <tr>
+    <td>SCK</td>
+    <td>PA5</td>
+    <td>CH1</td>
+  </tr>
+  <tr>
+    <td>MISO</td>
+    <td>PA6</td>
+    <td>CH2</td>
+  </tr>
+  <tr>
+    <td>MOSI</td>
+    <td>PA7</td>
+    <td>CH3</td>
+  </tr>
+</table>
+</div>
 
 The main code continuously transmits data to the logic analyzer, with the current involving the transmission of 0x56. An image displays the data captured and analyzed on the logic analyzer. 
 
 <p align="center">
-    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/assets/113542682/4b9f9b89-4a98-4f69-9e67-45bdb6536647" alt="[SPI Protocol" width="100%">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI/imagens/SPI%20Master%20Screen.png" alt="[SPI Protocol" width="100%">
 </p>
 
-Please refer to the Doxygen documentation available in [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/SPI/output_files/html/index.html) for detailed documentation.
+Please refer to the Doxygen documentation available in [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI/output_files/html/index.html) for detailed documentation.
 
-Note that this repository is a work in progress, and additional peripherical drivers such as SPI slave, Timer, I2C, and more will be added in the future. Each driver will be well documented automatically using Doxygen and implemented in a development board.
+**Serial Peripheral Interface (Master-Slave)**
+
+In this setup, the Serial Peripheral Interface (SPI) driver is configuring two Nucleo-F401RE boards, designating one as the master and the other as the slave, employing the SPI1 channel on both boards. The SPI configuration includes a baud rate = 4kHz, enabling full duplex communication, employing an 8-bit data frame format, and prioritizing the most significant bit transmission. To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among the master board, slave board, and the KY-57 logic analyzer:
+
+<div align="center">
+<table>
+  <tr>
+    <th>SPI connection</th>
+    <th>Master</th>
+    <th>Slave</th>
+    <th>Logic analyzer</th>
+  </tr>
+  <tr>
+    <td>NSS</td>
+    <td>PA4</td>
+    <td>PA4</td>
+    <td>CH4</td>
+  </tr>
+  <tr>
+    <td>SCK</td>
+    <td>PA5</td>
+    <td>PA5</td>
+    <td>CH1</td>
+  </tr>
+  <tr>
+    <td>MISO</td>
+    <td>PA6</td>
+    <td>PA6</td>
+    <td>CH2</td>
+  </tr>
+  <tr>
+    <td>MOSI</td>
+    <td>PA7</td>
+    <td>PA7</td>
+    <td>CH3</td>
+  </tr>
+</table>
+</div>
+
+In operation, the slave continually transmits a 0x66 value to the master device, which receives it and sends it back to the slave. The KY-57 logic analyzer is connected to capture and analyze the data exchanged between the two of them.
+
+<p align="center">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI_Master_Slave/imagens/SPI_Master_Slave_v2.png" alt="[SPI Protocol" width="100%">
+</p>
+
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for detailed documentation. Additionally, an accompanying image showcases the data captured and analyzed on the logic analyzer.
+
+**Note.**
+
+This repository is a work in progress, and additional peripherical drivers such as Timer, I2C, and more will be added in the future. Each driver will be well documented automatically using Doxygen and implemented in a development board.
 
 _Thank you for visiting my project repository, and I hope you find it useful!_
