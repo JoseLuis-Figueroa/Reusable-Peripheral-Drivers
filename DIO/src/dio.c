@@ -100,9 +100,9 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * This function is used to initialize the Dio based on the configuration  
  * table defined in dio_cfg module.
  * 
+ * PRE-CONDITION: The MCU clocks must be configured and enabled.
  * PRE-CONDITION: Configuration table needs to be populated (sizeof > 0) <br>
  * PRE-CONDITION: NUMBER_OF_PORTS > 0 <br>
- * PRE-CONDITION: The MCU clocks must be configured and enabled.
  * 
  * POST-CONDITION: The DIO peripheral is set up with the configuration 
  * settings.

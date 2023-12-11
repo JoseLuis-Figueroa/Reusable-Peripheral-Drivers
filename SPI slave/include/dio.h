@@ -2,7 +2,7 @@
  * @file dio.h
  * @author Jose Luis Figueroa
  * @brief The interface definition for the dio. This is the header file for 
- * the definition of the interface for a digital input/output peripheral on 
+ * the definition of the interface for a Serial Peripheral Interface on 
  * a standard microcontroller.
  * @version 1.0
  * @date 2023-03-18

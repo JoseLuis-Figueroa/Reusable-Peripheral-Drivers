@@ -58,7 +58,7 @@ int main()
             DIO_registerWrite(0x40020414, 0x00000001);
         }
         
-        /* Toggle the PA0 pin. Add delay to be avoid to see the toggling pin*/
+        /* Toggle the PA0 pin. Add delay to be able to see the toggling pin*/
         DIO_pinToggle(DIO_PA, DIO_PA0);
 
         /* 
