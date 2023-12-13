@@ -111,10 +111,8 @@ In operation, the slave continually transmits a 0x66 value to the master device,
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI_Master_Slave/imagens/SPI_Master_Slave_v2.png" alt="[SPI Protocol" width="100%">
 </p>
 
-Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for detailed documentation. Additionally, an accompanying image showcases the data captured and analyzed on the logic analyzer.
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for detailed documentation. 
 
 **Note.**
 
 This repository is a work in progress, and additional peripherical drivers such as Timer, I2C, and more will be added in the future. Each driver will be well documented automatically using Doxygen and implemented in a development board.
-
-_Thank you for visiting my project repository, and I hope you find it useful!_
