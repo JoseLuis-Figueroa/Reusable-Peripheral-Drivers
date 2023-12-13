@@ -44,8 +44,8 @@ typedef enum
     SPI_CHANNEL1,   /**< SPI Channel 1*/
     SPI_CHANNEL2,   /**< SPI Channel 2*/
     SPI_CHANNEL3,   /**< SPI Channel 3*/
-    SPI_CHANNEL4,    /**< SPI Channel 4*/
-    SPI_MAX_CHANNEL     /**< Maximum SPI Channel*/
+    SPI_CHANNEL4,   /**< SPI Channel 4*/
+    SPI_MAX_CHANNEL /**< Maximum SPI Channel*/
 }SpiChannel_t;
 
 /**
@@ -128,9 +128,9 @@ typedef enum
  */
 typedef enum
 {
-    SPI_8BITS,  /**< 8 bits data is selected for communication*/
-    SPI_16BITS,  /**< 16 bits data is selected for communication*/
-    SPI_MAX_BITS    /**< Define the maximum number of bits*/
+    SPI_8BITS,      /**< 8 bits data is selected for communication*/
+    SPI_16BITS,     /**< 16 bits data is selected for communication*/
+    SPI_MAX_BITS    /**< Maximum number of bits*/
 }SpiDataSize_t;
 
 /**
