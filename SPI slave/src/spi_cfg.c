@@ -35,8 +35,8 @@
  * Peripheral Interface. Each row represent a single SPI configuration.
  * Each column is representing a member of the SpiConfig_t structure. This 
  * table is read in by SPI_Init, where each channel is then set up based on 
- * this table. The SPI_CHANNELS_NUMBER constant should be agreed with the 
- * number of row.
+ * this table. The SPI_CHANNELS_NUMBER constant should be accorded with the 
+ * number of rows.
 */
 const SpiConfig_t SpiConfig[] = 
 {
