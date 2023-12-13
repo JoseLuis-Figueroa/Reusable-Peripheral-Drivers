@@ -47,7 +47,7 @@ int main(void)
         /* Pull cs line high to disable slave*/
         DIO_pinWrite(DIO_PA, DIO_PA4, DIO_HIGH);
 
-        data2 = data;
+        data2 = data;   
 
         /* Pull cs line low to enable slave*/
         DIO_pinWrite(DIO_PA, DIO_PA4, DIO_LOW);

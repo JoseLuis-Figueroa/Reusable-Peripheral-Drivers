@@ -44,7 +44,7 @@ const SpiConfig_t SpiConfig[] =
  * Channel        Mode       Hierarchy   Baud rate   NSS pin,      Frame               
  * Type             Size               
 */
-   {SPI_CHANNEL1, SPI_MODE3, SPI_MASTER, SPI_FPCLK4, SOFTWARE_NSS, SPI_MSB, 
+   {SPI_CHANNEL1, SPI_MODE3, SPI_MASTER, SPI_FPCLK4, SPI_SOFTWARE_NSS, SPI_MSB, 
    SPI_FULL_DUPLEX, SPI_8BITS},
 };
 

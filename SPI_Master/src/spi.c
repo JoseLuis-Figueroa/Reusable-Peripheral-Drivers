@@ -196,17 +196,17 @@ void SPI_init(const SpiConfig_t * const Config)
         }
 
         /**Set the slave select pin management for the device*/
-        if(Config[i].SlaveSelect == SOFTWARE_NSS)
+        if(Config[i].SlaveSelect == SPI_SOFTWARE_NSS)
         {
             *controlRegister1[Config[i].Channel] |= SPI_CR1_SSM;
             *controlRegister1[Config[i].Channel] |= SPI_CR1_SSI;
         }
-        else if(Config[i].SlaveSelect == HARDWARE_NSS_ENABLED)
+        else if(Config[i].SlaveSelect == SPI_HARDWARE_NSS_ENABLED)
         {
             *controlRegister1[Config[i].Channel] &=~ SPI_CR1_SSM;
             *controlRegister2[Config[i].Channel] |= SPI_CR2_SSOE;
         }
-        else if(Config[i].SlaveSelect == HARDWARE_NSS_DISABLED)
+        else if(Config[i].SlaveSelect == SPI_HARDWARE_NSS_DISABLED)
         {
             *controlRegister1[Config[i].Channel] &=~ SPI_CR1_SSM;
             *controlRegister2[Config[i].Channel] &=~ SPI_CR2_SSOE;
@@ -271,7 +271,6 @@ void SPI_init(const SpiConfig_t * const Config)
  * This function is used to initialize a data transfer on the SPI bus. 
  * 
  * PRE-CONDITION: SPI_Init must be called with valid configuration data.
- * TODO: Review if using a struct is better than variables.
  * PRE-CONDITION: SpiTransfer_t needs to be populated.
  * PRE-CONDITION: The MCU clocks must be configured and enabled.
  * 
@@ -332,7 +331,6 @@ void SPI_transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size)
  * This function is used to initialize a data reception on the SPI bus. 
  * 
  * PRE-CONDITION: SPI_Init must be called with valid configuration data.
- * TODO: Review if using a struct is better than variables.
  * PRE-CONDITION: SpiTransfer_t needs to be populated.
  * PRE-CONDITION: The MCU clocks must be configured and enabled.
  * 
