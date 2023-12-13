@@ -96,9 +96,10 @@ typedef enum
  */
 typedef enum
 {
-    SOFTWARE_NSS,           /**< Software NSS pin management*/
-    HARDWARE_NSS_ENABLED,   /**< Hardware NSS pin management (Master)*/
-    HARDWARE_NSS_DISABLED   /**< Hardware NSS pin management (slave)*/
+    SPI_SOFTWARE_NSS,           /**< Software NSS pin management*/
+    SPI_HARDWARE_NSS_ENABLED,   /**< Hardware NSS pin management (Master)*/
+    SPI_HARDWARE_NSS_DISABLED,  /**< Hardware NSS pin management (slave)*/
+    SPI_MAX_NSS                 /**< Maximum NSS input*/
 }SpiSlaveSelect_t;
 
 /**

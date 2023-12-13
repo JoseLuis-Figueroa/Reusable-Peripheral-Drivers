@@ -196,17 +196,17 @@ void SPI_init(const SpiConfig_t * const Config)
         }
 
         /**Set the slave select pin management for the device*/
-        if(Config[i].SlaveSelect == SOFTWARE_NSS)
+        if(Config[i].SlaveSelect == SPI_SOFTWARE_NSS)
         {
             *controlRegister1[Config[i].Channel] |= SPI_CR1_SSM;
             *controlRegister1[Config[i].Channel] |= SPI_CR1_SSI;
         }
-        else if(Config[i].SlaveSelect == HARDWARE_NSS_ENABLED)
+        else if(Config[i].SlaveSelect == SPI_HARDWARE_NSS_ENABLED)
         {
             *controlRegister1[Config[i].Channel] &=~ SPI_CR1_SSM;
             *controlRegister2[Config[i].Channel] |= SPI_CR2_SSOE;
         }
-        else if(Config[i].SlaveSelect == HARDWARE_NSS_DISABLED)
+        else if(Config[i].SlaveSelect == SPI_HARDWARE_NSS_DISABLED)
         {
             *controlRegister1[Config[i].Channel] &=~ SPI_CR1_SSM;
             *controlRegister2[Config[i].Channel] &=~ SPI_CR2_SSOE;
