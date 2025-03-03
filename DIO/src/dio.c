@@ -129,8 +129,15 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
 void DIO_init(const DioConfig_t * const Config)
 {
     /* Loop through all the elements of the configuration table. */
-    for(uint8_t i=0; i<=NUMBER_DIGITAL_PINS; i++)
+    for(uint8_t i=0; i<=sizeof(Config)/sizeof(*Config); i++)
     {
+        /* Prevent to assign a value out of the range of the port and pin.
+         * The registers arrays are limited to the NUMBER_OF_PORTS, higher 
+         * value can cause a memory violation.
+        */
+        assert(Config[i].Port < DIO_MAX_PORT);
+        assert(Config[i].Pin < DIO_MAX_PIN);
+
         /* 
          * Set the mode of the Dio pin on the GPIO port mode register. 
          * Multiply the pin number (Config[i].Pin) by two as MODER uses two 
@@ -159,7 +166,7 @@ void DIO_init(const DioConfig_t * const Config)
         }
         else
         {
-            printf("This Mode does not exist\n");
+            assert(Config[i].Mode < DIO_MAX_MODE);
         }
 
         /*
@@ -176,7 +183,7 @@ void DIO_init(const DioConfig_t * const Config)
         }
         else
         {
-            printf("This output type does not exist\n");
+            assert(Config[i].Type < DIO_MAX_TYPE);
         }
 
         /*
@@ -206,7 +213,7 @@ void DIO_init(const DioConfig_t * const Config)
         }
         else
         {
-            printf("The output speed does not exist\n");
+            assert(Config[i].Speed < DIO_MAX_SPEED);
         }
 
         /*
@@ -232,7 +239,7 @@ void DIO_init(const DioConfig_t * const Config)
        }
        else
        {
-            printf("The port register does not exist");
+            assert(Config[i].Resistor < DIO_MAX_RESISTOR);
        }
 
         /*
@@ -351,7 +358,11 @@ void DIO_init(const DioConfig_t * const Config)
             *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
             *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
             *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
-       } 
+       }
+       else
+       {
+            assert(Config[i].Function < DIO_MAX_FUNCTION);
+       }
 
     }
 }

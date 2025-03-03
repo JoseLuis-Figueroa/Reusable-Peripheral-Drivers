@@ -25,11 +25,6 @@
  */
 #define NUMBER_OF_PORTS 5U
 
-/** Set the value according with the number of digital input/output peripheral
- * channel (pins) used.
-*/
-#define NUMBER_DIGITAL_PINS 7
-
 /*****************************************************************************
 * Typedefs
 *****************************************************************************/
