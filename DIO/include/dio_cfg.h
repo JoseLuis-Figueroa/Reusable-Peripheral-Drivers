@@ -4,8 +4,8 @@
  * @brief This module contains interface definitions for the Dio 
  * configuration. This is the header file for the definition of the
  * interface for retrieving the digital input/output configuration table.
- * @version 1.0
- * @date 2023-03-16
+ * @version 1.1
+ * @date 2025-03-04
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
