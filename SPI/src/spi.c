@@ -1,11 +1,11 @@
 /**
  * @file spi.c
  * @author Jose Luis Figueroa 
- * @brief The implementation for the SPI.
- * @version 1.0
- * @date 2023-07-14
+ * @brief The implementation for the SPI Driver.
+ * @version 1.1
+ * @date 2025-03-11
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 
  */
 /*****************************************************************************
@@ -67,12 +67,13 @@ static uint16_t volatile * const dataRegister[SPI_PORTS_NUMBER] =
  * Function: SPI_init()
 *//**
 *\b Description:
- * This function is used to initialize the spi based on the configuration  
+ * This function is used to initialize the SPI based on the configuration  
  * table defined in spi_cfg module.
  * 
- * PRE-CONDITION: The MCU clocks must be configured and enabled.
- * PRE-CONDITION: SPI pins should be configured using GPIO driver.
+ * PRE-CONDITION: The MCU clocks must be configured and enabled. <br>
+ * PRE-CONDITION: SPI pins should be configured using GPIO driver. <br>
  * PRE-CONDITION: Configuration table needs to be populated (sizeof > 0) <br>
+ * PRE-CONDITION: The setting is within the maximum values (SPI_MAX). <br>
  *
  * POST-CONDITION: The peripheral is set up with the configuration settings.
  * 
@@ -98,8 +99,14 @@ static uint16_t volatile * const dataRegister[SPI_PORTS_NUMBER] =
 void SPI_init(const SpiConfig_t * const Config)
 {
     /**Loop through all the elements of the configuration table.*/
-    for(uint8_t i=0; i<SPI_CHANNELS_NUMBER; i++)
+    for(uint8_t i=0; i<sizeof(*Config); i++)
     {
+        /* Prevent to assign a value out of the range of the channels.
+         * The registers arrays are limited to the SPI_PORTS_NUMBER, higher 
+         * value can cause a memory violation.
+        */
+       assert(Config[i].Channel < SPI_MAX_CHANNEL);
+
         /**Set the configuration of the SPI on the control register 1*/
         /**Set the Clock phase and polarity modes*/
         if(Config[i].Mode == SPI_MODE0)
@@ -124,7 +131,7 @@ void SPI_init(const SpiConfig_t * const Config)
         }
         else
         {
-            printf("This mode does not exist\n");
+            assert(Config[i].Mode < SPI_MAX_MODE);
         }
 
         /**Set the hierarchy of the device*/
@@ -138,7 +145,7 @@ void SPI_init(const SpiConfig_t * const Config)
         } 
         else
         {
-            printf("This hierarchy does not exist\n");
+            assert(Config[i].Hierarchy < SPI_MAX_HIERARCHY);
         }
 
         /**Set the baud rate of the device*/
@@ -192,7 +199,7 @@ void SPI_init(const SpiConfig_t * const Config)
         }
         else
         {
-            printf("This baud rate does not exist\n");
+            assert(Config[i].BaudRate < SPI_MAX_FPCLK);
         }
 
         /**Set the slave select pin management for the device*/
@@ -213,7 +220,7 @@ void SPI_init(const SpiConfig_t * const Config)
         }
         else
         {
-            printf("This slave select pin option does not exist\n");
+            assert(Config[i].SlaveSelect < SPI_MAX_NSS);
         }
 
         /**Set the frame format of the device*/
@@ -227,7 +234,7 @@ void SPI_init(const SpiConfig_t * const Config)
         }
         else
         {
-            printf("This frame format does not exist\n");
+            assert(Config[i].FrameFormat < SPI_MAX_FF);
         }
 
         /**Set the data transfer type of the device*/
@@ -241,7 +248,7 @@ void SPI_init(const SpiConfig_t * const Config)
         }
         else
         {
-            printf("This data transfer type does not exist");
+            assert(Config[i].TypeTransfer < SPI_MAX_DF);
         }
 
         /**Set the data frame format (size) of the device*/
@@ -255,7 +262,7 @@ void SPI_init(const SpiConfig_t * const Config)
         }
         else
         {
-            printf("This data size does not exist\n");
+            assert(Config[i].DataSize < SPI_MAX_BITS);
         }
 
         /**Enable the SPI module*/

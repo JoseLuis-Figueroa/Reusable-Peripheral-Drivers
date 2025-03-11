@@ -6,7 +6,7 @@
  * @version 1.1
  * @date 2025-03-11
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 
  */
 

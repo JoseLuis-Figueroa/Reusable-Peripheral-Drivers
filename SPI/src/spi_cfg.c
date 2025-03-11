@@ -3,10 +3,10 @@
  * @author Jose Luis Figueroa.
  * @brief This module contains the implementation for the Serial Peripheral
  * Interface (SPI).
- * @version 1.0
- * @date 2023-07-14
+ * @version 1.1
+ * @date 2025-03-11
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 
  */
 

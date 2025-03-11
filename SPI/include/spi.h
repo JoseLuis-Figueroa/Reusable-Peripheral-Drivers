@@ -1,13 +1,13 @@
 /**
  * @file spi.h
  * @author Jose Luis Figueroa 
- * @brief The interface definition for the spi. This is the header file for 
+ * @brief The interface definition for the SPI. This is the header file for 
  * the definition of the interface for a Serial Peripheral Serial (SPI) on 
  * a standard microcontroller.
- * @version 1.0
- * @date 2023-07-14
+ * @version 1.1
+ * @date 2025-03-11
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. All rights reserved.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. All rights reserved.
  * 
  */
 #ifndef SPI_H_
@@ -18,6 +18,7 @@
 *****************************************************************************/
 #include <stdint.h>
 #include <stdio.h>
+#include <assert.h>
 #include "spi_cfg.h"
 #include "stm32f4xx.h"   
 

@@ -5,8 +5,8 @@
  * configuration. This is the header file for the definition of the
  * interface for retrieving the Serial Peripheral interface
  * configuration table.
- * @version 1.0
- * @date 2023-07-14
+ * @version 1.1
+ * @date 2025-03-11
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
@@ -14,27 +14,21 @@
 #ifndef SPI_CFG_H_
 #define SPI_CFG_H_
 
-/**********************************************************************
+/*****************************************************************************
 * Includes
-**********************************************************************/
+*****************************************************************************/
 
-/**********************************************************************
+/****************************************************************************
 * Preprocessor Constants
-**********************************************************************/
+*****************************************************************************/
 /** 
  * Defines the number of ports on the processor.
  */
 #define SPI_PORTS_NUMBER 4U
 
-/** 
- * Set the value according with the number of Serial Peripheral 
- * interface channels to be used.
-*/
-#define SPI_CHANNELS_NUMBER 1
-
-/**********************************************************************
+/****************************************************************************
 * Typedefs
-**********************************************************************/
+*****************************************************************************/
 /**
  * Define the SPI channels on the MCU device. It is used to specify
  * SPI channel to configure the register map.

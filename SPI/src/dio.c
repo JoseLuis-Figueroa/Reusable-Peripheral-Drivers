@@ -5,7 +5,7 @@
  * @version 1.1
  * @date 2025-03-11
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 
  */
 /*****************************************************************************
@@ -97,7 +97,7 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * Function: DIO_init()
 *//**
 *\b Description:
- * This function is used to initialize the Dio based on the configuration  
+ * This function is used to initialize the DIO based on the configuration  
  * table defined in dio_cfg module.
  * 
  * PRE-CONDITION: The MCU clocks must be configured and enabled. <br>
@@ -119,6 +119,7 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  *  DIO_init(DioConfig);
  * @endcode
  * 
+ * @see DIO_configGet
  * @see DIO_init
  * @see DIO_pinRead
  * @see DIO_pinWrite
