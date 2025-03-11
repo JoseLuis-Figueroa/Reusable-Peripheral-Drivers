@@ -4,8 +4,8 @@
  * @brief This module contains interface definitions for the Dio 
  * configuration. This is the header file for the definition of the
  * interface for retrieving the digital input/output configuration table.
- * @version 1.0
- * @date 2023-03-16
+ * @version 1.1
+ * @date 2025-03-04
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
@@ -24,11 +24,6 @@
  * Defines the number of ports on the processor.
  */
 #define NUMBER_OF_PORTS 5U
-
-/** Set the value according with the number of digital input/output peripheral
- * channel (pins) used.
-*/
-#define NUMBER_DIGITAL_PINS 4
 
 /*****************************************************************************
 * Typedefs

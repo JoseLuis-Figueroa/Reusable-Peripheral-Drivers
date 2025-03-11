@@ -3,8 +3,8 @@
  * @author Jose Luis Figueroa
  * @brief This module contains the implementation for the digital 
  * input/output peripheral configuration.
- * @version 1.0
- * @date 2023-03-17
+ * @version 1.1
+ * @date 2025-03-11
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
