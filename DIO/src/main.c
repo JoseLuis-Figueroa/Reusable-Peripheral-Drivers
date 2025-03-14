@@ -28,9 +28,10 @@ int main()
 
     /* Get the address of the configuration table*/
     const DioConfig_t * const DioConfig = DIO_configGet();
-
+    /* Get the size of the configuration table*/
+    size_t configSizeDio = DIO_configSizeGet();
     /* Initialize the GPIO according to the configuration table*/
-    DIO_init(DioConfig);
+    DIO_init(DioConfig, configSizeDio);
 
     /*Define the pin configuration for PC13 (User button)*/
     const DioPinConfig_t UserButton1= {DIO_PC, DIO_PC13};

@@ -54,7 +54,7 @@ typedef struct
 extern "C"{
 #endif
 
-void DIO_init(const DioConfig_t * const Config);
+void DIO_init(const DioConfig_t * const Config, size_t configSize);
 DioPinState_t DIO_pinRead(const DioPinConfig_t * const PinConfig);
 void DIO_pinWrite(const DioPinConfig_t * const PinConfig, DioPinState_t State);
 void DIO_pinToggle(const DioPinConfig_t * const PinConfig);
