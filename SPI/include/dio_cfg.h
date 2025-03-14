@@ -7,7 +7,7 @@
  * @version 1.1
  * @date 2025-03-04
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 
  */
 #ifndef DIO_CFG_H_
@@ -16,6 +16,7 @@
 /*****************************************************************************
 * Includes
 *****************************************************************************/
+#include <stdio.h>
 
 /*****************************************************************************
 * Preprocessor Constants
@@ -207,6 +208,7 @@ extern "C"{
 #endif
 
 const DioConfig_t * const DIO_configGet(void);
+size_t DIO_configSizeGet(void);
 
 #ifdef __cplusplus
 } //extern "C"

@@ -60,9 +60,7 @@ static uint32_t volatile * const pupdrRegister[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->PUPDR
 };
 
-/*
- * Defines a array of pointers to the GPIO port input data register.
-*/
+/* Defines a array of pointers to the GPIO port input data register. */
 static uint32_t volatile * const idrRegister[NUMBER_OF_PORTS] =  
 {
     (uint32_t*)&GPIOA->IDR, (uint32_t*)&GPIOB->IDR, (uint32_t*)&GPIOC->IDR,
@@ -110,16 +108,20 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * 
  * @param[in]   Config is a pointer to the configuration table that contains 
  *               the initialization for the peripheral.
+ * @param[in]   configSize is the size of the configuration table.
  * 
  * @return  void
  * 
  * \b Example:
  * @code
- *  const DioConfig_t * const DioConfig = DIO_configGet();
- *  DIO_init(DioConfig);
+ * const Dio_ConfigType_t * const DioConfig = DIO_configGet();
+ * size_t configSize = DIO_configSizeGet();
+ * 
+ * DIO_Init(DioConfig, configSize);
  * @endcode
  * 
  * @see DIO_configGet
+ * @see DIO_configSizeGet
  * @see DIO_init
  * @see DIO_pinRead
  * @see DIO_pinWrite
@@ -128,10 +130,10 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
  * @see DIO_registerRead
  * 
 *****************************************************************************/
-void DIO_init(const DioConfig_t * const Config)
+void DIO_init(const DioConfig_t * const Config, size_t configSize)
 {
     /* Loop through all the elements of the configuration table. */
-    for(uint8_t i=0; i<=sizeof(*Config); i++)
+    for(uint8_t i=0; i<configSize; i++)
     {
         /* Prevent to assign a value out of the range of the port and pin.
          * The registers arrays are limited to the NUMBER_OF_PORTS, higher 
@@ -381,22 +383,28 @@ void DIO_init(const DioConfig_t * const Config)
  * PRE-CONDITION: The pin is configured as GPIO <br>
  * PRE-CONDITION: DioPinConfig_t needs to be populated (sizeof > 0) <br>
  * PRE-CONDITION: The Port is within the maximum DioPort_t. <br>
- * PRE-CONDITION: The Pin is within the maximum DioPin_t. <br>
- * definition.
+ * PRE-CONDITION: The Pin is within the maximum DioPin_t. 
+ * definition. <br>
  * 
- * POST-CONDITION: The channel state is returned.
+ * POST-CONDITION: The channel state is returned. <br>
  * 
- * @param[in] pinConfig A pointer to a structure containing the port and pin 
+ * @param[in] PinConfig A pointer to a structure containing the port and pin 
  * to be read.
  * 
  * @return    DioPinState_t The state of the pin (high or low).
  * 
  * \b Example:
  * @code
- *  const DioPinConfig_t  UserButton1= {DIO_PC, DIO_PC13};
+ * const DioPinConfig_t  UserButton1= 
+ * {
+ *      .Port = DIO_PC, 
+ *      .Pin = DIO_PC13
+ * };
  *  bool pin = DIO_pinRead(&UserButton1);
  * @endcode
  * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
  * @see DIO_init
  * @see DIO_pinRead
  * @see DIO_pinWrite
@@ -439,7 +447,7 @@ DioPinState_t DIO_pinRead(const DioPinConfig_t * const PinConfig)
  * PRE-CONDITION: The Pin is within the maximum DioPin_t. <br>
  * PRE-CONDITION: The State is within the maximum DioPinState_t. <br>
  * 
- * POST-CONDITION: The channel state is Stated.
+ * POST-CONDITION: The channel state is Stated. <br>
  * 
  * @param[in]   pinConfig A pointer to a structure containing the port 
  *              and pin to be written.
@@ -450,12 +458,22 @@ DioPinState_t DIO_pinRead(const DioPinConfig_t * const PinConfig)
  * 
  * \b Example:
  * @code
- *  const DioPinConfig_t UserLED1= {DIO_PA, DIO_PA5};
- *  const DioPinConfig_t UserLED2= {DIO_PA, DIO_PA6};
- *  DIO_pinWrite(&UserLED1, LOW);    //Set the pin low
- *  DIO_pinWrite(&UserLED2, HIGH);   //Set the pin high
+ * const DioPinConfig_t  UserLED1= 
+ * {
+ *      .Port = DIO_PA, 
+ *      .Pin = DIO_PA5
+ * };
+ * const DioPinConfig_t  UserLED2= 
+ * {
+ *      .Port = DIO_PA, 
+ *      .Pin = DIO_PA6
+ * };
+ * DIO_pinWrite(&UserLED1, LOW);    //Set the pin low
+ * DIO_pinWrite(&UserLED2, HIGH);   //Set the pin high
  * @endcode
  * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
  * @see DIO_init
  * @see DIO_pinRead
  * @see DIO_pinWrite
@@ -502,7 +520,7 @@ void DIO_pinWrite(const DioPinConfig_t * const PinConfig, DioPinState_t State)
  * PRE-CONDITION: The Port is within the maximum DioPort_t. <br>
  * PRE-CONDITION: The Pin is within the maximum DioPin_t. <br>
  *
- * POST-CONDITION: The channel state is toggled.
+ * POST-CONDITION: The channel state is toggled. <br>
  * 
  * @param[in]   pinConfig A pointer to a structure containing the port 
  *              and pin to be toggled.
@@ -511,10 +529,16 @@ void DIO_pinWrite(const DioPinConfig_t * const PinConfig, DioPinState_t State)
  * 
  * \b Example:
  * @code
- *  const DioPinConfig_t UserLED1= {DIO_PA, DIO_PA5};
- *  DIO_pinToggle(&UserLED1);
+ * const DioPinConfig_t  UserLED1= 
+ * {
+ *      .Port = DIO_PA, 
+ *      .Pin = DIO_PA5
+ * };
+ * DIO_pinToggle(&UserLED1);
  * @endcode
  * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
  * @see DIO_init
  * @see DIO_pinRead
  * @see DIO_pinWrite
@@ -545,10 +569,10 @@ void DIO_pinToggle(const DioPinConfig_t * const PinConfig)
  * interface.
  * 
  * PRE-CONDITION: Address is within the boundaries of the DIO register
- * address space.
+ * address space. <br>
  * 
  * POST-CONDITION: The register located at address with be updated with
- * value.
+ * value. <br>
  * 
  * @param[in]   address is a register address within the DIO peripheral
  *              map.
@@ -561,6 +585,8 @@ void DIO_pinToggle(const DioPinConfig_t * const PinConfig)
  *  DIO_registerWrite(0x1000, 0x15);
  * @endcode
  * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
  * @see DIO_init
  * @see DIO_pinRead
  * @see DIO_pinWrite
@@ -585,10 +611,10 @@ void DIO_registerWrite(uint32_t address, uint32_t value)
  * interface.
  * 
  * PRE-CONDITION: Address is within the boundaries of the Dio register 
- * address space.
+ * address space. <br>
  * 
  * POST-CONDITION: The value stored in the register is returned to the 
- * caller.
+ * caller. <br>
  * 
  * @param[in]   address is the address of the Dio register to read.
  * 
@@ -599,6 +625,8 @@ void DIO_registerWrite(uint32_t address, uint32_t value)
  * type dioValue = DIO_registerRead(0x1000);
  * @endcode
  * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
  * @see DIO_init
  * @see DIO_pinRead
  * @see DIO_pinWrite
