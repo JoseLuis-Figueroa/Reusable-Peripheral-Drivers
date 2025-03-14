@@ -3,11 +3,11 @@
  * @author Jose Luis Figueroa
  * @brief Implement the master SPI driver using Nucleo-F401RE. 
  * @version 1.0
- * @date 2023-07-24
+ * @date 2025-03-13
  * @note The microcontroller internal system clock is 16MHz.
  * The baud rate is divided by 4, then, baud rate = 4MHz.
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 
  */
 /*****************************************************************************
@@ -24,24 +24,42 @@ int main(void)
 
     /* Get the address of the Configuration table for DIO*/
     const DioConfig_t * const DioConfig = DIO_configGet();
+    /* Get the size of the configuration table*/
+    size_t configSizeDio = DIO_configSizeGet();
     /* Initialize the DIO pins according to the configuration table*/
-    DIO_init(DioConfig);
-    
+    DIO_init(DioConfig, configSizeDio);
+
+    /*Define the pin configuration for PA9 (CS line)*/
+    const DioPinConfig_t CSLine = 
+    {
+        .Port = DIO_PA,
+        .Pin = DIO_PA9 
+    };
     /* Get the address of the configuration table for SPI*/
     const SpiConfig_t * const SpiConfig = SPI_ConfigGet();
+    /* Get the size of the configuration table*/
+    size_t configSizeSpi = SPI_configSizeGet();
     /* Initialize the SPI channel according to the configuration table*/
-    SPI_init(SpiConfig);
+    SPI_init(SpiConfig, configSizeSpi);
 
     /* Data to be sent*/
-    uint16_t data = 0x56;
+    uint16_t data[] = {0x56};
+    /* SPI transfer configuration*/
+    SpiTransferConfig_t TransferConfig =
+    {
+        .Channel = SPI_CHANNEL1,
+        .size = sizeof(data)/sizeof(data[0]),
+        .data = data
+    };
+    
 
     while(1)
     {
         /* Pull cs line low to enable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA9, DIO_LOW);
+        DIO_pinWrite(&CSLine, DIO_LOW);
         /* Transmit data*/
-        SPI_transfer(SPI_CHANNEL1, &data, 1);
+        SPI_transfer(&TransferConfig);
         /* Pull cs line high to disable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA9, DIO_HIGH);
+        DIO_pinWrite(&CSLine, DIO_HIGH);
     }
 }

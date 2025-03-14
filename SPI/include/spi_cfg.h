@@ -2,13 +2,12 @@
  * @file spi_cfg.h
  * @author Jose Luis Figueroa 
  * @brief This module contains interface definitions for the SPI
- * configuration. This is the header file for the definition of the
- * interface for retrieving the Serial Peripheral interface
- * configuration table.
+ * configuration. This is the header file for the definition of the interface
+ * for retrieving the Serial Peripheral interface configuration table.
  * @version 1.1
  * @date 2025-03-11
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 
  */
 #ifndef SPI_CFG_H_
@@ -17,6 +16,7 @@
 /*****************************************************************************
 * Includes
 *****************************************************************************/
+#include <stdio.h>
 
 /****************************************************************************
 * Preprocessor Constants
@@ -152,6 +152,7 @@ extern "C"{
 #endif
 
 const SpiConfig_t * const SPI_ConfigGet(void);
+size_t SPI_configSizeGet(void);
 
 #ifdef __cplusplus
 } //extern "C"

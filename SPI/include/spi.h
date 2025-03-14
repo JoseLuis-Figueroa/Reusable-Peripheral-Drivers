@@ -37,6 +37,12 @@
 /*****************************************************************************
 * Typedefs
 *****************************************************************************/
+typedef struct
+{
+    SpiChannel_t Channel;           /**< The SPI channel */
+    uint16_t size;                  /**< The size of the data */
+    uint16_t *data;                 /**< The data to be sent */
+}SpiTransferConfig_t;
 
 /*****************************************************************************
 * Variables
@@ -49,9 +55,9 @@
 extern "C"{
 #endif
 
-void SPI_init(const SpiConfig_t * const Config);
-void SPI_transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size);
-void SPI_receive(SpiChannel_t Channel, uint16_t *data, uint16_t size);
+void SPI_init(const SpiConfig_t * const Config, size_t configSize);
+void SPI_transfer(const SpiTransferConfig_t * const TransferConfig);
+void SPI_receive(const SpiTransferConfig_t * const TransferConfig);
 void SPI_registerWrite(uint32_t address, uint32_t value);
 uint16_t SPI_registerRead(uint32_t address);
 
