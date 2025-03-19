@@ -18,6 +18,7 @@
 *****************************************************************************/
 #include <stdint.h>
 #include <stdio.h>
+//#define NDEBUG          /*To disable assert function*/  
 #include <assert.h>
 #include "dio_cfg.h"    /*For dio configuration*/
 #include "stm32f4xx.h"  /*Microcontroller family header*/  
