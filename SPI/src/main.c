@@ -4,8 +4,11 @@
  * @brief Implement the master SPI driver using Nucleo-F401RE. 
  * @version 1.0
  * @date 2025-03-13
- * @note The microcontroller internal system clock is 16MHz.
- * The baud rate is divided by 4, then, baud rate = 4MHz.
+ * @note Take into account the following considerations:
+ * + The microcontroller internal system clock is 16MHz. The baud rate is 
+ *   divided by 4, then, baud rate = 4MHz.
+ * + It is necessary to connect the Logic Analyzer to the SPI1 pins to debug
+ *   or test the SPI communication.
  * 
  * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
  * 

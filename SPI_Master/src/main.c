@@ -5,9 +5,12 @@
  * a value and send back to the receiver.
  * @version 1.0
  * @date 2023-07-24
- * @note The microcontroller internal system clock is 16MHz.
- * The baud rate is divided by 4, then, baud rate = 4MHz. 
- * The NSS pin is enabled.
+ * @note Take into account the following considerations:
+ * + The microcontroller internal system clock is 16MHz.  The baud rate is 
+ *   divided by 4, then, baud rate = 4MHz. 
+ * + It is necessary to connect the Logic Analyzer to the SPI1 pins to debug
+ *   or test the SPI communication.
+ * + The NSS pin is enabled.
  * 
  * @copyright Copyright (c) 2023 Jose Luis Figueroa. MIT License.
  * 
@@ -26,35 +29,51 @@ int main(void)
 
     /* Get the address of the Configuration table for DIO*/
     const DioConfig_t * const DioConfig = DIO_configGet();
+    /* Get the size of the configuration table*/
+    size_t configSizeDio = DIO_configSizeGet();
     /* Initialize the DIO pins according to the configuration table*/
-    DIO_init(DioConfig);
-    
+    DIO_init(DioConfig, configSizeDio);
+
+    /*Define the pin configuration for PA9 (CS line)*/
+    const DioPinConfig_t CSLine = 
+    {
+        .Port = DIO_PA,
+        .Pin = DIO_PA4 
+    };
     /* Get the address of the configuration table for SPI*/
     const SpiConfig_t * const SpiConfig = SPI_ConfigGet();
+    /* Get the size of the configuration table*/
+    size_t configSizeSpi = SPI_configSizeGet();
     /* Initialize the SPI channel according to the configuration table*/
-    SPI_init(SpiConfig);
+    SPI_init(SpiConfig, configSizeSpi);
 
     /* Data to be sent*/
-    uint16_t data;
-    uint16_t data2;
+    uint16_t data[1]={};
+
+    /* SPI transfer configuration*/
+    SpiTransferConfig_t TransferConfig =
+    {
+        .Channel = SPI_CHANNEL1,
+        .size = sizeof(data)/sizeof(data[0]),
+        .data = data
+    };
 
     while(1)
     {
         /* Pull cs line low to enable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA4, DIO_LOW);
+        DIO_pinWrite(&CSLine, DIO_LOW);
         /* Receive data*/
-        SPI_receive(SPI_CHANNEL1, &data, 1);
+        SPI_receive(&TransferConfig);
         /* Pull cs line high to disable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA4, DIO_HIGH);
+        DIO_pinWrite(&CSLine, DIO_HIGH);
 
-        data2 = data;   
 
         /* Pull cs line low to enable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA4, DIO_LOW);
+        DIO_pinWrite(&CSLine, DIO_LOW);
         /* Transmit data*/
-        SPI_transfer(SPI_CHANNEL1, &data2, 1);
+        SPI_transfer(&TransferConfig);
         /* Pull cs line high to disable slave*/
-        DIO_pinWrite(DIO_PA, DIO_PA4, DIO_HIGH);
+        DIO_pinWrite(&CSLine, DIO_HIGH);
 
         /*Delay*/
         for(int d=0; d<=500; d++)
