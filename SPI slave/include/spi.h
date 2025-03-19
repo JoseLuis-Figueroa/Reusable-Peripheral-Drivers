@@ -1,13 +1,13 @@
 /**
  * @file spi.h
  * @author Jose Luis Figueroa 
- * @brief The interface definition for the spi. This is the header file for 
+ * @brief The interface definition for the SPI. This is the header file for 
  * the definition of the interface for a Serial Peripheral Serial (SPI) on 
  * a standard microcontroller.
- * @version 1.0
- * @date 2023-07-14
+ * @version 1.1
+ * @date 2025-03-11
  * 
- * @copyright Copyright (c) 2023 Jose Luis Figueroa. All rights reserved.
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. All rights reserved.
  * 
  */
 #ifndef SPI_H_
@@ -18,6 +18,7 @@
 *****************************************************************************/
 #include <stdint.h>
 #include <stdio.h>
+#include <assert.h>
 #include "spi_cfg.h"
 #include "stm32f4xx.h"   
 
@@ -36,6 +37,12 @@
 /*****************************************************************************
 * Typedefs
 *****************************************************************************/
+typedef struct
+{
+    SpiChannel_t Channel;           /**< The SPI channel */
+    uint16_t size;                  /**< The size of the data */
+    uint16_t *data;                 /**< The data to be sent */
+}SpiTransferConfig_t;
 
 /*****************************************************************************
 * Variables
@@ -48,9 +55,9 @@
 extern "C"{
 #endif
 
-void SPI_init(const SpiConfig_t * const Config);
-void SPI_transfer(SpiChannel_t Channel, uint16_t *data, uint16_t size);
-void SPI_receive(SpiChannel_t Channel, uint16_t *data, uint16_t size);
+void SPI_init(const SpiConfig_t * const Config, size_t configSize);
+void SPI_transfer(const SpiTransferConfig_t * const TransferConfig);
+void SPI_receive(const SpiTransferConfig_t * const TransferConfig);
 void SPI_registerWrite(uint32_t address, uint32_t value);
 uint16_t SPI_registerRead(uint32_t address);
 
