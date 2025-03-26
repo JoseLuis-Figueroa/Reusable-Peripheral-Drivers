@@ -1,32 +1,59 @@
 # Reusable Drivers
 
-**Introduction.**
+## Introduction
 
-This personal project was performed with the acquired knowledge based on the _“Reusable Firmware Development: A Practical Approach to APIs, HALs, and Drivers”_ book where the objective is to create reusable firmware development that can be used across multiple microcontroller platforms and software products.  This is achieved through embedded C (Bare-metal) code that works directly with the microcontroller (MCU) register map, following industry-standard coding practices such as MISRA-C.
+This project is a personal initiative inspired by the book _"Reusable Firmware Development: A Practical Approach to APIs, HALs, and Drivers."_ The goal is to develop reusable firmware that can be applied across multiple microcontroller platforms and software products.
 
-**Project Overview.**
+The firmware is implemented in **embedded C (Bare-metal)**, directly interfacing with the microcontroller (MCU) register map. It follows **industry-standard coding practices**, including **MISRA-C**, to ensure reliability and maintainability.
 
-The repository consists of creating reusable drivers, and HALs for MCU. The current tooling being used for this project includes:
-* Development Board: _Nucleo-F401RE._
-* IDE/Debugger: _Visual Studio Code (PlatformIO extension)._
-* Compiler Toolchain: _GNU ARM Embedded Toolchain._
+## Project Overview
 
-**General Propose Input/Output (GPIO).**
+This repository focuses on developing **reusable drivers** and **Hardware Abstraction Layers (HALs)** for MCUs. The tools used in this project include:
 
-The main code consists of configuring the user button (PC13 pin) as an input. When pressed, the button turns on the embedded LED (PA5) on the board and turns off the yellow LED (PB0 pin) by writing directly to the ORD register. Conversely, when the button is released, the embedded LED is turned off, and the yellow LED is turned on. The red LED (PA0 pin) is set to toggle, although this behavior may not be apparent as a delay is not currently implemented (it will be implemented later), but it can be seen in debug mode. Additionally, the value of PC13 is obtained by reading directly from the IDR register, and if the user button is pressed, a corresponding message is printed on the console.
+### **Development Environment**
+- **Development Board:** _Nucleo-F401RE._
+- **Logic Analyzer:** _KY-57_.
+- **IDE & Debugger:** _Visual Studio Code (PlatformIO extension)._
+- **Compiler Toolchain:** _GNU ARM Embedded Toolchain._
 
-The main purpose of this code is to implement and test the GPIO driver. A video demonstration provides a visual representation of the DIO driver's physical implementation.
+---
+
+## General-Purpose Input/Output (GPIO)
+
+1. The DIO codes configure the **user button (PC13)** as an input. 
+
+    When pressed:
+    - The **embedded LED (PA5)** turns **on**.
+    - The **yellow LED (PB0)** turns **off**, and its state is read **directly from the ODR register**.
+
+    When released:
+    - the LEDs **revert to their original states**. 
+
+2. The **red LED (PA0)** toggles (without a delay, it can be observed in debugging mode). 
+
+3. Additionally, the PC13 is also read **directly from the IDR register.**
+
+This implementation serves as a **test and validation of the GPIO driver**. A video demonstration provides a visual representation of the physical implementation of the DIO driver.
 
 <p align="center">
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/assets/113542682/7324bd6a-fac1-4b3b-a10d-abe7818b59bd" alt="DIO_Implementation">
 </p>
 
-Please refer to the Doxygen documentation available in [Digital Input/Output Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/DIO/output_files/html/index.html) for detailed documentation.
+Please refer to the Doxygen documentation available in the [Digital Input/Output Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/DIO/output_files/html/index.html) for detailed documentation.
 
-**Serial Peripheral Interface (SPI).**
+---
 
-The code involves the configuration of a Serial Peripheral Interface. The SPI driver is used to configure the SPI1 as a master device. The setting includes a baud rate = 4KHz, full duplex communication, an 8-bit data frame format, and most significant bit transmission.
-A KY-57 logic analyzer is connected to the master device for data reception and analysis. To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among the Nucleo board, and KY-57 logic analyzer:
+## Serial Peripheral Interface (SPI)
+
+The SPI codes configure **SPI1 as a master device** with the following settings:
+- **Baud rate:** 4 kHz
+- **Communication mode:** Full duplex
+- **Data frame format:** 8-bit
+- **Bit transmission order:** Most Significant Bit (MSB) first  
+
+A **KY-57 logic analyzer** is connected to the master device for data reception and analysis. The GPIO driver configures the SPI1 pins for proper operation.
+
+### **Pin Connections**
 
 <div align="center">
 <table>
@@ -58,18 +85,28 @@ A KY-57 logic analyzer is connected to the master device for data reception and 
 </table>
 </div>
 
-The main code continuously transmits data to the logic analyzer, with the current involving the transmission of 0x56. An image displays the data captured and analyzed on the logic analyzer. 
+The master continuously transmits data to the logic analyzer, currently sending **0x56**. Below is a screenshot of the captured data:
 
 <p align="center">
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI/imagens/SPI%20Master%20Screen.png" alt="[SPI Protocol" width="100%">
 </p>
 
-Please refer to the Doxygen documentation available in [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI/output_files/html/index.html) for detailed documentation.
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI/output_files/html/index.html) for detailed documentation.
 
-**Serial Peripheral Interface (Master-Slave)**
+---
 
-In this setup, the Serial Peripheral Interface (SPI) driver is configuring two Nucleo-F401RE boards, designating one as the master and the other as the slave, employing the SPI1 channel on both boards. The SPI configuration includes a baud rate = 4kHz, enabling full duplex communication, employing an 8-bit data frame format, and prioritizing the most significant bit transmission. To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among the master board, slave board, and the KY-57 logic analyzer:
+## Serial Peripheral Interface (Master-Slave)
 
+This implementation configures two **Nucleo-F401RE boards** for SPI communication:
+- One board acts as the **master**, and the other as the **slave**.
+- Both use **SPI1** for communication.
+- The configuration includes:
+    - **Baud rate:** 4 kHz.
+    - **Comunication mode:** Full-duplex communication.
+    - **Data frame format:** 8-bit.
+    - **Bit transmission order:** Most significant bit (MSB) first.
+
+### **Pin Connections**
 <div align="center">
 <table>
   <tr>
@@ -105,14 +142,18 @@ In this setup, the Serial Peripheral Interface (SPI) driver is configuring two N
 </table>
 </div>
 
-In operation, the slave continually transmits a 0x66 value to the master device, which receives it and sends it back to the slave. The KY-57 logic analyzer is connected to capture and analyze the data exchanged between the two of them.
+The **slave device continuously transmits** a **0x66 value**, which the master receives and echoes back to the slave. A KY-57 logic analyzer is used to monitor the data exchange.
 
 <p align="center">
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI_Master_Slave/imagens/SPI_Master_Slave_v2.png" alt="[SPI Protocol" width="100%">
 </p>
 
-Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for detailed documentation. 
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for detailed documentation.
 
-**Note.**
+---
 
-This repository is a work in progress, and additional peripherical drivers such as Timer, I2C, and more will be added in the future. Each driver will be well documented automatically using Doxygen and implemented in a development board.
+## Conclusion
+
+Reusable firmware development is a powerful approach for building embedded systems as it enhances scalability, maintainability, and efficiency. By designing firmware that can be reused across different microcontrollers and projects, developers can reduce development time, minimize errors, and improve code consistency.
+
+Additionally, adhering to industry standards like MISRA-C and leveraging Hardware Abstraction Layers (HALs) ensures portability and flexibility, allowing the same firmware to be adapted to different hardware platforms with minimal modifications. This approach ultimately leads to cost-effective, reliable, and high-quality embedded solutions, making it an essential practice in modern firmware development.
