@@ -1,0 +1,71 @@
+/**
+ * @mainpage Digital Input/Output (DIO) Reusable Driver - Version 1.1
+ *
+ * @section intro Introduction
+ * This project is a personal initiative aimed at developing reusable firmware components for microcontroller platforms. 
+ * It focuses on a modular and efficient General-Purpose Input/Output (GPIO) driver referred as the Digital Input/Output (DIO) driver on the documentation that can be easily adapted   
+ * across various microcontroller families.
+ *
+ * @section version Version History
+ * - **v1.0**: Initial release
+ * - **v1.1**: Updated documentation, structural improvements and design by contract.
+ *
+ * @section architecture Software Architecture
+ * The software architecture follows a layered approach. This design pattern separates low-level code (drivers or HALs), and application-specific code. A layered architecture promotes reusability and simplifies the portability between different applications or microcontrollers.
+ * The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
+ *
+ * <center>
+ * <table>
+ *   <tr>
+ *     <td style="background-color: #eaf2ff; text-align: center;"><b>Application Layer</b></td>
+ *   </tr>
+ *   <tr>
+ *     <td style="background-color: #e8f8e8; text-align: center;"><b>Driver Layer</b></td>
+ *   </tr>
+ *   <tr>
+ *     <td style="background-color: #fffbe6; text-align: center;"><b>Hardware</b></td>
+ *   </tr>
+ * </table>
+ * <i>Figure 1: Layered Software Architecture</i>
+ * </center>
+ *
+ * The **Driver Layer** provides all necessary low-level code to initialize and control hardware peripherals (e.g., GPIO pins, sensors, buttons).  
+ * The **Application Layer** contains no direct hardware manipulation but instead interacts with hardware through the exposed driver interfaces. 
+ * This abstraction improves maintainability and facilitates hardware migration.
+ *
+ * @section standards Coding Standards
+ * The code is developed using a bare-metal approach and complies with industry-standard guidelines, particularly **MISRA-C**. 
+ * Best practices in naming, formatting, documentation, and modular design are followed to ensure reliability and maintainability.
+ *
+ * @section description Project Description
+ * This demonstration configures the **user button (PC13)** as an input. When pressed:
+ * - The **on-board LED (PA5)** turns on.
+ * - The **external yellow LED (PB0)** turns off via direct manipulation of the **ODR register**.
+ * 
+ * When released:
+ * - The on-board LED turns off.
+ * - The yellow LED turns on.
+ * 
+ * Additionally:
+ * - The **red LED (PA0)** toggles (no delay implemented yet; behavior observable during debugging).
+ * - The state of **PC13** is read directly from the **IDR register**, and status messages are printed to the console accordingly.
+ *
+ * @section requirements Project Goals
+ * - Provide a reusable GPIO driver for embedded applications.
+ * - Ensure portability across different microcontroller platforms.
+ * - Maintain compliance with professional coding standards (MISRA-C).
+ *
+ * @section tools Development Tools
+ * - **Development Board**: STM32 Nucleo-F401RE  
+ * - **IDE/Debugger**: Visual Studio Code with PlatformIO extension  
+ * - **Toolchain**: GNU ARM Embedded Toolchain
+ *
+ * @section usage Usage & Documentation
+ * The project is fully documented using Doxygen. Inline comments offer detailed insights into function behavior and usage. 
+ * The generated Doxygen documentation provides a structured and navigable reference for all code modules and components.
+ *
+ * @section acronyms Glossary
+ * - **GPIO**: General-Purpose Input/Output  
+ * - **DIO**: Digital Input/Output  
+ */
+
