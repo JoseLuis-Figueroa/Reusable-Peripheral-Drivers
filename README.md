@@ -66,7 +66,7 @@ Tested on: `Nucleo-F401RE`
 - ✅ SPI Master.  
 - ✅ SPI Master-Slave.  
 - ✅ GPIO Button/LED Control.  
-- ⏳ Timer driver (Planned).
+- ⏳ Unit Testing (Planned).
 
 **[Back to top](#table-of-contents)**
 
@@ -98,19 +98,15 @@ cd Reusable-Drivers
 
 You can build the project using either the **PlatformIO extension in Visual Studio Code** or the **PlatformIO CLI**.
 
-**Build using the PlatformIO Toolbar (GUI).**
+- **Build using the PlatformIO Toolbar (GUI):** If you're using VS Code with the PlatformIO extension, simply click the "_Build_" button in the PlatformIO toolbar. This will compile your project using the selected environment in your `platformio.ini`.
 
-If you're using **VS Code with the PlatformIO extension**, simply click the **"Build" button** in the PlatformIO toolbar. This will compile your project using the selected environment in your `platformio.ini`.
-
-**Build using the PlatformIO CLI.**
-
-From the project's root directory, run the following command to build all environments defined in `platformio.ini`:
+- **Build using the PlatformIO CLI:** From the project's root directory, run the following command to build all environments defined in `platformio.ini`:
 
 ```
 pio run
 ```
 
-Build specific environments:
+- **Build specific environments in CLI:** run the following command to build a specific environment:
 
 ```
 pio run -e nucleo_f401re
@@ -118,31 +114,32 @@ pio run -e nucleo_f401re
 
 ### Running Tests
 
-You can test on actual hardware by uploading the code:
+You can test on actual hardware by uploading the code using the **PlatformIO extension in Visual Studio Code** or the **PlatformIO CLI**:
+
+- **Run and debug using the PlatformIO Toolbar (GUI):** If you're using VS Code with the PlatformIO extension, simply click the "_Run and Debug_" button in the PlatformIO toolbar. This will run and debug your project using the selected environment in your `platformio.ini`.
+
+- **Build using the PlatformIO CLI:** From the project's root directory, run the following command to upload all environments defined in `platformio.ini`:
 
 ```
 pio run --target upload
 ```
 
-To monitor output:
-
-```
-pio device monitor
-```
-
 #### Other Tests
 
-- Manual debugging via SWD  
-- Logic analyzer (KY-57) signal validation for SPI  
-- Static analysis (planned)
+- Manual debugging via SWD.  
+- Logic analyzer (KY-57) signal validation for SPI.  
+- Static analysis (planned).
 
 ### Installation
 
 No separate installation needed—firmware is flashed directly to the microcontroller using the ST-Link interface.
 
+**[Back to top](#table-of-contents)**
+
 ---
 
 ## Usage
+
 
 ### General-Purpose Input/Output (GPIO)
 
@@ -165,8 +162,9 @@ This implementation serves as a **test and validation of the GPIO driver**. A vi
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/assets/113542682/7324bd6a-fac1-4b3b-a10d-abe7818b59bd" alt="DIO_Implementation">
 </p>
 
-Please refer to the Doxygen documentation available in the [Digital I/O Doxygen Documentation](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/DIO/output_files/html/index.html) for detailed documentation.
+<p align="center">Image 1. DIO Hardware Test.</p>
 
+Please refer to the Doxygen documentation available in the [Digital I/O Doxygen Documentation](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/DIO/output_files/html/index.html) for further code information.
 
 
 ### Serial Peripheral Interface (SPI)
@@ -178,8 +176,6 @@ The SPI codes configure **SPI1 as a master device** with the following settings:
 - **Bit transmission order:** Most Significant Bit (MSB) first  
 
 A **KY-57 logic analyzer** is connected to the master device for data reception and analysis. The GPIO driver configures the SPI1 pins for proper operation.
-
-**Pin Connections**
 
 <div align="center">
 <table>
@@ -211,14 +207,17 @@ A **KY-57 logic analyzer** is connected to the master device for data reception 
 </table>
 </div>
 
+<p align="center">Table 1. SPI Pin Connections.</p>
+
 The master continuously transmits data to the logic analyzer, currently sending **0x56**. Below is a screenshot of the captured data:
 
 <p align="center">
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI/imagens/SPI%20Master%20Screen.png" alt="[SPI Protocol" width="100%">
 </p>
 
-Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI/output_files/html/index.html) for detailed documentation.
+<p align="center">Image 2. SPI Protocol.</p>
 
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI/output_files/html/index.html) for further code information.
 
 
 ### Serial Peripheral Interface (Master-Slave)
@@ -232,7 +231,6 @@ This implementation configures two **Nucleo-F401RE boards** for SPI communicatio
     - **Data frame format:** 8-bit.
     - **Bit transmission order:** Most significant bit (MSB) first.
 
-**Pin Connections**
 <div align="center">
 <table>
   <tr>
@@ -268,13 +266,17 @@ This implementation configures two **Nucleo-F401RE boards** for SPI communicatio
 </table>
 </div>
 
+<p align="center">Table 2. Master-Slave Pin Connections.</p>
+
 The **slave device continuously transmits** a **0x66 value**, which the master receives and echoes back to the slave. A KY-57 logic analyzer is used to monitor the data exchange.
 
 <p align="center">
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI_Master_Slave/imagens/SPI_Master_Slave_v2.png" alt="[SPI Protocol" width="100%">
 </p>
 
-Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for detailed documentation.
+<p align="center">Image 3. Master-Slave SPI Protocol.</p>
+
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for further code information.
 
 
 **[Back to top](#table-of-contents)**
@@ -292,8 +294,8 @@ Latest release: **v1.1**
 
 ### Payload
 
-- `v1.0`: GPIO driver for user button and LED  
-- `v1.1`: SPI Master and Master-Slave communication
+- `v1.0`: Initial release. GPIO and SPIs drivers.  
+- `v1.1`: Struct arguments and Design by contract.
 
 **[Back to top](#table-of-contents)**
 
@@ -301,8 +303,7 @@ Latest release: **v1.1**
 
 ## How to Get Help
 
-Create an [issue on GitHub](https://github.com/JoseLuis-Figueroa/Reusable-Drivers/issues)  
-or contact the author through the GitHub profile.
+Create an [issue on GitHub](https://github.com/JoseLuis-Figueroa/Reusable-Drivers/issues) or contact the author through the GitHub profile.
 
 ---
 
@@ -318,7 +319,7 @@ Please read [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on the developme
 
 ## Further Reading
 
-- [Reusable Firmware Development](https://www.amazon.com/dp/1732708609) by Jacob Beningo  
+- [Reusable Firmware Development](https://www.beningo.com/store/developing-reusable-firmware-a-practical-approach-to-apis-hals-and-drivers/) by Jacob Beningo  
 - [STM32Cube HAL Drivers](https://www.st.com/en/embedded-software/stm32cubef4.html)  
 - [MISRA-C Guidelines](https://www.misra.org.uk/)
 
@@ -326,7 +327,7 @@ Please read [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on the developme
 
 ## License
 
-This project is licensed under the MIT License – see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License – see the [LICENSE.md](LICENSE) file for details.
 
 ---
 
