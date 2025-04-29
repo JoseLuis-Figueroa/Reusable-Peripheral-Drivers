@@ -217,7 +217,7 @@ The master continuously transmits data to the logic analyzer, currently sending 
 
 <p align="center">Image 2. SPI Protocol.</p>
 
-Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI/output_files/html/index.html) for further code information.
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/main/Documentation/Doxygen/SPI/output_files/html/index.html) for further code information.
 
 
 ### Serial Peripheral Interface (Master-Slave)
@@ -276,7 +276,7 @@ The **slave device continuously transmits** a **0x66 value**, which the master r
 
 <p align="center">Image 3. Master-Slave SPI Protocol.</p>
 
-Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for further code information.
+Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/main/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for further code information.
 
 
 **[Back to top](#table-of-contents)**
@@ -294,8 +294,8 @@ Latest release: **v1.1**
 
 ### Payload
 
-- `v1.0`: Initial release. GPIO and SPIs drivers.  
-- `v1.1`: Struct arguments and Design by contract.
+- `v1.0`: Initial release. GPIO and SPI drivers.  
+- `v1.1`: Updated documentation, structural improvements, and design by contract enhancements.
 
 **[Back to top](#table-of-contents)**
 
@@ -311,7 +311,7 @@ Create an [issue on GitHub](https://github.com/JoseLuis-Figueroa/Reusable-Driver
 
 Pull requests are welcome!
 
-Please read [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on the development process, coding standards, and submission guidelines.
+Please read [CONTRIBUTING.md](/Documentation/CONTRIBUTING.md) for details on the development process, coding standards, and submission guidelines.
 
 **[Back to top](#table-of-contents)**
 
