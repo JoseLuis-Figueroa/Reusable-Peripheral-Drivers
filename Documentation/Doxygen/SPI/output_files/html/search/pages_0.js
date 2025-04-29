@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['serial_20peripheral_20interface_20_28master_29_0',['Serial Peripheral Interface (Master)',['../index.html',1,'']]]
+  ['1_0',['Serial Peripheral Interface (SPI) Reusable Driver - Version 1.1',['../index.html',1,'']]],
+  ['1_201_1',['Serial Peripheral Interface (SPI) Reusable Driver - Version 1.1',['../index.html',1,'']]]
 ];

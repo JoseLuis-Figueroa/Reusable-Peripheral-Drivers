@@ -1,10 +1,13 @@
-\hypertarget{index_intro}{}\doxysection{Introduction}\label{index_intro}
-This project is a personal endeavor focused on developing reusable firmware for microcontroller platforms. The goal is to create a modular and efficient SPI reusable driver that can be easily adapted to various microcontrollers. The DIO driver is used to configure the selected SPI port.\hypertarget{index_version}{}\doxysection{Version Log}\label{index_version}
+\chapter{Serial Peripheral Interface (SPI) Reusable Driver -\/ Version 1.1}
+\hypertarget{index}{}\label{index}\index{Serial Peripheral Interface (SPI) Reusable Driver -\/ Version 1.1@{Serial Peripheral Interface (SPI) Reusable Driver -\/ Version 1.1}}
+\hypertarget{index_intro}{}\doxysection{\texorpdfstring{Introduction}{Introduction}}\label{index_intro}
+This project is a personal initiative aimed at developing reusable firmware components for microcontroller platforms. It focuses on creating a modular and efficient Serial Peripheral Interface (SPI) driver that can be easily adapted across various microcontroller families. The DIO driver is utilized to configure the selected SPI port for physical connectivity.\hypertarget{index_version}{}\doxysection{\texorpdfstring{Version History}{Version History}}\label{index_version}
 
 \begin{DoxyItemize}
-\item \mbox{[}Version 1.\+0\mbox{]} -\/ Initial release
-\end{DoxyItemize}\hypertarget{index_architecture}{}\doxysection{Software Architecture Overview}\label{index_architecture}
-The software architecture follows a layered approach. This design pattern separates low-\/level code (drivers or HALs), and application-\/specific code. A layered architecture promotes reusability and simplifies the portability between different applications or microcontrollers. The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
+\item {\bfseries{v1.\+0}}\+: Initial release.
+\item {\bfseries{v1.\+1}}\+: Updated documentation, structural improvements, and design by contract enhancements.
+\end{DoxyItemize}\hypertarget{index_architecture}{}\doxysection{\texorpdfstring{Software Architecture}{Software Architecture}}\label{index_architecture}
+The software architecture follows a layered approach. This design pattern separates low-\/level driver code (HALs) from application-\/specific code, promoting reusability and simplifying portability between different applications or microcontrollers. The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
 
 \begin{center} \tabulinesep=1mm
 \begin{longtabu}spread 0pt [c]{*{1}{|X[-1]}|}
@@ -15,9 +18,19 @@ Hardware  \\\cline{1-1}
 \end{longtabu}
 Figure 1. Two-\/\+Layer Software Architecture. \end{center} 
 
-The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. The application code (main) contains no driver code but has access to the low-\/level hardware through a driver-\/layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.\hypertarget{index_coding-standards}{}\doxysection{Coding Standards}\label{index_coding-standards}
-This project is developed as bare-\/metal firmware and adheres to industry-\/standard coding practices, following the MISRA-\/C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.\hypertarget{index_description}{}\doxysection{Project Description}\label{index_description}
-The code involves the configuration of a Serial Peripheral Interface. The SPI driver is used to configure the SPI1 as a master device. The setting includes a baud rate = 4KHz, full duplex communication, an 8-\/bit data frame format, and most significant bit transmission. To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among Nucleo board, and KY-\/57 logic analyzer\+:
+The {\bfseries{Driver Layer}} includes all necessary low-\/level code to initialize and manage hardware peripherals like SPI modules. ~\newline
+ The {\bfseries{Application Layer}} contains no hardware-\/specific code but instead interacts with the hardware through the driver interfaces, ensuring abstraction and easier maintenance.\hypertarget{index_standards}{}\doxysection{\texorpdfstring{Coding Standards}{Coding Standards}}\label{index_standards}
+This project is developed as bare-\/metal firmware and adheres to industry-\/standard coding practices, specifically the {\bfseries{MISRA-\/C}} guidelines. ~\newline
+ Best practices such as consistent naming conventions, clear code formatting, modularity, and detailed documentation are followed throughout.\hypertarget{index_description}{}\doxysection{\texorpdfstring{Project Description}{Project Description}}\label{index_description}
+This demonstration configures the SPI1 peripheral as a {\bfseries{master device}} with the following settings\+:
+\begin{DoxyItemize}
+\item {\bfseries{Baud rate}}\+: 4 k\+Hz.
+\item {\bfseries{Communication}}\+: Full duplex.
+\item {\bfseries{Data frame format}}\+: 8 bits.
+\item {\bfseries{Bit order}}\+: Most Significant Bit (MSB) first.
+\end{DoxyItemize}
+
+The physical connections between the STM32 Nucleo board and the KY-\/57 logic analyzer are configured using the DIO driver and follow this mapping\+:
 
 \begin{center}\end{center} 
 
@@ -38,22 +51,26 @@ MOSI   &PA7   &CH3   \\\cline{1-3}
 \end{longtabu}
 Table 1. SPI Pin Connections. \end{center} 
 
-In operation, the master continuously transmits data to the KY-\/57 logic analyzer for data reception and analysis, with the current involving the transmission of 0x56.\hypertarget{index_requirements}{}\doxysection{Project Requirements}\label{index_requirements}
-The project aims to meet the following requirements\+:
-\begin{DoxyItemize}
-\item Provide a set of reusable functions for microcontroller SPI.
-\item Maintain portability across different microcontroller platforms.
-\item Follow industry-\/standard coding practices and guidelines.
-\end{DoxyItemize}\hypertarget{index_tools}{}\doxysection{Tools}\label{index_tools}
-The current tooling used for this project includes\+:
-\begin{DoxyItemize}
-\item Development Board\+: Nucleo-\/\+F401\+RE
-\item IDE/\+Debugger\+: Visual Studio Code (Platform\+IO extension)
-\item Compiler Toolchain\+: GNU ARM Embedded Toolchain
-\end{DoxyItemize}\hypertarget{index_usage}{}\doxysection{Usage}\label{index_usage}
-The project is well-\/documented using Doxygen. Inline comments are used extensively to provide detailed explanations of code functionality, usage, and limitations. The Doxygen-\/generated documentation provides an easy-\/to-\/navigate reference for all project components.\hypertarget{index_acronyms}{}\doxysection{Acronyms}\label{index_acronyms}
+During operation, the master continuously transmits the data byte {\bfseries{0x56}} to the KY-\/57 logic analyzer for capture and analysis.\hypertarget{index_requirements}{}\doxysection{\texorpdfstring{Project Goals}{Project Goals}}\label{index_requirements}
 
 \begin{DoxyItemize}
-\item SPI\+: Serial Peripheral Interface
-\item DIO\+: Digital Input/\+Output 
+\item Provide a reusable, modular SPI driver for embedded applications.
+\item Maintain portability across different microcontroller platforms.
+\item Follow industry-\/standard coding guidelines (MISRA-\/C) for reliability and maintainability.
+\end{DoxyItemize}\hypertarget{index_tools}{}\doxysection{\texorpdfstring{Development Tools}{Development Tools}}\label{index_tools}
+
+\begin{DoxyItemize}
+\item {\bfseries{Development Board}}\+: STM32 Nucleo-\/\+F401\+RE. ~\newline
+
+\item {\bfseries{IDE/\+Debugger}}\+: Visual Studio Code with Platform\+IO extension. ~\newline
+
+\item {\bfseries{Toolchain}}\+: GNU ARM Embedded Toolchain.
+\end{DoxyItemize}\hypertarget{index_usage}{}\doxysection{\texorpdfstring{Usage \& Documentation}{Usage \& Documentation}}\label{index_usage}
+The project is fully documented using Doxygen. ~\newline
+ Extensive inline comments provide insights into the functionality, assumptions, and limitations of the code. ~\newline
+ The Doxygen-\/generated documentation offers a structured and easy-\/to-\/navigate reference for developers.\hypertarget{index_acronyms}{}\doxysection{\texorpdfstring{Glossary}{Glossary}}\label{index_acronyms}
+
+\begin{DoxyItemize}
+\item {\bfseries{SPI}}\+: Serial Peripheral Interface.
+\item {\bfseries{DIO}}\+: Digital Input/\+Output. 
 \end{DoxyItemize}

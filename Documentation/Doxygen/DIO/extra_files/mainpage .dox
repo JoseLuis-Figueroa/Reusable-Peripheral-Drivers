@@ -3,8 +3,7 @@
  *
  * @section intro Introduction
  * This project is a personal initiative aimed at developing reusable firmware components for microcontroller platforms. 
- * It focuses on a modular and efficient General-Purpose Input/Output (GPIO) driver referred as the Digital Input/Output (DIO) driver on the documentation that can be easily adapted   
- * across various microcontroller families.
+ * It focuses on a modular and efficient General-Purpose Input/Output (GPIO) driver referred as the Digital Input/Output (DIO) driver on the documentation that can be easily adapted across various microcontroller families.
  *
  * @section version Version History
  * - **v1.0**: Initial release
@@ -56,16 +55,16 @@
  * - Maintain compliance with professional coding standards (MISRA-C).
  *
  * @section tools Development Tools
- * - **Development Board**: STM32 Nucleo-F401RE  
- * - **IDE/Debugger**: Visual Studio Code with PlatformIO extension  
- * - **Toolchain**: GNU ARM Embedded Toolchain
+ * - **Development Board**: STM32 Nucleo-F401RE.  
+ * - **IDE/Debugger**: Visual Studio Code with PlatformIO extension. 
+ * - **Toolchain**: GNU ARM Embedded Toolchain.
  *
  * @section usage Usage & Documentation
  * The project is fully documented using Doxygen. Inline comments offer detailed insights into function behavior and usage. 
  * The generated Doxygen documentation provides a structured and navigable reference for all code modules and components.
  *
  * @section acronyms Glossary
- * - **GPIO**: General-Purpose Input/Output  
- * - **DIO**: Digital Input/Output  
+ * - **GPIO**: General-Purpose Input/Output.  
+ * - **DIO**: Digital Input/Output.  
  */
 

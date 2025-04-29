@@ -1,12 +1,12 @@
-\hypertarget{main_8c}{}\doxysection{C\+:/\+Users/figue/\+Documents/2.Electronics/1.Embedded\+\_\+\+Systems/\+STM32/\+Bare\+\_\+\+Metal/\+Boards/\+Nucleo\+\_\+\+F401\+RE/\+Reusable-\/\+Drivers/\+SPI/src/main.c File Reference}
-\label{main_8c}\index{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI/src/main.c@{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI/src/main.c}}
+\doxysection{C\+:/\+Users/\+User/\+One\+Drive/\+Documents/1.Repositories/\+Embedded\+Systems/\+STM32/\+Reusable-\/\+Drivers/\+SPI/src/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI/src/main.c@{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI/src/main.c}}
 
 
 Implement the master SPI driver using Nucleo-\/\+F401\+RE.  
 
 
-{\ttfamily \#include \char`\"{}spi.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}dio.\+h\char`\"{}}\newline
+{\ttfamily \#include "{}spi.\+h"{}}\newline
+{\ttfamily \#include "{}dio.\+h"{}}\newline
 Include dependency graph for main.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -14,10 +14,10 @@ Include dependency graph for main.\+c\+:\nopagebreak
 \includegraphics[width=350pt]{main_8c__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe} 
 int {\bfseries main} (void)
 \end{DoxyCompactItemize}
 
@@ -32,11 +32,15 @@ Jose Luis Figueroa
 1.\+0 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-2023-\/07-\/24 
+2025-\/03-\/13 
 \end{DoxyDate}
 \begin{DoxyNote}{Note}
-The microcontroller internal system clock is 16MHz. The baud rate is divided by 4, then, baud rate = 4MHz.
+Take into account the following considerations\+:
+\begin{DoxyItemize}
+\item The microcontroller internal system clock is 16MHz. The baud rate is divided by 4, then, baud rate = 4MHz.
+\item It is necessary to connect the Logic Analyzer to the SPI1 pins to debug or test the SPI communication.
+\end{DoxyItemize}
 \end{DoxyNote}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2023 Jose Luis Figueroa. MIT License. 
+Copyright (c) 2025 Jose Luis Figueroa. MIT License. 
 \end{DoxyCopyright}

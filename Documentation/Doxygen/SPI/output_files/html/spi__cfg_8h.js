@@ -1,7 +1,6 @@
 var spi__cfg_8h =
 [
     [ "SpiConfig_t", "struct_spi_config__t.html", "struct_spi_config__t" ],
-    [ "SPI_CHANNELS_NUMBER", "spi__cfg_8h.html#a9c7819d19280ce30224b2f46bd62ee4d", null ],
     [ "SPI_PORTS_NUMBER", "spi__cfg_8h.html#a95f741c335280d2a4856d763a206c3e1", null ],
     [ "SpiBaudRate_t", "spi__cfg_8h.html#a3cb3dda1124db8846befff5be1bdfb2f", [
       [ "SPI_FPCLK2", "spi__cfg_8h.html#a3cb3dda1124db8846befff5be1bdfb2fae5cb9a0a4b196e9ec1681086178f43a5", null ],
@@ -18,11 +17,13 @@ var spi__cfg_8h =
       [ "SPI_CHANNEL1", "spi__cfg_8h.html#a8ed88c83798d221d2afb7ab8b4023faaae01f25f2493c2b0a1406ee1371a2752d", null ],
       [ "SPI_CHANNEL2", "spi__cfg_8h.html#a8ed88c83798d221d2afb7ab8b4023faaa4acd0d9734887e78aa4c50dfc78fcbfa", null ],
       [ "SPI_CHANNEL3", "spi__cfg_8h.html#a8ed88c83798d221d2afb7ab8b4023faaa1b7e43cfe92e1412fc1d13622e099a6f", null ],
-      [ "SPI_CHANNEL4", "spi__cfg_8h.html#a8ed88c83798d221d2afb7ab8b4023faaaad41df2ed0eb35b857f48bd36cf9f91e", null ]
+      [ "SPI_CHANNEL4", "spi__cfg_8h.html#a8ed88c83798d221d2afb7ab8b4023faaaad41df2ed0eb35b857f48bd36cf9f91e", null ],
+      [ "SPI_MAX_CHANNEL", "spi__cfg_8h.html#a8ed88c83798d221d2afb7ab8b4023faaa845012bb8c36d60b29b9a17993ea5a4f", null ]
     ] ],
     [ "SpiDataSize_t", "spi__cfg_8h.html#abcc4f72e578adda03140d4dd9e459eba", [
       [ "SPI_8BITS", "spi__cfg_8h.html#abcc4f72e578adda03140d4dd9e459ebaa7d0f3f931e11690790cd430da3023142", null ],
-      [ "SPI_16BITS", "spi__cfg_8h.html#abcc4f72e578adda03140d4dd9e459ebaa43039bc9dc6d36ddb07d5565ddff0cf2", null ]
+      [ "SPI_16BITS", "spi__cfg_8h.html#abcc4f72e578adda03140d4dd9e459ebaa43039bc9dc6d36ddb07d5565ddff0cf2", null ],
+      [ "SPI_MAX_BITS", "spi__cfg_8h.html#abcc4f72e578adda03140d4dd9e459ebaa8a44215ed1cb98f6d8700f98e5592981", null ]
     ] ],
     [ "SpiFrameFormat_t", "spi__cfg_8h.html#ad0d0fad64f9813e5853f46b5bc1a3af9", [
       [ "SPI_MSB", "spi__cfg_8h.html#ad0d0fad64f9813e5853f46b5bc1a3af9a1eae4fe3047bf4fbef593e1d39562f45", null ],
@@ -42,14 +43,16 @@ var spi__cfg_8h =
       [ "SPI_MAX_MODE", "spi__cfg_8h.html#af7fd666f01e1a2fe00c42b85eaa3bf4da0b45ed1f5218bc73fa94541b4aac2ae8", null ]
     ] ],
     [ "SpiSlaveSelect_t", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34", [
-      [ "SOFTWARE_NSS", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a9f2f0be2769400d90f74adacbc3db246", null ],
-      [ "HARDWARE_NSS_ENABLED", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a21040ae68209a0a22c86e627d17b7778", null ],
-      [ "HARDWARE_NSS_DISABLED", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a354f1da6f400e644c45ba8b28d26df16", null ]
+      [ "SPI_SOFTWARE_NSS", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a0e8a69c8abefcc710ebc9190e98b2e06", null ],
+      [ "SPI_HARDWARE_NSS_ENABLED", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a6aa9f4e95b3f817f976aee86f1b15f50", null ],
+      [ "SPI_HARDWARE_NSS_DISABLED", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34af8450bb54c06e3a67b95f5730c1d42f7", null ],
+      [ "SPI_MAX_NSS", "spi__cfg_8h.html#a474aab4df5cccbad97f07bffe96dfb34a634f487ec39567972fcfb86b0779f5aa", null ]
     ] ],
     [ "SpiTypeTransfer_t", "spi__cfg_8h.html#ad62f9d63a1ab4982d18a733bec771326", [
       [ "SPI_FULL_DUPLEX", "spi__cfg_8h.html#ad62f9d63a1ab4982d18a733bec771326ab90ebf6910c1da04cfe4fe611b46866f", null ],
       [ "SPI_RECEIVE_MODE", "spi__cfg_8h.html#ad62f9d63a1ab4982d18a733bec771326abc167d862cc6ea23a7b5ac40730b6e5f", null ],
       [ "SPI_MAX_DF", "spi__cfg_8h.html#ad62f9d63a1ab4982d18a733bec771326ab5734c4b18de17cd5bc54a57bc463ace", null ]
     ] ],
-    [ "SPI_ConfigGet", "spi__cfg_8h.html#a72af5b1b28647c0f42591ecd067fccb9", null ]
+    [ "SPI_ConfigGet", "spi__cfg_8h.html#a72af5b1b28647c0f42591ecd067fccb9", null ],
+    [ "SPI_configSizeGet", "spi__cfg_8h.html#a52c2bcd5d6de69c68453237ffc72e724", null ]
 ];

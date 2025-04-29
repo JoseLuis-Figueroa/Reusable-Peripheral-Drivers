@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "Serial Peripheral Interface Reusable Driver", "index.html", [
-    [ "Serial Peripheral Interface (Master)", "index.html", "index" ],
+    [ "Serial Peripheral Interface (SPI) Reusable Driver - Version 1.1", "index.html", "index" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -53,5 +53,5 @@ var NAVTREEINDEX =
 "annotated.html"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';

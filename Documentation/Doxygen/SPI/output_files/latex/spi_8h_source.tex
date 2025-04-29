@@ -1,5 +1,5 @@
-\hypertarget{spi_8h_source}{}\doxysection{spi.\+h}
-\label{spi_8h_source}\index{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI/include/spi.h@{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI/include/spi.h}}
+\doxysection{spi.\+h}
+\hypertarget{spi_8h_source}{}\label{spi_8h_source}\index{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI/include/spi.h@{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI/include/spi.h}}
 \mbox{\hyperlink{spi_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ }
@@ -11,46 +11,54 @@
 \DoxyCodeLine{00018\ \textcolor{comment}{*****************************************************************************/}}
 \DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
 \DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
-\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{spi__cfg_8h}{spi\_cfg.h}}"{}}}
-\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}stm32f4xx.h"{}}\ \ \ }
-\DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \textcolor{comment}{/*****************************************************************************}}
-\DoxyCodeLine{00025\ \textcolor{comment}{*\ Preprocessor\ Constants}}
-\DoxyCodeLine{00026\ \textcolor{comment}{*****************************************************************************/}}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \textcolor{comment}{/*****************************************************************************}}
-\DoxyCodeLine{00029\ \textcolor{comment}{*\ Configuration\ Constants}}
-\DoxyCodeLine{00030\ \textcolor{comment}{*****************************************************************************/}}
-\DoxyCodeLine{00031\ }
-\DoxyCodeLine{00032\ \textcolor{comment}{/*****************************************************************************}}
-\DoxyCodeLine{00033\ \textcolor{comment}{*\ Macros}}
-\DoxyCodeLine{00034\ \textcolor{comment}{*****************************************************************************/}}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00036\ \textcolor{comment}{/*****************************************************************************}}
-\DoxyCodeLine{00037\ \textcolor{comment}{*\ Typedefs}}
-\DoxyCodeLine{00038\ \textcolor{comment}{*****************************************************************************/}}
-\DoxyCodeLine{00039\ }
-\DoxyCodeLine{00040\ \textcolor{comment}{/*****************************************************************************}}
-\DoxyCodeLine{00041\ \textcolor{comment}{*\ Variables}}
-\DoxyCodeLine{00042\ \textcolor{comment}{*****************************************************************************/}}
-\DoxyCodeLine{00043\ }
-\DoxyCodeLine{00044\ \textcolor{comment}{/*****************************************************************************}}
-\DoxyCodeLine{00045\ \textcolor{comment}{*\ Function\ Prototypes}}
-\DoxyCodeLine{00046\ \textcolor{comment}{*****************************************************************************/}}
-\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00048\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\{}
-\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_ac48916da3e83793b4ab8e77ff1b20f12}{SPI\_init}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_spi_config__t}{SpiConfig\_t}}\ *\ \textcolor{keyword}{const}\ Config);}
-\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_ae01bbf088c75b3fcaad609a9e433885e}{SPI\_transfer}}(\mbox{\hyperlink{spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{SpiChannel\_t}}\ Channel,\ uint16\_t\ *data,\ uint16\_t\ size);}
-\DoxyCodeLine{00053\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_aeb9cbd9cfaeaf0b94f23656f2e0bb542}{SPI\_receive}}(\mbox{\hyperlink{spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{SpiChannel\_t}}\ Channel,\ uint16\_t\ *data,\ uint16\_t\ size);}
-\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_aa37a28f7826d2b06a5150c5e92e686ae}{SPI\_registerWrite}}(uint32\_t\ address,\ uint32\_t\ value);}
-\DoxyCodeLine{00055\ uint16\_t\ \mbox{\hyperlink{spi_8h_a03822429df04dacaaae2f7682a3f6956}{SPI\_registerRead}}(uint32\_t\ address);}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00058\ \}\ \textcolor{comment}{//\ extern\ C}}
-\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00060\ }
-\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*SPI\_H\_*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\#define\ NDEBUG\ \ \ \ \ \ \ \ \ \ /*To\ disable\ assert\ function*/\ \ }}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <assert.h>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{spi__cfg_8h}{spi\_cfg.h}}"{}}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}stm32f4xx.h"{}}\ \ \ }
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{/*****************************************************************************}}
+\DoxyCodeLine{00027\ \textcolor{comment}{*\ Preprocessor\ Constants}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*****************************************************************************/}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{/*****************************************************************************}}
+\DoxyCodeLine{00031\ \textcolor{comment}{*\ Configuration\ Constants}}
+\DoxyCodeLine{00032\ \textcolor{comment}{*****************************************************************************/}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{/*****************************************************************************}}
+\DoxyCodeLine{00035\ \textcolor{comment}{*\ Macros}}
+\DoxyCodeLine{00036\ \textcolor{comment}{*****************************************************************************/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{comment}{/*****************************************************************************}}
+\DoxyCodeLine{00039\ \textcolor{comment}{*\ Typedefs}}
+\DoxyCodeLine{00040\ \textcolor{comment}{*****************************************************************************/}}
+\DoxyCodeLine{00041\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{SpiChannel\_t}}\ \mbox{\hyperlink{struct_spi_transfer_config__t_ac3308e3c6c7708c3159be2c53f39b6db}{Channel}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_spi_transfer_config__t_aaba88b24a21a6c70c895c0d55f4a69a0}{size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ uint16\_t\ *\mbox{\hyperlink{struct_spi_transfer_config__t_a5d286c9bcb0e4c4f62d09f5ec39118e4}{data}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \}\mbox{\hyperlink{struct_spi_transfer_config__t}{SpiTransferConfig\_t}};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{/*****************************************************************************}}
+\DoxyCodeLine{00049\ \textcolor{comment}{*\ Variables}}
+\DoxyCodeLine{00050\ \textcolor{comment}{*****************************************************************************/}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{/*****************************************************************************}}
+\DoxyCodeLine{00053\ \textcolor{comment}{*\ Function\ Prototypes}}
+\DoxyCodeLine{00054\ \textcolor{comment}{*****************************************************************************/}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\{}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_a1c60b9b5ccb0c9730a8203bc50f51512}{SPI\_init}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_spi_config__t}{SpiConfig\_t}}\ *\ \textcolor{keyword}{const}\ Config,\ \textcolor{keywordtype}{size\_t}\ configSize);}
+\DoxyCodeLine{00060\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_a4eb5e4456aade25edc6c6f4b673ddeda}{SPI\_transfer}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_spi_transfer_config__t}{SpiTransferConfig\_t}}\ *\ \textcolor{keyword}{const}\ TransferConfig);}
+\DoxyCodeLine{00061\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_a7720b57a48f8aa6dc2e928d42397fdea}{SPI\_receive}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_spi_transfer_config__t}{SpiTransferConfig\_t}}\ *\ \textcolor{keyword}{const}\ TransferConfig);}
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi_8h_aa37a28f7826d2b06a5150c5e92e686ae}{SPI\_registerWrite}}(uint32\_t\ address,\ uint32\_t\ value);}
+\DoxyCodeLine{00063\ uint16\_t\ \mbox{\hyperlink{spi_8h_a03822429df04dacaaae2f7682a3f6956}{SPI\_registerRead}}(uint32\_t\ address);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00066\ \}\ \textcolor{comment}{//\ extern\ C}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*SPI\_H\_*/}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

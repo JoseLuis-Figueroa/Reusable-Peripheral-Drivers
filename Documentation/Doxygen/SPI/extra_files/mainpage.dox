@@ -1,16 +1,16 @@
 /**
- * @mainpage Serial Peripheral Interface (Master)
+ * @mainpage Serial Peripheral Interface (SPI) Reusable Driver - Version 1.1
  *
  * @section intro Introduction
- * This project is a personal endeavor focused on developing reusable firmware for microcontroller platforms. The goal is to create a modular and efficient SPI reusable driver that can be easily adapted to various microcontrollers. The DIO driver is used to configure the selected SPI port. 
+ * This project is a personal initiative aimed at developing reusable firmware components for microcontroller platforms. It focuses on creating a modular and efficient Serial Peripheral Interface (SPI) driver that can be easily adapted across various microcontroller families. The DIO driver is utilized to configure the selected SPI port for physical connectivity.
  *
- * @section version Version Log
- * - [Version 1.0] - Initial release
- *
- * @section architecture Software Architecture Overview
- * The software architecture follows a layered approach. This design pattern separates low-level code (drivers or HALs), and application-specific code. A layered architecture promotes reusability and simplifies the portability between different applications or microcontrollers.
- * The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
+ * @section version Version History
+ * - **v1.0**: Initial release.
+ * - **v1.1**: Updated documentation, structural improvements, and design by contract enhancements.
  * 
+ * @section architecture Software Architecture
+ * The software architecture follows a layered approach. This design pattern separates low-level driver code (HALs) from application-specific code, promoting reusability and simplifying portability between different applications or microcontrollers. The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
+ *
  * <center>
  * <table>
  *   <tr>
@@ -26,16 +26,21 @@
  * Figure 1. Two-Layer Software Architecture.
  * </center>
  * 
- * The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. 
- * The application code (main) contains no driver code but has access to the low-level hardware through a driver-layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.
+ * The **Driver Layer** includes all necessary low-level code to initialize and manage hardware peripherals like SPI modules.  
+ * The **Application Layer** contains no hardware-specific code but instead interacts with the hardware through the driver interfaces, ensuring abstraction and easier maintenance.
  *
- * @section coding-standards Coding Standards
- * This project is developed as bare-metal firmware and adheres to industry-standard coding practices, following the MISRA-C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.
+ * @section standards Coding Standards
+ * This project is developed as bare-metal firmware and adheres to industry-standard coding practices, specifically the **MISRA-C** guidelines.  
+ * Best practices such as consistent naming conventions, clear code formatting, modularity, and detailed documentation are followed throughout.
  *
  * @section description Project Description
- * The code involves the configuration of a Serial Peripheral Interface. The SPI driver is used to configure the SPI1 as a master device. 
- * The setting includes a baud rate = 4KHz, full duplex communication, an 8-bit data frame format, and most significant bit transmission. 
- * To establish the physical connections, the GPIO driver configures the SPI1 pins. The following table illustrates the pin connections among Nucleo board, and KY-57 logic analyzer:
+ * This demonstration configures the SPI1 peripheral as a **master device** with the following settings:
+ * - **Baud rate**: 4 kHz.
+ * - **Communication**: Full duplex.
+ * - **Data frame format**: 8 bits.
+ * - **Bit order**: Most Significant Bit (MSB) first.
+ *
+ * The physical connections between the STM32 Nucleo board and the KY-57 logic analyzer are configured using the DIO driver and follow this mapping:
  *
  * <center>
  * @tableofcontents
@@ -49,25 +54,25 @@
  * Table 1. SPI Pin Connections.
  * </center>
  *
- * In operation, the master continuously transmits data to the KY-57 logic analyzer for data reception and analysis, with the current involving the transmission of 0x56.
+ * During operation, the master continuously transmits the data byte **0x56** to the KY-57 logic analyzer for capture and analysis.
  *
- * @section requirements Project Requirements
- * The project aims to meet the following requirements:
- * - Provide a set of reusable functions for microcontroller SPI.
+ * @section requirements Project Goals
+ * - Provide a reusable, modular SPI driver for embedded applications.
  * - Maintain portability across different microcontroller platforms.
- * - Follow industry-standard coding practices and guidelines.
+ * - Follow industry-standard coding guidelines (MISRA-C) for reliability and maintainability.
  *
- * @section tools Tools
- * The current tooling used for this project includes:
- * - Development Board: Nucleo-F401RE
- * - IDE/Debugger: Visual Studio Code (PlatformIO extension)
- * - Compiler Toolchain: GNU ARM Embedded Toolchain
+ * @section tools Development Tools
+ * - **Development Board**: STM32 Nucleo-F401RE.  
+ * - **IDE/Debugger**: Visual Studio Code with PlatformIO extension.  
+ * - **Toolchain**: GNU ARM Embedded Toolchain.
  *
- * @section usage Usage
- * The project is well-documented using Doxygen. Inline comments are used extensively to provide detailed explanations of code functionality, usage, and limitations. The Doxygen-generated documentation provides an easy-to-navigate reference for all project components.
+ * @section usage Usage & Documentation
+ * The project is fully documented using Doxygen.  
+ * Extensive inline comments provide insights into the functionality, assumptions, and limitations of the code.  
+ * The Doxygen-generated documentation offers a structured and easy-to-navigate reference for developers.
  *
- * @section acronyms Acronyms
- * - SPI: Serial Peripheral Interface
- * - DIO: Digital Input/Output
+ * @section acronyms Glossary
+ * - **SPI**: Serial Peripheral Interface.
+ * - **DIO**: Digital Input/Output.
  *
 */

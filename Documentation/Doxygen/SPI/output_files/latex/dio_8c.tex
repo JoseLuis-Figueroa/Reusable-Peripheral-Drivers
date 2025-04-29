@@ -1,11 +1,11 @@
-\hypertarget{dio_8c}{}\doxysection{C\+:/\+Users/figue/\+Documents/2.Electronics/1.Embedded\+\_\+\+Systems/\+STM32/\+Bare\+\_\+\+Metal/\+Boards/\+Nucleo\+\_\+\+F401\+RE/\+Reusable-\/\+Drivers/\+SPI/src/dio.c File Reference}
-\label{dio_8c}\index{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI/src/dio.c@{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI/src/dio.c}}
+\doxysection{C\+:/\+Users/\+User/\+One\+Drive/\+Documents/1.Repositories/\+Embedded\+Systems/\+STM32/\+Reusable-\/\+Drivers/\+SPI/src/dio.c File Reference}
+\hypertarget{dio_8c}{}\label{dio_8c}\index{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI/src/dio.c@{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI/src/dio.c}}
 
 
-The implementation for the dio.  
+The implementation for the DIO driver.  
 
 
-{\ttfamily \#include \char`\"{}dio.\+h\char`\"{}}\newline
+{\ttfamily \#include "{}dio.\+h"{}}\newline
 Include dependency graph for dio.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -13,16 +13,16 @@ Include dependency graph for dio.\+c\+:\nopagebreak
 \includegraphics[width=350pt]{dio_8c__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\+\_\+init}} (const \mbox{\hyperlink{struct_dio_config__t}{Dio\+Config\+\_\+t}} $\ast$const Config)
+void \mbox{\hyperlink{dio_8c_a185ed82086ce8882400bd04bccacf4d3}{DIO\+\_\+init}} (const \mbox{\hyperlink{struct_dio_config__t}{Dio\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const Config, size\+\_\+t config\+Size)
 \item 
-\mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}} \mbox{\hyperlink{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}{DIO\+\_\+pin\+Read}} (\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}} Port, \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}} Pin)
+\mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}} \mbox{\hyperlink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\+\_\+pin\+Read}} (const \mbox{\hyperlink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const Pin\+Config)
 \item 
-void \mbox{\hyperlink{dio_8c_a3abc9becdaa8630d94206050c82580bf}{DIO\+\_\+pin\+Write}} (\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}} Port, \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}} Pin, \mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}} State)
+void \mbox{\hyperlink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\+\_\+pin\+Write}} (const \mbox{\hyperlink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const Pin\+Config, \mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}} State)
 \item 
-void \mbox{\hyperlink{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}{DIO\+\_\+pin\+Toggle}} (\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}} Port, \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}} Pin)
+void \mbox{\hyperlink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\+\_\+pin\+Toggle}} (const \mbox{\hyperlink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const Pin\+Config)
 \item 
 void \mbox{\hyperlink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write}} (uint32\+\_\+t address, uint32\+\_\+t value)
 \item 
@@ -31,41 +31,45 @@ uint32\+\_\+t \mbox{\hyperlink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_
 
 
 \doxysubsection{Detailed Description}
-The implementation for the dio. 
+The implementation for the DIO driver. 
 
 \begin{DoxyAuthor}{Author}
 Jose Luis Figueroa 
 \end{DoxyAuthor}
 \begin{DoxyVersion}{Version}
-1.\+0 
+1.\+1 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-2023-\/03-\/19
+2025-\/03-\/11
 \end{DoxyDate}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2023 Jose Luis Figueroa. MIT License. 
+Copyright (c) 2025 Jose Luis Figueroa. MIT License. 
 \end{DoxyCopyright}
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}\label{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}} 
-\index{dio.c@{dio.c}!DIO\_init@{DIO\_init}}
+\Hypertarget{dio_8c_a185ed82086ce8882400bd04bccacf4d3}\index{dio.c@{dio.c}!DIO\_init@{DIO\_init}}
 \index{DIO\_init@{DIO\_init}!dio.c@{dio.c}}
 \doxysubsubsection{\texorpdfstring{DIO\_init()}{DIO\_init()}}
-{\footnotesize\ttfamily void DIO\+\_\+init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_dio_config__t}{Dio\+Config\+\_\+t}} $\ast$const}]{Config }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{dio_8c_a185ed82086ce8882400bd04bccacf4d3} 
+void DIO\+\_\+init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_dio_config__t}{Dio\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{Config}{, }\item[{size\+\_\+t}]{config\+Size}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to initialize the Dio based on the configuration ~\newline
+{\bfseries{Description\+:}} This function is used to initialize the DIO based on the configuration ~\newline
  table defined in dio\+\_\+cfg module.
 
-PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled. PRE-\/\+CONDITION\+: NUMBER\+\_\+\+OF\+\_\+\+PORTS \texorpdfstring{$>$}{>} 0 ~\newline
+PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled. ~\newline
  PRE-\/\+CONDITION\+: Configuration table needs to be populated (sizeof \texorpdfstring{$>$}{>} 0) ~\newline
+ PRE-\/\+CONDITION\+: NUMBER\+\_\+\+OF\+\_\+\+PORTS \texorpdfstring{$>$}{>} 0 ~\newline
+ PRE-\/\+CONDITION\+: The setting is within the maximum values (DIO\+\_\+\+MAX). ~\newline
 
 
 POST-\/\+CONDITION\+: The DIO peripheral is set up with the configuration settings.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em Config} & is a pointer to the configuration table that contains the initialization for the peripheral.\\
+\mbox{\texttt{ in}}  & {\em Config} & is a pointer to the configuration table that contains the initialization for the peripheral. \\
+\hline
+\mbox{\texttt{ in}}  & {\em config\+Size} & is the size of the configuration table.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -73,88 +77,107 @@ void
 \end{DoxyReturn}
 {\bfseries{Example\+:}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_dio_config__t}{DioConfig\_t}}\ *\ \textcolor{keyword}{const}\ \mbox{\hyperlink{dio__cfg_8c_ad606ed583fbec9d0749c319c717a65f1}{DioConfig}}\ =\ \mbox{\hyperlink{dio__cfg_8c_ad94e4a3383df84c2eb51f941e343755b}{DIO\_configGet}}();}
-\DoxyCodeLine{\mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\_init}}(\mbox{\hyperlink{dio__cfg_8c_ad606ed583fbec9d0749c319c717a65f1}{DioConfig}});}
+\DoxyCodeLine{\textcolor{keyword}{const}\ Dio\_ConfigType\_t\ *\ \textcolor{keyword}{const}\ \mbox{\hyperlink{dio__cfg_8c_ad606ed583fbec9d0749c319c717a65f1}{DioConfig}}\ =\ \mbox{\hyperlink{dio__cfg_8c_ad94e4a3383df84c2eb51f941e343755b}{DIO\_configGet}}();}
+\DoxyCodeLine{\textcolor{keywordtype}{size\_t}\ configSize\ =\ \mbox{\hyperlink{dio__cfg_8c_a5547c2e77c21e6b9c3605d9e518d2a80}{DIO\_configSizeGet}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{DIO\_Init(\mbox{\hyperlink{dio__cfg_8c_ad606ed583fbec9d0749c319c717a65f1}{DioConfig}},\ configSize);}
 
 \end{DoxyCode}
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\+\_\+init}} 
+\doxylink{dio__cfg_8c_ad94e4a3383df84c2eb51f941e343755b}{DIO\+\_\+config\+Get} 
 
-\mbox{\hyperlink{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}{DIO\+\_\+pin\+Read}} 
+\doxylink{dio__cfg_8c_a5547c2e77c21e6b9c3605d9e518d2a80}{DIO\+\_\+config\+Size\+Get} 
 
-\mbox{\hyperlink{dio_8c_a3abc9becdaa8630d94206050c82580bf}{DIO\+\_\+pin\+Write}} 
+\doxylink{dio_8c_a185ed82086ce8882400bd04bccacf4d3}{DIO\+\_\+init} 
 
-\mbox{\hyperlink{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}{DIO\+\_\+pin\+Toggle}} 
+\doxylink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\+\_\+pin\+Read} 
 
-\mbox{\hyperlink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write}} 
+\doxylink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\+\_\+pin\+Write} 
 
-\mbox{\hyperlink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read}} 
+\doxylink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\+\_\+pin\+Toggle} 
+
+\doxylink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write} 
+
+\doxylink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read} 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}\label{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}} 
-\index{dio.c@{dio.c}!DIO\_pinRead@{DIO\_pinRead}}
+\Hypertarget{dio_8c_ac8accdf22443a8de856d9c82798bbed2}\index{dio.c@{dio.c}!DIO\_pinRead@{DIO\_pinRead}}
 \index{DIO\_pinRead@{DIO\_pinRead}!dio.c@{dio.c}}
 \doxysubsubsection{\texorpdfstring{DIO\_pinRead()}{DIO\_pinRead()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}} DIO\+\_\+pin\+Read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}}}]{Port,  }\item[{\mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}}}]{Pin }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{dio_8c_ac8accdf22443a8de856d9c82798bbed2} 
+\mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}} DIO\+\_\+pin\+Read (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{Pin\+Config}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to read the state of a dio pin.
+{\bfseries{Description\+:}} This function is used to reads the state of a specified pin. This function reads the state of a digital input/output pin specified by the \doxylink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t} structure, which contains the port and pin information.
 
 PRE-\/\+CONDITION\+: The pin is configured as INPUT ~\newline
  PRE-\/\+CONDITION\+: The pin is configured as GPIO ~\newline
- PRE-\/\+CONDITION\+: The Port is within the maximum Dio\+Port\+\_\+t. PRE-\/\+CONDITION\+: The Pin is within the maximum Dio\+Pin\+\_\+t. definition.
+ PRE-\/\+CONDITION\+: \doxylink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t} needs to be populated (sizeof \texorpdfstring{$>$}{>} 0) ~\newline
+ PRE-\/\+CONDITION\+: The Port is within the maximum \doxylink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}. ~\newline
+ PRE-\/\+CONDITION\+: The Pin is within the maximum \doxylink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}. definition. ~\newline
 
-POST-\/\+CONDITION\+: The channel state is returned.
+
+POST-\/\+CONDITION\+: The channel state is returned. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em Port} & is the Dio\+Port\+\_\+t that represents a port. \\
-\hline
-\mbox{\texttt{ in}}  & {\em Pin} & is the Dio\+Pin\+\_\+t that represents a pin. \\
+\mbox{\texttt{ in}}  & {\em Pin\+Config} & A pointer to a structure containing the port and pin to be read.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The state of the channel as HIGH or LOW.
+\doxylink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t} The state of the pin (high or low).
 \end{DoxyReturn}
 {\bfseries{Example\+:}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordtype}{bool}\ pin\ =\ \mbox{\hyperlink{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}{DIO\_pinRead}}(\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2aba081051d7cf8fc6476576f371457360}{DIO\_PC}},\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efa10d7d3ea7b61d616ff435e126e9dadcb}{DIO\_PC5}});}
+\DoxyCodeLine{\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_dio_pin_config__t}{DioPinConfig\_t}}\ \ UserButton1=\ }
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ .Port\ =\ \mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2aba081051d7cf8fc6476576f371457360}{DIO\_PC}},\ }
+\DoxyCodeLine{\ \ \ \ \ .Pin\ =\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efa5d8c431d97006c93a1830d6dc5aa6b70}{DIO\_PC13}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ pin\ =\ \mbox{\hyperlink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\_pinRead}}(\&UserButton1);}
 
 \end{DoxyCode}
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\+\_\+init}} 
+DIO\+\_\+\+Config\+Get 
 
-\mbox{\hyperlink{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}{DIO\+\_\+pin\+Read}} 
+\doxylink{dio__cfg_8c_a5547c2e77c21e6b9c3605d9e518d2a80}{DIO\+\_\+config\+Size\+Get} 
 
-\mbox{\hyperlink{dio_8c_a3abc9becdaa8630d94206050c82580bf}{DIO\+\_\+pin\+Write}} 
+\doxylink{dio_8c_a185ed82086ce8882400bd04bccacf4d3}{DIO\+\_\+init} 
 
-\mbox{\hyperlink{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}{DIO\+\_\+pin\+Toggle}} 
+\doxylink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\+\_\+pin\+Read} 
 
-\mbox{\hyperlink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write}} 
+\doxylink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\+\_\+pin\+Write} 
 
-\mbox{\hyperlink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read}} 
+\doxylink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\+\_\+pin\+Toggle} 
+
+\doxylink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write} 
+
+\doxylink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read} 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}\label{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}} 
-\index{dio.c@{dio.c}!DIO\_pinToggle@{DIO\_pinToggle}}
+\Hypertarget{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}\index{dio.c@{dio.c}!DIO\_pinToggle@{DIO\_pinToggle}}
 \index{DIO\_pinToggle@{DIO\_pinToggle}!dio.c@{dio.c}}
 \doxysubsubsection{\texorpdfstring{DIO\_pinToggle()}{DIO\_pinToggle()}}
-{\footnotesize\ttfamily void DIO\+\_\+pin\+Toggle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}}}]{Port,  }\item[{\mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}}}]{Pin }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e} 
+void DIO\+\_\+pin\+Toggle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{Pin\+Config}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to toggle the current state of a pin.
+{\bfseries{Description\+:}} This function is used to toggle the current state of a pin. This function reads the state of a digital input/output pin specified by the \doxylink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t} structure, which contains the port and pin information.
 
 PRE-\/\+CONDITION\+: The channel is configured as output ~\newline
  PRE-\/\+CONDITION\+: The channel is configured as GPIO ~\newline
- PRE-\/\+CONDITION\+: The channel is within the maximum Dio\+Channel\+\_\+t definition.
+ PRE-\/\+CONDITION\+: \doxylink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t} needs to be populated (sizeof \texorpdfstring{$>$}{>} 0) ~\newline
+ PRE-\/\+CONDITION\+: The Port is within the maximum \doxylink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}. ~\newline
+ PRE-\/\+CONDITION\+: The Pin is within the maximum \doxylink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}. ~\newline
 
-POST-\/\+CONDITION\+:
+
+POST-\/\+CONDITION\+: The channel state is toggled. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em Port} & is the GPIO to write using the Dio\+Port\+\_\+t enum. \\
-\hline
-\mbox{\texttt{ in}}  & {\em Pin} & is the bit from the Dio\+Pin\+\_\+t that is to be modified\\
+\mbox{\texttt{ in}}  & {\em pin\+Config} & A pointer to a structure containing the port and pin to be toggled.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -162,45 +185,57 @@ void
 \end{DoxyReturn}
 {\bfseries{Example\+:}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}{DIO\_pinToggle}}(\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2af9be5fca1bf8343526a7854be6d1a5af}{DIO\_PA}},\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efaadd606b3c2efbe2991f2d7adc46c1b3f}{DIO\_PA3}});}
+\DoxyCodeLine{\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_dio_pin_config__t}{DioPinConfig\_t}}\ \ UserLED1=\ }
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ .Port\ =\ \mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2af9be5fca1bf8343526a7854be6d1a5af}{DIO\_PA}},\ }
+\DoxyCodeLine{\ \ \ \ \ .Pin\ =\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efabb0375c0a73b8254ab3ccf2ee2cabdc6}{DIO\_PA5}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{\mbox{\hyperlink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\_pinToggle}}(\&UserLED1);}
 
 \end{DoxyCode}
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\+\_\+init}} 
+DIO\+\_\+\+Config\+Get 
 
-\mbox{\hyperlink{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}{DIO\+\_\+pin\+Read}} 
+\doxylink{dio__cfg_8c_a5547c2e77c21e6b9c3605d9e518d2a80}{DIO\+\_\+config\+Size\+Get} 
 
-\mbox{\hyperlink{dio_8c_a3abc9becdaa8630d94206050c82580bf}{DIO\+\_\+pin\+Write}} 
+\doxylink{dio_8c_a185ed82086ce8882400bd04bccacf4d3}{DIO\+\_\+init} 
 
-\mbox{\hyperlink{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}{DIO\+\_\+pin\+Toggle}} 
+\doxylink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\+\_\+pin\+Read} 
 
-\mbox{\hyperlink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write}} 
+\doxylink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\+\_\+pin\+Write} 
 
-\mbox{\hyperlink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read}} 
+\doxylink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\+\_\+pin\+Toggle} 
+
+\doxylink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write} 
+
+\doxylink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read} 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{dio_8c_a3abc9becdaa8630d94206050c82580bf}\label{dio_8c_a3abc9becdaa8630d94206050c82580bf}} 
-\index{dio.c@{dio.c}!DIO\_pinWrite@{DIO\_pinWrite}}
+\Hypertarget{dio_8c_ac429cbbf160c1b221c57785332055369}\index{dio.c@{dio.c}!DIO\_pinWrite@{DIO\_pinWrite}}
 \index{DIO\_pinWrite@{DIO\_pinWrite}!dio.c@{dio.c}}
 \doxysubsubsection{\texorpdfstring{DIO\_pinWrite()}{DIO\_pinWrite()}}
-{\footnotesize\ttfamily void DIO\+\_\+pin\+Write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}}}]{Port,  }\item[{\mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}}}]{Pin,  }\item[{\mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}}}]{State }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{dio_8c_ac429cbbf160c1b221c57785332055369} 
+void DIO\+\_\+pin\+Write (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{Pin\+Config}{, }\item[{\mbox{\hyperlink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}}}]{State}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to write the state of a pin as either logic high or low through the use of the Dio\+Channel\+\_\+t enum to select the channel and the Dio\+Pin\+State\+\_\+t to define the desired state.
+{\bfseries{Description\+:}} This function is used to write the state of a pin as either logic high or low. it reads the state of a digital input/output pin specified by the \doxylink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t} structure and the \doxylink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t} to define the desired state, which contains the port and pin information.
 
 PRE-\/\+CONDITION\+: The pin is configured as OUTPUT ~\newline
  PRE-\/\+CONDITION\+: The pin is configured as GPIO ~\newline
- PRE-\/\+CONDITION\+: The pin is within the maximum Dio\+Channel\+\_\+t . definition.
+ PRE-\/\+CONDITION\+: \doxylink{struct_dio_pin_config__t}{Dio\+Pin\+Config\+\_\+t} needs to be populated (sizeof \texorpdfstring{$>$}{>} 0) ~\newline
+ PRE-\/\+CONDITION\+: The Port is within the maximum \doxylink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2}{Dio\+Port\+\_\+t}. ~\newline
+ PRE-\/\+CONDITION\+: The Pin is within the maximum \doxylink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9ef}{Dio\+Pin\+\_\+t}. ~\newline
+ PRE-\/\+CONDITION\+: The State is within the maximum \doxylink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t}. ~\newline
 
-POST-\/\+CONDITION\+: The channel state will be Stated.
+
+POST-\/\+CONDITION\+: The channel state is Stated. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em Port} & is the GPIO to write using the Dio\+Port\+\_\+t enum. \\
+\mbox{\texttt{ in}}  & {\em pin\+Config} & A pointer to a structure containing the port and pin to be written. \\
 \hline
-\mbox{\texttt{ in}}  & {\em Pin} & is the bit to write using the Dio\+Pin\+\_\+t enum definition. \\
-\hline
-\mbox{\texttt{ in}}  & {\em State} & is HIGH or LOW as defined in the Dio\+Pin\+State\+\_\+t enum.\\
+\mbox{\texttt{ in}}  & {\em State} & is HIGH or LOW as defined in the \doxylink{dio__cfg_8h_acccd72f1da55a79911ba97e4cf3c176f}{Dio\+Pin\+State\+\_\+t} enum.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -208,36 +243,52 @@ void
 \end{DoxyReturn}
 {\bfseries{Example\+:}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{dio_8c_a3abc9becdaa8630d94206050c82580bf}{DIO\_pinWrite}}(\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2af9be5fca1bf8343526a7854be6d1a5af}{DIO\_PA}},\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efad00fe9478d40d9afd26a446032739be0}{DIO\_PA1}},\ LOW);\ \ \textcolor{comment}{//Set\ the\ PORT\ pin\ low}}
-\DoxyCodeLine{\mbox{\hyperlink{dio_8c_a3abc9becdaa8630d94206050c82580bf}{DIO\_pinWrite}}(\mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2a02a12ed5fbaf448e62628510acb839f6}{DIO\_PB}},\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efa9f931f65a4455996bfb6fdc7d37117ab}{DIO\_PB3}},\ HIGH);\ \textcolor{comment}{//Set\ the\ PORT\ pin\ high}}
+\DoxyCodeLine{\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_dio_pin_config__t}{DioPinConfig\_t}}\ \ UserLED1=\ }
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ .Port\ =\ \mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2af9be5fca1bf8343526a7854be6d1a5af}{DIO\_PA}},\ }
+\DoxyCodeLine{\ \ \ \ \ .Pin\ =\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efabb0375c0a73b8254ab3ccf2ee2cabdc6}{DIO\_PA5}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_dio_pin_config__t}{DioPinConfig\_t}}\ \ UserLED2=\ }
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ .Port\ =\ \mbox{\hyperlink{dio__cfg_8h_abe5dc700bc4d664a1c594968ea8ae9b2af9be5fca1bf8343526a7854be6d1a5af}{DIO\_PA}},\ }
+\DoxyCodeLine{\ \ \ \ \ .Pin\ =\ \mbox{\hyperlink{dio__cfg_8h_af0645afc6cc3c26ff8e3d75477dbc9efa571175d91104776aad0b7b4106f8d805}{DIO\_PA6}}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{\mbox{\hyperlink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\_pinWrite}}(\&UserLED1,\ LOW);\ \ \ \ \textcolor{comment}{//Set\ the\ pin\ low}}
+\DoxyCodeLine{\mbox{\hyperlink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\_pinWrite}}(\&UserLED2,\ HIGH);\ \ \ \textcolor{comment}{//Set\ the\ pin\ high}}
 
 \end{DoxyCode}
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\+\_\+init}} 
+DIO\+\_\+\+Config\+Get 
 
-\mbox{\hyperlink{dio_8c_a0d32e902fa164c3b7b901630c0bcc249}{DIO\+\_\+pin\+Read}} 
+\doxylink{dio__cfg_8c_a5547c2e77c21e6b9c3605d9e518d2a80}{DIO\+\_\+config\+Size\+Get} 
 
-\mbox{\hyperlink{dio_8c_a3abc9becdaa8630d94206050c82580bf}{DIO\+\_\+pin\+Write}} 
+\doxylink{dio_8c_a185ed82086ce8882400bd04bccacf4d3}{DIO\+\_\+init} 
 
-\mbox{\hyperlink{dio_8c_a6a3f5b6494b09bfc6b15bc6c401a6341}{DIO\+\_\+pin\+Toggle}} 
+\doxylink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\+\_\+pin\+Read} 
 
-\mbox{\hyperlink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write}} 
+\doxylink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\+\_\+pin\+Write} 
 
-\mbox{\hyperlink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read}} 
+\doxylink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\+\_\+pin\+Toggle} 
+
+\doxylink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write} 
+
+\doxylink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read} 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{dio_8c_acb402f0cb510766d39ddb676bdb782bb}\label{dio_8c_acb402f0cb510766d39ddb676bdb782bb}} 
-\index{dio.c@{dio.c}!DIO\_registerRead@{DIO\_registerRead}}
+\Hypertarget{dio_8c_acb402f0cb510766d39ddb676bdb782bb}\index{dio.c@{dio.c}!DIO\_registerRead@{DIO\_registerRead}}
 \index{DIO\_registerRead@{DIO\_registerRead}!dio.c@{dio.c}}
 \doxysubsubsection{\texorpdfstring{DIO\_registerRead()}{DIO\_registerRead()}}
-{\footnotesize\ttfamily uint32\+\_\+t DIO\+\_\+register\+Read (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{dio_8c_acb402f0cb510766d39ddb676bdb782bb} 
+uint32\+\_\+t DIO\+\_\+register\+Read (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address}{}\end{DoxyParamCaption})}
 
 {\bfseries{Description\+:}} This function is used to directly address a Dio register. The function should be used to access specialized functionality in the Dio peripheral that is not exposed by any other function of the interface.
 
-PRE-\/\+CONDITION\+: Address is within the boundaries of the Dio register address space.
+PRE-\/\+CONDITION\+: Address is within the boundaries of the Dio register address space. ~\newline
 
-POST-\/\+CONDITION\+: The value stored in the register is returned to the caller.
+
+POST-\/\+CONDITION\+: The value stored in the register is returned to the caller. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -255,35 +306,41 @@ The current value of the Dio register.
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\+\_\+init}} 
+DIO\+\_\+\+Config\+Get 
 
-DIO\+\_\+channel\+Read 
+\doxylink{dio__cfg_8c_a5547c2e77c21e6b9c3605d9e518d2a80}{DIO\+\_\+config\+Size\+Get} 
 
-DIO\+\_\+channel\+Write 
+\doxylink{dio_8c_a185ed82086ce8882400bd04bccacf4d3}{DIO\+\_\+init} 
 
-DIO\+\_\+channel\+Toggle 
+\doxylink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\+\_\+pin\+Read} 
 
-\mbox{\hyperlink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write}} 
+\doxylink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\+\_\+pin\+Write} 
 
-\mbox{\hyperlink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read}} 
+\doxylink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\+\_\+pin\+Toggle} 
+
+\doxylink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write} 
+
+\doxylink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read} 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{dio_8c_af155115944633a5e1df9dade3787e799}\label{dio_8c_af155115944633a5e1df9dade3787e799}} 
-\index{dio.c@{dio.c}!DIO\_registerWrite@{DIO\_registerWrite}}
+\Hypertarget{dio_8c_af155115944633a5e1df9dade3787e799}\index{dio.c@{dio.c}!DIO\_registerWrite@{DIO\_registerWrite}}
 \index{DIO\_registerWrite@{DIO\_registerWrite}!dio.c@{dio.c}}
 \doxysubsubsection{\texorpdfstring{DIO\_registerWrite()}{DIO\_registerWrite()}}
-{\footnotesize\ttfamily void DIO\+\_\+register\+Write (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address,  }\item[{uint32\+\_\+t}]{value }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{dio_8c_af155115944633a5e1df9dade3787e799} 
+void DIO\+\_\+register\+Write (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address}{, }\item[{uint32\+\_\+t}]{value}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to directly address and modify a Dio register. The function should be used to access specialized functionality in the Dio peripheral that is not exposed by any other function of the interface.
+{\bfseries{Description\+:}} This function is used to directly address and modify a GPIO register. The function should be used to access specialized functionality in the DIO peripheral that is not exposed by any other function of the interface.
 
-PRE-\/\+CONDITION\+: Address is within the boundaries of the Dio register address space.
+PRE-\/\+CONDITION\+: Address is within the boundaries of the DIO register address space. ~\newline
 
-POST-\/\+CONDITION\+: The register located at address with be updated with value.
+
+POST-\/\+CONDITION\+: The register located at address with be updated with value. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em address} & is a register address within the Dio peripheral map. \\
+\mbox{\texttt{ in}}  & {\em address} & is a register address within the DIO peripheral map. \\
 \hline
-\mbox{\texttt{ in}}  & {\em value} & is the value to set the Dio register.\\
+\mbox{\texttt{ in}}  & {\em value} & is the value to set the DIO register.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -297,15 +354,19 @@ void
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{dio_8c_aebe782dff96e21ec5192e3056ca8d88b}{DIO\+\_\+init}} 
+DIO\+\_\+\+Config\+Get 
 
-DIO\+\_\+channel\+Read 
+\doxylink{dio__cfg_8c_a5547c2e77c21e6b9c3605d9e518d2a80}{DIO\+\_\+config\+Size\+Get} 
 
-DIO\+\_\+channel\+Write 
+\doxylink{dio_8c_a185ed82086ce8882400bd04bccacf4d3}{DIO\+\_\+init} 
 
-DIO\+\_\+channel\+Toggle 
+\doxylink{dio_8c_ac8accdf22443a8de856d9c82798bbed2}{DIO\+\_\+pin\+Read} 
 
-\mbox{\hyperlink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write}} 
+\doxylink{dio_8c_ac429cbbf160c1b221c57785332055369}{DIO\+\_\+pin\+Write} 
 
-\mbox{\hyperlink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read}} 
+\doxylink{dio_8c_aaa5eb7e27c1605a3d73485e6c090843e}{DIO\+\_\+pin\+Toggle} 
+
+\doxylink{dio_8c_af155115944633a5e1df9dade3787e799}{DIO\+\_\+register\+Write} 
+
+\doxylink{dio_8c_acb402f0cb510766d39ddb676bdb782bb}{DIO\+\_\+register\+Read} 
 \end{DoxySeeAlso}
