@@ -1,14 +1,15 @@
-\hypertarget{_s_p_i_01slave_2include_2spi_8h}{}\doxysection{C\+:/\+Users/figue/\+Documents/2.Electronics/1.Embedded\+\_\+\+Systems/\+STM32/\+Bare\+\_\+\+Metal/\+Boards/\+Nucleo\+\_\+\+F401\+RE/\+Reusable-\/\+Drivers/\+SPI slave/include/spi.h File Reference}
-\label{_s_p_i_01slave_2include_2spi_8h}\index{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI slave/include/spi.h@{C:/Users/figue/Documents/2.Electronics/1.Embedded\_Systems/STM32/Bare\_Metal/Boards/Nucleo\_F401RE/Reusable-\/Drivers/SPI slave/include/spi.h}}
+\doxysection{C\+:/\+Users/\+User/\+One\+Drive/\+Documents/1.Repositories/\+Embedded\+Systems/\+STM32/\+Reusable-\/\+Drivers/\+SPI slave/include/spi.h File Reference}
+\hypertarget{_s_p_i_01slave_2include_2spi_8h}{}\label{_s_p_i_01slave_2include_2spi_8h}\index{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI slave/include/spi.h@{C:/Users/User/OneDrive/Documents/1.Repositories/EmbeddedSystems/STM32/Reusable-\/Drivers/SPI slave/include/spi.h}}
 
 
-The interface definition for the spi. This is the header file for the definition of the interface for a Serial Peripheral Serial (SPI) on a standard microcontroller.  
+The interface definition for the SPI. This is the header file for the definition of the interface for a Serial Peripheral Serial (SPI) on a standard microcontroller.  
 
 
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
-{\ttfamily \#include \char`\"{}spi\+\_\+cfg.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}stm32f4xx.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include "{}spi\+\_\+cfg.\+h"{}}\newline
+{\ttfamily \#include "{}stm32f4xx.\+h"{}}\newline
 Include dependency graph for spi.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -16,14 +17,19 @@ Include dependency graph for spi.\+h\+:\nopagebreak
 \includegraphics[width=350pt]{_s_p_i_01slave_2include_2spi_8h__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Functions}
+\doxysubsubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_ac48916da3e83793b4ab8e77ff1b20f12}{SPI\+\_\+init}} (const \mbox{\hyperlink{struct_spi_config__t}{Spi\+Config\+\_\+t}} $\ast$const Config)
+struct \mbox{\hyperlink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_ae01bbf088c75b3fcaad609a9e433885e}{SPI\+\_\+transfer}} (\mbox{\hyperlink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{Spi\+Channel\+\_\+t}} Channel, uint16\+\_\+t $\ast$data, uint16\+\_\+t size)
+void \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_a1c60b9b5ccb0c9730a8203bc50f51512}{SPI\+\_\+init}} (const \mbox{\hyperlink{struct_spi_config__t}{Spi\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const Config, size\+\_\+t config\+Size)
 \item 
-void \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_aeb9cbd9cfaeaf0b94f23656f2e0bb542}{SPI\+\_\+receive}} (\mbox{\hyperlink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{Spi\+Channel\+\_\+t}} Channel, uint16\+\_\+t $\ast$data, uint16\+\_\+t size)
+void \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_a4eb5e4456aade25edc6c6f4b673ddeda}{SPI\+\_\+transfer}} (const \mbox{\hyperlink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const Transfer\+Config)
+\item 
+void \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_a7720b57a48f8aa6dc2e928d42397fdea}{SPI\+\_\+receive}} (const \mbox{\hyperlink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const Transfer\+Config)
 \item 
 void \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_aa37a28f7826d2b06a5150c5e92e686ae}{SPI\+\_\+register\+Write}} (uint32\+\_\+t address, uint32\+\_\+t value)
 \item 
@@ -32,40 +38,46 @@ uint16\+\_\+t \mbox{\hyperlink{_s_p_i_01slave_2include_2spi_8h_a03822429df04daca
 
 
 \doxysubsection{Detailed Description}
-The interface definition for the spi. This is the header file for the definition of the interface for a Serial Peripheral Serial (SPI) on a standard microcontroller. 
+The interface definition for the SPI. This is the header file for the definition of the interface for a Serial Peripheral Serial (SPI) on a standard microcontroller. 
 
 \begin{DoxyAuthor}{Author}
 Jose Luis Figueroa 
 \end{DoxyAuthor}
 \begin{DoxyVersion}{Version}
-1.\+0 
+1.\+1 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-2023-\/07-\/14
+2025-\/03-\/11
 \end{DoxyDate}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2023 Jose Luis Figueroa. All rights reserved. 
+Copyright (c) 2025 Jose Luis Figueroa. All rights reserved. 
 \end{DoxyCopyright}
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{_s_p_i_01slave_2include_2spi_8h_ac48916da3e83793b4ab8e77ff1b20f12}\label{_s_p_i_01slave_2include_2spi_8h_ac48916da3e83793b4ab8e77ff1b20f12}} 
-\index{spi.h@{spi.h}!SPI\_init@{SPI\_init}}
+\Hypertarget{_s_p_i_01slave_2include_2spi_8h_a1c60b9b5ccb0c9730a8203bc50f51512}\index{spi.h@{spi.h}!SPI\_init@{SPI\_init}}
 \index{SPI\_init@{SPI\_init}!spi.h@{spi.h}}
 \doxysubsubsection{\texorpdfstring{SPI\_init()}{SPI\_init()}}
-{\footnotesize\ttfamily void SPI\+\_\+init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_spi_config__t}{Spi\+Config\+\_\+t}} $\ast$const}]{Config }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{_s_p_i_01slave_2include_2spi_8h_a1c60b9b5ccb0c9730a8203bc50f51512} 
+void SPI\+\_\+init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_spi_config__t}{Spi\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{Config}{, }\item[{size\+\_\+t}]{config\+Size}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to initialize the spi based on the configuration ~\newline
+{\bfseries{Description\+:}} This function is used to initialize the SPI based on the configuration ~\newline
  table defined in spi\+\_\+cfg module.
 
-PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled. PRE-\/\+CONDITION\+: SPI pins should be configured using GPIO driver. PRE-\/\+CONDITION\+: Configuration table needs to be populated (sizeof \texorpdfstring{$>$}{>} 0) ~\newline
+PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled. ~\newline
+ PRE-\/\+CONDITION\+: SPI pins should be configured using GPIO driver. ~\newline
+ PRE-\/\+CONDITION\+: Configuration table needs to be populated (sizeof \texorpdfstring{$>$}{>} 0) ~\newline
+ PRE-\/\+CONDITION\+: The setting is within the maximum values (SPI\+\_\+\+MAX). ~\newline
 
 
-POST-\/\+CONDITION\+: The peripheral is set up with the configuration settings.
+POST-\/\+CONDITION\+: The peripheral is set up with the configuration settings. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em Config} & is a pointer to the configuration table that contains the initialization for the peripheral.\\
+\mbox{\texttt{ in}}  & {\em Config} & is a pointer to the configuration table that contains the initialization for the peripheral. \\
+\hline
+\mbox{\texttt{ in}}  & {\em config\+Size} & is the size of the configuration table.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -74,13 +86,17 @@ void
 {\bfseries{Example\+:}} 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_spi_config__t}{SpiConfig\_t}}\ *\ \textcolor{keyword}{const}\ \mbox{\hyperlink{_s_p_i___master_2src_2spi__cfg_8c_a19dbdd2a49e995603d1f6506823d2f84}{SpiConfig}}\ =\ SPI\_configGet();}
-\DoxyCodeLine{SPI\_Init(\mbox{\hyperlink{_s_p_i___master_2src_2dio__cfg_8c_ad606ed583fbec9d0749c319c717a65f1}{DioConfig}});}
+\DoxyCodeLine{\textcolor{keywordtype}{size\_t}\ configSize\ =\ \mbox{\hyperlink{_s_p_i___master_2src_2spi__cfg_8c_a52c2bcd5d6de69c68453237ffc72e724}{SPI\_configSizeGet}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{SPI\_Init(\mbox{\hyperlink{_s_p_i___master_2src_2dio__cfg_8c_ad606ed583fbec9d0749c319c717a65f1}{DioConfig}},\ configSize);}
 
 \end{DoxyCode}
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{_s_p_i___master_2src_2spi__cfg_8c_a72af5b1b28647c0f42591ecd067fccb9}{SPI\+\_\+\+Config\+Get}} 
+SPI\+\_\+config\+Get 
+
+SPI\+\_\+get\+Config\+Size 
 
 SPI\+\_\+\+Init 
 
@@ -110,43 +126,27 @@ Set the data transfer type of the device
 
 Set the data frame format (size) of the device
 
-Enable the SPI module
-
-Loop through all the elements of the configuration table.
-
-Set the configuration of the SPI on the control register 1
-
-Set the Clock phase and polarity modes
-
-Set the hierarchy of the device
-
-Set the baud rate of the device
-
-Set the slave select pin management for the device
-
-Set the frame format of the device
-
-Set the data transfer type of the device
-
-Set the data frame format (size) of the device
-
-Enable the SPI module\mbox{\Hypertarget{_s_p_i_01slave_2include_2spi_8h_aeb9cbd9cfaeaf0b94f23656f2e0bb542}\label{_s_p_i_01slave_2include_2spi_8h_aeb9cbd9cfaeaf0b94f23656f2e0bb542}} 
-\index{spi.h@{spi.h}!SPI\_receive@{SPI\_receive}}
+Enable the SPI module\Hypertarget{_s_p_i_01slave_2include_2spi_8h_a7720b57a48f8aa6dc2e928d42397fdea}\index{spi.h@{spi.h}!SPI\_receive@{SPI\_receive}}
 \index{SPI\_receive@{SPI\_receive}!spi.h@{spi.h}}
 \doxysubsubsection{\texorpdfstring{SPI\_receive()}{SPI\_receive()}}
-{\footnotesize\ttfamily void SPI\+\_\+receive (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{Spi\+Channel\+\_\+t}}}]{Channel,  }\item[{uint16\+\_\+t $\ast$}]{data,  }\item[{uint16\+\_\+t}]{size }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{_s_p_i_01slave_2include_2spi_8h_a7720b57a48f8aa6dc2e928d42397fdea} 
+void SPI\+\_\+receive (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{Transfer\+Config}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to initialize a data reception on the SPI bus.
+{\bfseries{Description\+:}} This function is used to initialize a data reception on the SPI bus. This function is used to receive data specified by the \doxylink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t} structure, which contains the channel, size, and data.
 
-PRE-\/\+CONDITION\+: SPI\+\_\+\+Init must be called with valid configuration data. TODO\+: Review if using a struct is better than variables. PRE-\/\+CONDITION\+: Spi\+Transfer\+\_\+t needs to be populated. PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled.
+PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled. ~\newline
+ PRE-\/\+CONDITION\+: SPI\+\_\+\+Init must be called with valid configuration data. ~\newline
+ PRE-\/\+CONDITION\+: \doxylink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t} needs to be populated. ~\newline
+ PRE-\/\+CONDITION\+: The Channel is within the maximum \doxylink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{Spi\+Channel\+\_\+t}. ~\newline
+ PRE-\/\+CONDITION\+: The size is greater than 0. ~\newline
+ PRE-\/\+CONDITION\+: The data is not NULL. ~\newline
+
 
 POST-\/\+CONDITION\+: Data transferred based on configuration.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em data(pointer)} & is the information to be sent. \\
-\hline
-\mbox{\texttt{ in}}  & {\em size} & is data size.\\
+\mbox{\texttt{ in}}  & {\em Spi\+Transfer\+Config} & A pointer to a structure containing the channel, size, and data to be read.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -154,13 +154,22 @@ void
 \end{DoxyReturn}
 {\bfseries{Example\+:}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{SPI\_Receive(*data,\ size);}
+\DoxyCodeLine{uint16\_t\ rxdata[1];}
+\DoxyCodeLine{\ \mbox{\hyperlink{struct_spi_transfer_config__t}{SpiTransferConfig\_t}}\ ReceiveConfig\ =}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \ \ .Channel\ =\ \mbox{\hyperlink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faaae01f25f2493c2b0a1406ee1371a2752d}{SPI\_CHANNEL1}},}
+\DoxyCodeLine{\ \ \ \ \ .size\ =\ \textcolor{keyword}{sizeof}(rxdata)/\textcolor{keyword}{sizeof}(rxdata[0]),}
+\DoxyCodeLine{\ \ \ \ \ .data\ =\ rxdata}
+\DoxyCodeLine{\ \};}
+\DoxyCodeLine{\ \mbox{\hyperlink{_s_p_i___master_2src_2spi_8c_a7720b57a48f8aa6dc2e928d42397fdea}{SPI\_receive}}(\&ReceiveConfig);}
 
 \end{DoxyCode}
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{_s_p_i___master_2src_2spi__cfg_8c_a72af5b1b28647c0f42591ecd067fccb9}{SPI\+\_\+\+Config\+Get}} 
+SPI\+\_\+config\+Get 
+
+SPI\+\_\+get\+Config\+Size 
 
 SPI\+\_\+\+Init 
 
@@ -172,17 +181,19 @@ SPI\+\_\+\+Register\+Read
 
 SPI\+\_\+\+Callback\+Register 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{_s_p_i_01slave_2include_2spi_8h_a03822429df04dacaaae2f7682a3f6956}\label{_s_p_i_01slave_2include_2spi_8h_a03822429df04dacaaae2f7682a3f6956}} 
-\index{spi.h@{spi.h}!SPI\_registerRead@{SPI\_registerRead}}
+\Hypertarget{_s_p_i_01slave_2include_2spi_8h_a03822429df04dacaaae2f7682a3f6956}\index{spi.h@{spi.h}!SPI\_registerRead@{SPI\_registerRead}}
 \index{SPI\_registerRead@{SPI\_registerRead}!spi.h@{spi.h}}
 \doxysubsubsection{\texorpdfstring{SPI\_registerRead()}{SPI\_registerRead()}}
-{\footnotesize\ttfamily uint16\+\_\+t SPI\+\_\+register\+Read (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{_s_p_i_01slave_2include_2spi_8h_a03822429df04dacaaae2f7682a3f6956} 
+uint16\+\_\+t SPI\+\_\+register\+Read (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address}{}\end{DoxyParamCaption})}
 
 {\bfseries{Description\+:}} This function is used to directly address a SPI register. The function should be used to access specialized functionality in the SPI peripheral that is not exposed by any other function of the interface.
 
-PRE-\/\+CONDITION\+: Address is within the boundaries of the SPI register address space.
+PRE-\/\+CONDITION\+: Address is within the boundaries of the SPI register address space. ~\newline
 
-POST-\/\+CONDITION\+: The value stored in the register is returned to the caller.
+
+POST-\/\+CONDITION\+: The value stored in the register is returned to the caller. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -200,7 +211,9 @@ The current value of the SPI register.
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{_s_p_i___master_2src_2spi__cfg_8c_a72af5b1b28647c0f42591ecd067fccb9}{SPI\+\_\+\+Config\+Get}} 
+SPI\+\_\+config\+Get 
+
+\doxylink{_s_p_i___master_2src_2spi__cfg_8c_a52c2bcd5d6de69c68453237ffc72e724}{SPI\+\_\+config\+Size\+Get} 
 
 SPI\+\_\+\+Init 
 
@@ -212,17 +225,19 @@ SPI\+\_\+\+Register\+Read
 
 SPI\+\_\+\+Callback\+Register 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{_s_p_i_01slave_2include_2spi_8h_aa37a28f7826d2b06a5150c5e92e686ae}\label{_s_p_i_01slave_2include_2spi_8h_aa37a28f7826d2b06a5150c5e92e686ae}} 
-\index{spi.h@{spi.h}!SPI\_registerWrite@{SPI\_registerWrite}}
+\Hypertarget{_s_p_i_01slave_2include_2spi_8h_aa37a28f7826d2b06a5150c5e92e686ae}\index{spi.h@{spi.h}!SPI\_registerWrite@{SPI\_registerWrite}}
 \index{SPI\_registerWrite@{SPI\_registerWrite}!spi.h@{spi.h}}
 \doxysubsubsection{\texorpdfstring{SPI\_registerWrite()}{SPI\_registerWrite()}}
-{\footnotesize\ttfamily void SPI\+\_\+register\+Write (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address,  }\item[{uint32\+\_\+t}]{value }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{_s_p_i_01slave_2include_2spi_8h_aa37a28f7826d2b06a5150c5e92e686ae} 
+void SPI\+\_\+register\+Write (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{address}{, }\item[{uint32\+\_\+t}]{value}{}\end{DoxyParamCaption})}
 
 {\bfseries{Description\+:}} This function is used to directly address and modify a SPI register. The function should be used to access specialized functionality in the SPI peripheral that is not exposed by any other function of the interface.
 
-PRE-\/\+CONDITION\+: Address is within the boundaries of the SPI register address space.
+PRE-\/\+CONDITION\+: Address is within the boundaries of the SPI register address space. ~\newline
 
-POST-\/\+CONDITION\+: The register located at address with be updated with value.
+
+POST-\/\+CONDITION\+: The register located at address with be updated with value. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -242,7 +257,9 @@ void
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{_s_p_i___master_2src_2spi__cfg_8c_a72af5b1b28647c0f42591ecd067fccb9}{SPI\+\_\+\+Config\+Get}} 
+SPI\+\_\+config\+Get 
+
+\doxylink{_s_p_i___master_2src_2spi__cfg_8c_a52c2bcd5d6de69c68453237ffc72e724}{SPI\+\_\+config\+Size\+Get} 
 
 SPI\+\_\+\+Init 
 
@@ -254,23 +271,28 @@ SPI\+\_\+\+Register\+Read
 
 SPI\+\_\+\+Callback\+Register 
 \end{DoxySeeAlso}
-\mbox{\Hypertarget{_s_p_i_01slave_2include_2spi_8h_ae01bbf088c75b3fcaad609a9e433885e}\label{_s_p_i_01slave_2include_2spi_8h_ae01bbf088c75b3fcaad609a9e433885e}} 
-\index{spi.h@{spi.h}!SPI\_transfer@{SPI\_transfer}}
+\Hypertarget{_s_p_i_01slave_2include_2spi_8h_a4eb5e4456aade25edc6c6f4b673ddeda}\index{spi.h@{spi.h}!SPI\_transfer@{SPI\_transfer}}
 \index{SPI\_transfer@{SPI\_transfer}!spi.h@{spi.h}}
 \doxysubsubsection{\texorpdfstring{SPI\_transfer()}{SPI\_transfer()}}
-{\footnotesize\ttfamily void SPI\+\_\+transfer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{Spi\+Channel\+\_\+t}}}]{Channel,  }\item[{uint16\+\_\+t $\ast$}]{data,  }\item[{uint16\+\_\+t}]{size }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{_s_p_i_01slave_2include_2spi_8h_a4eb5e4456aade25edc6c6f4b673ddeda} 
+void SPI\+\_\+transfer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{Transfer\+Config}{}\end{DoxyParamCaption})}
 
-{\bfseries{Description\+:}} This function is used to initialize a data transfer on the SPI bus.
+{\bfseries{Description\+:}} This function is used to initialize a data transfer on the SPI bus. This function is used to send data to a slave device specified by the \doxylink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t} structure, which contains the channel, size, and data.
 
-PRE-\/\+CONDITION\+: SPI\+\_\+\+Init must be called with valid configuration data. TODO\+: Review if using a struct is better than variables. PRE-\/\+CONDITION\+: Spi\+Transfer\+\_\+t needs to be populated. PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled.
+PRE-\/\+CONDITION\+: The MCU clocks must be configured and enabled. ~\newline
+ PRE-\/\+CONDITION\+: SPI\+\_\+\+Init must be called with valid configuration data. ~\newline
+ PRE-\/\+CONDITION\+: \doxylink{struct_spi_transfer_config__t}{Spi\+Transfer\+Config\+\_\+t} needs to be populated. ~\newline
+ PRE-\/\+CONDITION\+: The Channel is within the maximum \doxylink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faa}{Spi\+Channel\+\_\+t}. ~\newline
+ PRE-\/\+CONDITION\+: The size is greater than 0. ~\newline
+ PRE-\/\+CONDITION\+: The data is not NULL. ~\newline
 
-POST-\/\+CONDITION\+: Data transferred based on configuration.
+
+POST-\/\+CONDITION\+: Data transferred based on configuration. ~\newline
+
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in}}  & {\em data(pointer)} & is the information to be sent. \\
-\hline
-\mbox{\texttt{ in}}  & {\em size} & is data size.\\
+\mbox{\texttt{ in}}  & {\em Spi\+Transfer\+Config} & A pointer to a structure containing the channel, size, and data to be read.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -278,13 +300,22 @@ void
 \end{DoxyReturn}
 {\bfseries{Example\+:}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{SPI\_Transfer(*data,\ size);}
+\DoxyCodeLine{uint16\_t\ data[]\ =\ \{0x56\};}
+\DoxyCodeLine{\mbox{\hyperlink{struct_spi_transfer_config__t}{SpiTransferConfig\_t}}\ TransferConfig\ =}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ .Channel\ =\ \mbox{\hyperlink{_s_p_i___master_2include_2spi__cfg_8h_a8ed88c83798d221d2afb7ab8b4023faaae01f25f2493c2b0a1406ee1371a2752d}{SPI\_CHANNEL1}},}
+\DoxyCodeLine{\ \ \ \ .size\ =\ \textcolor{keyword}{sizeof}(data)/\textcolor{keyword}{sizeof}(data[0]),}
+\DoxyCodeLine{\ \ \ \ .data\ =\ data}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{SPI\_Transfer(\&TransferConfig);}
 
 \end{DoxyCode}
 
 
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{_s_p_i___master_2src_2spi__cfg_8c_a72af5b1b28647c0f42591ecd067fccb9}{SPI\+\_\+\+Config\+Get}} 
+SPI\+\_\+config\+Get 
+
+SPI\+\_\+get\+Config\+Size 
 
 SPI\+\_\+\+Init 
 

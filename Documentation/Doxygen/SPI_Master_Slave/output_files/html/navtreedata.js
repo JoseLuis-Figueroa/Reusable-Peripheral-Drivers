@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "Serial Peripheral Interface Reusable Driver (Master-Slave)", "index.html", [
-    [ "Serial Peripheral Interface (Master-Slave)", "index.html", "index" ],
+    [ "Serial Peripheral Interface (Master-Slave) Reusable Driver - Version 1.1", "index.html", "index" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -51,9 +51,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_s_p_i_01slave_2include_2dio_8h.html",
-"_s_p_i_01slave_2include_2spi__cfg_8h.html#a72af5b1b28647c0f42591ecd067fccb9",
-"_s_p_i___master_2include_2dio__cfg_8h.html#af0645afc6cc3c26ff8e3d75477dbc9efac29e03eba3ae55e343ca3e59363b35e7"
+"_s_p_i___master_2include_2dio__cfg_8h.html#acfdc903a5070db089697cf32d1e7406ba5e48fc7915bca8f32e68418824c7e3b7"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
