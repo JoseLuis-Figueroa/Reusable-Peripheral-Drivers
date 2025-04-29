@@ -134,8 +134,8 @@ doxygen Doxyfile
 You can view the documentation in the `/Documentation/Doxygen` folder or visit:
 
 - [DIO Driver Docs](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/DIO/output_files/html/index.html)  
-- [SPI Driver Docs](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI/output_files/html/index.html)  
-- [SPI Master-Slave Docs](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/readme/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html)
+- [SPI Driver Docs](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/SPI/output_files/html/index.html)  
+- [SPI Master-Slave Docs](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html)
 
 ---
 
