@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['digital_20input_2foutput_20reusable_20driver_0',['Digital Input/Output Reusable Driver',['../index.html',1,'']]]
+  ['1_0',['Digital Input/Output (DIO) Reusable Driver - Version 1.1',['../index.html',1,'']]],
+  ['1_201_1',['Digital Input/Output (DIO) Reusable Driver - Version 1.1',['../index.html',1,'']]]
 ];

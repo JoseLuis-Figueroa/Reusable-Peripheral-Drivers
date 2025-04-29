@@ -1,38 +1,60 @@
-\hypertarget{index_intro}{}\doxysection{Introduction}\label{index_intro}
-This project is a personal endeavor focused on developing reusable firmware for microcontroller platforms. The goal is to create a modular and efficient GPIO (called DIO) reusable driver that can be easily adapted to various microcontrollers.\hypertarget{index_version}{}\doxysection{Version Log}\label{index_version}
+\chapter{Digital Input/\+Output (DIO) Reusable Driver -\/ Version 1.1}
+\hypertarget{index}{}\label{index}\index{Digital Input/Output (DIO) Reusable Driver -\/ Version 1.1@{Digital Input/Output (DIO) Reusable Driver -\/ Version 1.1}}
+\hypertarget{index_intro}{}\doxysection{\texorpdfstring{Introduction}{Introduction}}\label{index_intro}
+This project is a personal initiative aimed at developing reusable firmware components for microcontroller platforms. It focuses on a modular and efficient General-\/\+Purpose Input/\+Output (GPIO) driver referred as the Digital Input/\+Output (DIO) driver on the documentation that can be easily adapted across various microcontroller families.\hypertarget{index_version}{}\doxysection{\texorpdfstring{Version History}{Version History}}\label{index_version}
 
 \begin{DoxyItemize}
-\item \mbox{[}Version 1.\+0\mbox{]} -\/ Initial release
-\end{DoxyItemize}\hypertarget{index_architecture}{}\doxysection{Software Architecture Overview}\label{index_architecture}
+\item {\bfseries{v1.\+0}}\+: Initial release
+\item {\bfseries{v1.\+1}}\+: Updated documentation, structural improvements and design by contract.
+\end{DoxyItemize}\hypertarget{index_architecture}{}\doxysection{\texorpdfstring{Software Architecture}{Software Architecture}}\label{index_architecture}
 The software architecture follows a layered approach. This design pattern separates low-\/level code (drivers or HALs), and application-\/specific code. A layered architecture promotes reusability and simplifies the portability between different applications or microcontrollers. The layered architecture can be seen in figure 1 and contains a driver and application layer operating on the hardware.
 
 \begin{center} \tabulinesep=1mm
 \begin{longtabu}spread 0pt [c]{*{1}{|X[-1]}|}
 \hline
-Application Code  \\\cline{1-1}
-Drivers  \\\cline{1-1}
-Hardware  \\\cline{1-1}
+{\bfseries{Application Layer}}  \\\cline{1-1}
+{\bfseries{Driver Layer}}  \\\cline{1-1}
+{\bfseries{Hardware}}  \\\cline{1-1}
 \end{longtabu}
-Figure 1. Two-\/\+Layer Software Architecture. \end{center} 
+{\itshape Figure 1\+: Layered Software Architecture} \end{center} 
 
-The driver layer includes all the code (drivers) necessary to get the microcontroller and any other associated board hardware, such as sensors, buttons, and so forth, running. The application code (main) contains no driver code but has access to the low-\/level hardware through a driver-\/layer interface that hides the hardware details from the application developer but still allows them to perform a useful function.\hypertarget{index_coding-standards}{}\doxysection{Coding Standards}\label{index_coding-standards}
-This project is developed as bare-\/metal firmware and adheres to industry-\/standard coding practices, following the MISRA-\/C guidelines. This includes consistent naming conventions, code formatting, and best practices for code organization and documentation.\hypertarget{index_description}{}\doxysection{Project Description}\label{index_description}
-The main code consists of configuring the user button (PC13 pin) as an input. When pressed, the button turns on the embedded led (PA5) on the board and turns off the yellow led (PB0 pin) by writing directly to the ORD register. Conversely, when the button is released, the embedded led is turned off, and the yellow led is turned on. The red led (PA0 pin) is set to toggle, although this behavior may not be apparent as a delay is not currently implemented (it will be implemented later), but it can be seen in debug mode. Additionally, the value of PC13 is obtained by reading directly from the IDR register, and if the user button is pressed, a corresponding message is printed on the console.\hypertarget{index_requirements}{}\doxysection{Project Requirements}\label{index_requirements}
-The project aims to meet the following requirements\+:
+The {\bfseries{Driver Layer}} provides all necessary low-\/level code to initialize and control hardware peripherals (e.\+g., GPIO pins, sensors, buttons). ~\newline
+ The {\bfseries{Application Layer}} contains no direct hardware manipulation but instead interacts with hardware through the exposed driver interfaces. This abstraction improves maintainability and facilitates hardware migration.\hypertarget{index_standards}{}\doxysection{\texorpdfstring{Coding Standards}{Coding Standards}}\label{index_standards}
+The code is developed using a bare-\/metal approach and complies with industry-\/standard guidelines, particularly {\bfseries{MISRA-\/C}}. Best practices in naming, formatting, documentation, and modular design are followed to ensure reliability and maintainability.\hypertarget{index_description}{}\doxysection{\texorpdfstring{Project Description}{Project Description}}\label{index_description}
+This demonstration configures the {\bfseries{user button (PC13)}} as an input. When pressed\+:
 \begin{DoxyItemize}
-\item Provide a set of reusable functions microcontroller GPIO.
-\item Maintain portability across different microcontroller platforms.
-\item Follow industry-\/standard coding practices and guidelines.
-\end{DoxyItemize}\hypertarget{index_tools}{}\doxysection{Tools}\label{index_tools}
-The current tooling used for this project includes\+:
+\item The {\bfseries{on-\/board LED (PA5)}} turns on.
+\item The {\bfseries{external yellow LED (PB0)}} turns off via direct manipulation of the {\bfseries{ODR register}}.
+\end{DoxyItemize}
+
+When released\+:
 \begin{DoxyItemize}
-\item Development Board\+: Nucleo-\/\+F401\+RE
-\item IDE/\+Debugger\+: Visual Studio Code (Platform\+IO extension)
-\item Compiler Toolchain\+: GNU ARM Embedded Toolchain
-\end{DoxyItemize}\hypertarget{index_usage}{}\doxysection{Usage}\label{index_usage}
-The project is well-\/documented using Doxygen. Inline comments are used extensively to provide detailed explanations of code functionality, usage, and limitations. The Doxygen-\/generated documentation provides an easy-\/to-\/navigate reference for all project components.\hypertarget{index_acronyms}{}\doxysection{Acronyms}\label{index_acronyms}
+\item The on-\/board LED turns off.
+\item The yellow LED turns on.
+\end{DoxyItemize}
+
+Additionally\+:
+\begin{DoxyItemize}
+\item The {\bfseries{red LED (PA0)}} toggles (no delay implemented yet; behavior observable during debugging).
+\item The state of {\bfseries{PC13}} is read directly from the {\bfseries{IDR register}}, and status messages are printed to the console accordingly.
+\end{DoxyItemize}\hypertarget{index_requirements}{}\doxysection{\texorpdfstring{Project Goals}{Project Goals}}\label{index_requirements}
 
 \begin{DoxyItemize}
-\item GPIO\+: General Purpose Input/\+Output
-\item DIO\+: Digital Input/\+Output 
+\item Provide a reusable GPIO driver for embedded applications.
+\item Ensure portability across different microcontroller platforms.
+\item Maintain compliance with professional coding standards (MISRA-\/C).
+\end{DoxyItemize}\hypertarget{index_tools}{}\doxysection{\texorpdfstring{Development Tools}{Development Tools}}\label{index_tools}
+
+\begin{DoxyItemize}
+\item {\bfseries{Development Board}}\+: STM32 Nucleo-\/\+F401\+RE. ~\newline
+
+\item {\bfseries{IDE/\+Debugger}}\+: Visual Studio Code with Platform\+IO extension.
+\item {\bfseries{Toolchain}}\+: GNU ARM Embedded Toolchain.
+\end{DoxyItemize}\hypertarget{index_usage}{}\doxysection{\texorpdfstring{Usage \& Documentation}{Usage \& Documentation}}\label{index_usage}
+The project is fully documented using Doxygen. Inline comments offer detailed insights into function behavior and usage. The generated Doxygen documentation provides a structured and navigable reference for all code modules and components.\hypertarget{index_acronyms}{}\doxysection{\texorpdfstring{Glossary}{Glossary}}\label{index_acronyms}
+
+\begin{DoxyItemize}
+\item {\bfseries{GPIO}}\+: General-\/\+Purpose Input/\+Output. ~\newline
+
+\item {\bfseries{DIO}}\+: Digital Input/\+Output. 
 \end{DoxyItemize}

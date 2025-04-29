@@ -1,7 +1,6 @@
 var dio__cfg_8h =
 [
     [ "DioConfig_t", "struct_dio_config__t.html", "struct_dio_config__t" ],
-    [ "NUMBER_DIGITAL_PINS", "dio__cfg_8h.html#a036f6751c226936e67f6693808b6a455", null ],
     [ "NUMBER_OF_PORTS", "dio__cfg_8h.html#a00f8a86f3bc21109096ba9da4712ac13", null ],
     [ "DioFunction_t", "dio__cfg_8h.html#a9bba5b3e13a5bd739085ab0b0b03876d", [
       [ "DIO_AF0", "dio__cfg_8h.html#a9bba5b3e13a5bd739085ab0b0b03876da2d771fc3f2564a097aa23c9bf314b22e", null ],
@@ -113,5 +112,6 @@ var dio__cfg_8h =
       [ "DIO_OPEN_DRAIN", "dio__cfg_8h.html#a50c66bd6f27b32ade420e80612abd20aa3deceb80646f32014a44844c4852dd51", null ],
       [ "DIO_MAX_TYPE", "dio__cfg_8h.html#a50c66bd6f27b32ade420e80612abd20aa4fa89974b07d048eb25364233d59a9cb", null ]
     ] ],
-    [ "DIO_configGet", "dio__cfg_8h.html#ad94e4a3383df84c2eb51f941e343755b", null ]
+    [ "DIO_configGet", "dio__cfg_8h.html#ad94e4a3383df84c2eb51f941e343755b", null ],
+    [ "DIO_configSizeGet", "dio__cfg_8h.html#a5547c2e77c21e6b9c3605d9e518d2a80", null ]
 ];

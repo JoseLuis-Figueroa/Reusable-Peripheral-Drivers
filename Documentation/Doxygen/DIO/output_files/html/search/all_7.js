@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type_0',['Type',['../struct_dio_config__t.html#aeaf3d68b6d50b90ec2b7b35f6e1cb985',1,'DioConfig_t']]]
+  ['input_20output_20dio_20reusable_20driver_20version_201_201_0',['Digital Input/Output (DIO) Reusable Driver - Version 1.1',['../index.html',1,'']]],
+  ['introduction_1',['Introduction',['../index.html#intro',1,'']]]
 ];

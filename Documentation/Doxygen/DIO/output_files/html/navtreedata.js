@@ -25,15 +25,7 @@
 var NAVTREE =
 [
   [ "Digital Input/Output Reusable Driver", "index.html", [
-    [ "Introduction", "index.html#intro", null ],
-    [ "Version Log", "index.html#version", null ],
-    [ "Software Architecture Overview", "index.html#architecture", null ],
-    [ "Coding Standards", "index.html#coding-standards", null ],
-    [ "Project Description", "index.html#description", null ],
-    [ "Project Requirements", "index.html#requirements", null ],
-    [ "Tools", "index.html#tools", null ],
-    [ "Usage", "index.html#usage", null ],
-    [ "Acronyms", "index.html#acronyms", null ],
+    [ "Digital Input/Output (DIO) Reusable Driver - Version 1.1", "index.html", "index" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -61,5 +53,5 @@ var NAVTREEINDEX =
 "annotated.html"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
