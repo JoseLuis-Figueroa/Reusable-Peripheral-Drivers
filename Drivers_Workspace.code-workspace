@@ -15,7 +15,15 @@
 		{
 			"name": "SPI slave",
 			"path": "SPI slave"
+		},
+		{
+			"name": "USART",
+			"path": "USART"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"stdio.h": "c"
+		}
+	}
 }
