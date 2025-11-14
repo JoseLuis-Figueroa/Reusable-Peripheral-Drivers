@@ -44,7 +44,68 @@ void tearDown(void)
 }
 
 /*****************************************************************************
-* DIO test functions
+* DIO test functions for MCU register verification
+*****************************************************************************/
+/* 
+ * Test that initializing the DIO peripheral sets the correct bits in the 
+ * MCU registers.
+*/
+void test_dio_init_registers(void)
+{
+    /* Verify MODER register for PA5 is set to output (01) */
+    TEST_ASSERT_BITS(0b11 << (5*2), (DIO_OUTPUT<<(5*2)), GPIOA->MODER);
+
+    /* Verify OTYPER register for PA5 is set to push-pull (0) */
+    TEST_ASSERT_BITS(1 << 5, 1 << DIO_PUSH_PULL, GPIOA->OTYPER);
+
+    /* Verify OSPEEDR register for PA5 is set to high speed (10) */
+    TEST_ASSERT_BITS(0b11 << (5*2), (DIO_HIGH_SPEED<<(5*2)), GPIOA->OSPEEDR);
+
+    /* Verify PUPDR register for PA5 is set to no resistor (00) */
+    TEST_ASSERT_BITS(0b11 << (5 * 2), (DIO_NO_RESISTOR<<(5*2)), GPIOA->PUPDR);
+
+    /* Verify AFRL register for PA5 is set to AF0 (0000) */
+    TEST_ASSERT_BITS(0b1111 << (5 * 4), (DIO_AF0<<(5*4)), GPIOA->AFR[0]);
+}
+
+/*
+ * Test input data register that the address results in the expected 
+ * value.
+*/
+void test_dio_input_data_register(void)
+{
+    /* Set bit 13 high */
+    uint32_t testValue = 0x00001000;    
+
+    /* Read from GPIOA_IDR using DIO_pinRead */
+    DioPinConfig_t pinConfig = {DIO_PC, DIO_PC13};
+    DioPinState_t pinState = DIO_pinRead(&pinConfig);
+    TEST_ASSERT_BITS(testValue, (pinState << 13), GPIOC->IDR);
+}
+
+/* Test output data register that the address results in the expected 
+ * value.
+*/
+void test_dio_output_data_register(void)
+{
+    /* Set bit 5 high */
+    uint32_t testValue = 0x00000020;    
+
+    /* Write to GPIOA_ODR using DIO_pinWrite */
+    DioPinConfig_t pinConfig = {DIO_PA, DIO_PA5};
+    DIO_pinWrite(&pinConfig, DIO_HIGH);
+    TEST_ASSERT_EQUAL(testValue, GPIOA->ODR);
+
+    /* Set bit 5 low */
+    testValue = 0x00000000;
+
+    /* Write to GPIOA_ODR using DIO_pinWrite */
+    DIO_pinWrite(&pinConfig, DIO_LOW);
+    TEST_ASSERT_EQUAL(testValue, GPIOA->ODR);
+}
+
+/*****************************************************************************
+* DIO test functions for functionality verification
 *****************************************************************************/
 /*
  * Verify the LED pin macro matches the on-board built-in LED pin.
@@ -133,6 +194,15 @@ int main(void)
 
     /*Initialize the Unity Test Framework*/
     UNITY_BEGIN();
+
+    /* Run test to verify DIO initialization configures registers */
+    RUN_TEST(test_dio_init_registers);
+
+    /* Run test to verify DIO IDR read*/
+    RUN_TEST(test_dio_input_data_register);
+
+    /* Run test to verify DIO ODR write*/
+    RUN_TEST(test_dio_output_data_register);
 
     /*Run the DIO test functions*/
     RUN_TEST(led_builtin_pin_number);

@@ -1,6 +1,25 @@
+/**
+ * @file unity_config.h
+ * @author Jose Luis Figueroa
+ * @brief This header contains the function prototype and macros for 
+ * the Unity test framework configuration for UART output on the 
+ * Nucleo-F401RE board.
+ * @version 1.2
+ * @date 2025-nov-03
+ * 
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
+ * 
+*/
+/*****************************************************************************
+* Includes
+*****************************************************************************/
+
 #include "unity_config.h"
 #include "stm32f4xx_hal.h"
 
+/*****************************************************************************
+* Preprocessor Macros
+*****************************************************************************/
 // USART configuration defines
 // Select USART2 peripheral for test output
 #define USARTx USART2
@@ -27,6 +46,9 @@
 // UART handle structure for managing the UART peripheral
 static UART_HandleTypeDef UartHandle;
 
+/*****************************************************************************
+* Function Definitions
+*****************************************************************************/
 // Initialize UART for test output
 void unityOutputStart()
 {
