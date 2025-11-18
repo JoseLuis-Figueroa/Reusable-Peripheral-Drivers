@@ -15,16 +15,17 @@ This repository showcases reusable peripheral driver development and low-level h
    4. [Running Tests](#running-tests)  
       1. [Other Tests](#other-tests)  
    5. [Installation](#installation)  
-4. [Usage](#usage)  
-5. [Release Process](#release-process)  
+4. [Usage](#usage)
+5. [Unit Testing](#unit-testing)
+6. [Release Process](#release-process)  
    1. [Versioning](#versioning)  
    2. [Payload](#payload)  
-6. [How to Get Help](#how-to-get-help)  
-7. [Contributing](#contributing)  
-8. [Further Reading](#further-reading)  
-9. [License](#license)  
-10. [Authors](#authors)  
-11. [Acknowledgments](#acknowledgments)  
+7. [How to Get Help](#how-to-get-help)  
+8. [Contributing](#contributing)  
+9. [Further Reading](#further-reading)  
+10. [License](#license)  
+11. [Authors](#authors)  
+12. [Acknowledgments](#acknowledgments)  
 
 ---
 
@@ -61,12 +62,12 @@ It aims to abstract hardware-dependent functionality while keeping the codebase 
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 
-Current Version: `v1.1`  
+Current Version: `v1.2`  
 Tested on: `Nucleo-F401RE`  
 - ✅ SPI Master.  
 - ✅ SPI Master-Slave.  
 - ✅ GPIO Button/LED Control.  
-- ⏳ Unit Testing (Planned).
+- ✅  Unit Testing (DIO).
 
 **[Back to top](#table-of-contents)**
 
@@ -132,7 +133,7 @@ pio run --target upload
 
 ### Installation
 
-No separate installation needed—firmware is flashed directly to the microcontroller using the ST-Link interface.
+No separate installation needed firmware is flashed directly to the microcontroller using the ST-Link interface.
 
 **[Back to top](#table-of-contents)**
 
@@ -283,6 +284,50 @@ Please refer to the Doxygen documentation available in the [Serial Peripheral In
 
 ---
 
+## Unit Testing
+
+This project includes target-based unit testing for the DIO driver using the **PlatformIO Unit Testing** Framework and **Unity**. 
+Unit testing is executed on the  **Nucleo-F401RE boards** using a custom `unity_config.h` (as documented in PlatformIO’s advanced unit-testing guide).
+
+### Test Framework
+
+- **Framework:** PlatformIO Unity Test Runner.
+- **Custom Unity Configuration:** Implemented to redirect Unity output through the platformio.ini environment.
+- **Test File:**
+   - `test_dio.c` (located in `test/` directory).
+- **Framework used in project:** `stm32cube` (instead of CMSIS).
+
+### Running Unit Tests.
+
+You can run unit testing on actual hardware (MCU) by using the **PlatformIO extension in Visual Studio Code** or the **PlatformIO CLI**:
+
+- **Test using the PlatformIO Toolbar (GUI):** If you're using VS Code with the PlatformIO extension, go to the advanced folder and simply click the "_Test_" option in the PlatformIO toolbar. This will build and upload the tests on the host machine using the selected environment in your `platformio.ini`. 
+
+- **Build using the PlatformIO CLI:** From the project's root directory, run the following command to build and upload all tests using the selected environments defined in `platformio.ini`:
+
+```
+platformio test
+```
+
+### Tests
+
+The following aspects of the DIO driver are verified:
+- Correct **initialization** of STM32 GPIO registers.
+- **Input data** register behavior.
+- **Output data** register behavior.
+- **Pin** mapping and functional behavior (write, read, toggle).
+- **Register-level** read/write abstractions.
+
+The test results of the `test_dio.c` code can be seen as follow:
+
+<p align="center">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/tree/main/Documentation/Doxygen/DIO/images/DIO-Tests.png" alt="[DIO Unit Testing" width="100%">
+</p>
+
+**[Back to top](#table-of-contents)**
+
+--
+
 ## Release Process
 
 New features and updates are pushed under versioned tags.
@@ -290,12 +335,13 @@ New features and updates are pushed under versioned tags.
 ### Versioning
 
 We use [Semantic Versioning](http://semver.org/).  
-Latest release: **v1.1**
+Latest release: **v1.2**
 
 ### Payload
 
 - `v1.0`: Initial release. GPIO and SPI drivers.  
 - `v1.1`: Updated documentation, structural improvements, and design by contract enhancements.
+- `V1.2`: Implement unit testing on the target.
 
 **[Back to top](#table-of-contents)**
 
@@ -322,6 +368,7 @@ Please read [CONTRIBUTING.md](/Documentation/CONTRIBUTING.md) for details on the
 - [Reusable Firmware Development](https://www.beningo.com/store/developing-reusable-firmware-a-practical-approach-to-apis-hals-and-drivers/) by Jacob Beningo  
 - [STM32Cube HAL Drivers](https://www.st.com/en/embedded-software/stm32cubef4.html)  
 - [MISRA-C Guidelines](https://www.misra.org.uk/)
+- [Unit Testing with PlatformIO](https://docs.platformio.org/en/latest/advanced/unit-testing/index.html)
 
 ---
 
@@ -344,3 +391,5 @@ This project is licensed under the MIT License – see the [LICENSE.md](LICENSE)
 - STM32 community and PlatformIO
 
 **[Back to top](#table-of-contents)**
+
+
