@@ -321,12 +321,13 @@ The following aspects of the DIO driver are verified:
 The test results of the `test_dio.c` code can be seen as follow:
 
 <p align="center">
-    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/tree/main/Documentation/Doxygen/DIO/images/DIO-Tests.png" alt="[DIO Unit Testing" width="100%">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/blob/main/Documentation/Doxygen/DIO/images/DIO-Tests.png" alt="[DIO Unit Testing" width="100%">
 </p>
+
 
 **[Back to top](#table-of-contents)**
 
---
+---
 
 ## Release Process
 
