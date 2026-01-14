@@ -138,6 +138,14 @@ typedef enum
     DIO_MAX_EXTI        /**< Defines the maximum external interrupt line */
 }DioExti_t;
 
+/* Defines the possible triggers for the external interrupt */
+typedef enum
+{
+    DIO_EXTI_RISING,        /**< Rising edge trigger */
+    DIO_EXTI_FALLING,       /**< Falling edge trigger */
+    DIO_EXTI_MAX_TRIGGER    /**< Defines the maximum trigger type */
+}DioExtiTrigger_t;
+
 /**
  * Defines the mode of the Dio pin as an input, output, alternate function 
  * and analog.
@@ -215,14 +223,15 @@ typedef enum
  */
 typedef struct 
 {
-    DioPort_t Port;             /**< The I/O port */
-    DioPin_t Pin;               /**< The I/O pin */
-    DioMode_t Mode;             /**< Input, Output, Function, or Analog */
-    DioType_t Type;             /**< Push-pull or Open-drain */
-    DioSpeed_t Speed;           /**< Low, Medium, High, very */
-    DioResistor_t Resistor;     /**< Enabled or Disabled */
-    DioFunction_t Function;     /**< Mux Function - Dio_Peri_Select */
-    DioExti_t Exti;             /**< External interrupt line */
+    DioPort_t Port;               /**< The I/O port */
+    DioPin_t Pin;                 /**< The I/O pin */
+    DioMode_t Mode;               /**< Input, Output, Function, or Analog */
+    DioType_t Type;               /**< Push-pull or Open-drain */
+    DioSpeed_t Speed;             /**< Low, Medium, High, very */
+    DioResistor_t Resistor;       /**< Enabled or Disabled */
+    DioFunction_t Function;       /**< Mux Function - Dio_Peri_Select */
+    DioExti_t Exti;               /**< External interrupt line */
+    DioExtiTrigger_t ExtiTrigger; /**< External interrupt trigger */
 }DioConfig_t;
 
 
