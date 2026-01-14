@@ -113,6 +113,31 @@ typedef enum
     DIO_MAX_PIN = 16/**< Defines the maximum pin value*/
 }DioPin_t;
 
+/*
+ * Defines all the external interruption lines available on the MCU.
+*/
+typedef enum
+{
+    DIO_NO_EXTI = -1,   /**< No external interrupt line selected */
+    DIO_EXTI0,          /**< External interrupt line 0 */
+    DIO_EXTI1,          /**< External interrupt line 1 */
+    DIO_EXTI2,          /**< External interrupt line 2 */
+    DIO_EXTI3,          /**< External interrupt line 3 */
+    DIO_EXTI4,          /**< External interrupt line 4 */
+    DIO_EXTI5,          /**< External interrupt line 5 */
+    DIO_EXTI6,          /**< External interrupt line 6 */
+    DIO_EXTI7,          /**< External interrupt line 7 */
+    DIO_EXTI8,          /**< External interrupt line 8 */
+    DIO_EXTI9,          /**< External interrupt line 9 */
+    DIO_EXTI10,         /**< External interrupt line 10 */
+    DIO_EXTI11,         /**< External interrupt line 11 */
+    DIO_EXTI12,         /**< External interrupt line 12 */
+    DIO_EXTI13,         /**< External interrupt line 13 */
+    DIO_EXTI14,         /**< External interrupt line 14 */
+    DIO_EXTI15,         /**< External interrupt line 15 */
+    DIO_MAX_EXTI        /**< Defines the maximum external interrupt line */
+}DioExti_t;
+
 /**
  * Defines the mode of the Dio pin as an input, output, alternate function 
  * and analog.
@@ -197,6 +222,7 @@ typedef struct
     DioSpeed_t Speed;           /**< Low, Medium, High, very */
     DioResistor_t Resistor;     /**< Enabled or Disabled */
     DioFunction_t Function;     /**< Mux Function - Dio_Peri_Select */
+    DioExti_t Exti;             /**< External interrupt line */
 }DioConfig_t;
 
 
