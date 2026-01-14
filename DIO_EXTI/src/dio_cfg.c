@@ -41,17 +41,11 @@
 const DioConfig_t DioConfig[] = 
 {
 /*                                                          
- *  Port    Pin      Mode        Type           Speed          Resistor         Function
+ *  Port    Pin      Mode        Type           Speed          Resistor         Function  ExtI
  *                
 */
-   {DIO_PA, DIO_PA0, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
-   {DIO_PA, DIO_PA1, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
-   {DIO_PA, DIO_PA2, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
-   {DIO_PA, DIO_PA3, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
-   {DIO_PA, DIO_PA4, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
-   {DIO_PA, DIO_PA5, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
-   {DIO_PB, DIO_PB0, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
-   {DIO_PC, DIO_PC13, DIO_INPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0},
+   {DIO_PA, DIO_PA5, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0, DIO_NO_EXTI},
+   {DIO_PC, DIO_PC13, DIO_INPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0, DIO_EXTI13},
 };
 
 /*****************************************************************************
