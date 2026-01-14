@@ -19,6 +19,10 @@
 		{
 			"name": "USART",
 			"path": "USART"
+		},
+		{
+			"name": "DIO_EXTI",
+			"path": "DIO_EXTI"
 		}
 	],
 	"settings": {
@@ -26,6 +30,7 @@
 			"stdio.h": "c",
 			"dio.h": "c",
 			"dio_cfg.h": "c"
-		}
+		},
+		"stm32cube-ide-clangd.path": "cube"
 	}
 }
