@@ -84,6 +84,24 @@ static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
     (uint32_t*)&GPIOH->AFR[0]
 };
 
+/* Defines a array of pointers to the SYSCFG external interrupt configuration
+ * register.
+*/
+static uint32_t volatile * const exticrRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&SYSCFG->EXTICR[0], (uint32_t*)&SYSCFG->EXTICR[1],
+    (uint32_t*)&SYSCFG->EXTICR[2], (uint32_t*)&SYSCFG->EXTICR[3]
+};
+
+/* Define a pointer to the EXTI interrupt mask register */
+static uint32_t volatile * const imrRegister = (uint32_t*)&EXTI->IMR;
+
+/* Define a pointer to the EXTI interrupt rising trigger register */
+static uint32_t volatile * const rtsrRegister = (uint32_t*)&EXTI->RTSR;
+
+/* Define a pointer to the EXTI interrupt falling trigger register */
+static uint32_t volatile * const ftsrRegister = (uint32_t*)&EXTI->FTSR;
+
 /*****************************************************************************
 * Function Prototypes
 *****************************************************************************/
