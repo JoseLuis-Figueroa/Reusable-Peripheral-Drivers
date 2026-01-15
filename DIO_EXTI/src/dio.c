@@ -386,6 +386,36 @@ void DIO_init(const DioConfig_t * const Config, size_t configSize)
             assert(Config[i].Function < DIO_MAX_FUNCTION);
        }
 
+       if(Config[i].Exti != DIO_EXTI_NONE && Config[i].Exti < DIO_MAX_EXTI)
+       {
+            /* Configure the SYSCFG external interrupt configuration register */
+            uint8_t extiRegIndex = Config[i].Exti / 4;
+            uint8_t extiBitPos = (Config[i].Exti % 4) * 4;
+
+            /* Clear the previous port selection for the EXTI line */
+            *exticrRegister[extiRegIndex] &= ~(0x0FUL << extiBitPos);
+            /* Set the new port selection for the EXTI line */
+            *exticrRegister[extiRegIndex] |= (Config[i].Port << extiBitPos);
+
+            /* Enable the EXTI line in the interrupt mask register */
+            *imrRegister |= (1UL << Config[i].Exti);
+
+            /* Configure the trigger selection */
+            if(Config[i].Trigger == DIO_EXTI_RISING)
+            {
+                *rtsrRegister |= (1UL << Config[i].Exti);
+                *ftsrRegister &= ~(1UL << Config[i].Exti);
+            }
+            else if(Config[i].Trigger == DIO_EXTI_FALLING)
+            {
+                *ftsrRegister |= (1UL << Config[i].Exti);
+                *rtsrRegister &= ~(1UL << Config[i].Exti);
+            }
+            else
+            {
+                assert(Config[i].Trigger < DIO_EXTI_MAX_TRIGGER);
+            }
+       }
     }
 }
 

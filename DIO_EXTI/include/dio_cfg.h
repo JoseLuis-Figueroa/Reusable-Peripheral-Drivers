@@ -118,7 +118,7 @@ typedef enum
 */
 typedef enum
 {
-    DIO_NO_EXTI = -1,   /**< No external interrupt line selected */
+    DIO_EXTI_NONE = -1,   /**< No external interrupt line selected */
     DIO_EXTI0,          /**< External interrupt line 0 */
     DIO_EXTI1,          /**< External interrupt line 1 */
     DIO_EXTI2,          /**< External interrupt line 2 */
@@ -141,6 +141,7 @@ typedef enum
 /* Defines the possible triggers for the external interrupt */
 typedef enum
 {
+    DIO_EXTI_NO_TRIGGER,    /**< No trigger selected */
     DIO_EXTI_RISING,        /**< Rising edge trigger */
     DIO_EXTI_FALLING,       /**< Falling edge trigger */
     DIO_EXTI_MAX_TRIGGER    /**< Defines the maximum trigger type */
@@ -231,7 +232,7 @@ typedef struct
     DioResistor_t Resistor;       /**< Enabled or Disabled */
     DioFunction_t Function;       /**< Mux Function - Dio_Peri_Select */
     DioExti_t Exti;               /**< External interrupt line */
-    DioExtiTrigger_t ExtiTrigger; /**< External interrupt trigger */
+    DioExtiTrigger_t Trigger; /**< External interrupt trigger */
 }DioConfig_t;
 
 
