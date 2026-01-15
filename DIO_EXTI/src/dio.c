@@ -146,6 +146,7 @@ static uint32_t volatile * const ftsrRegister = (uint32_t*)&EXTI->FTSR;
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
  * 
 *****************************************************************************/
 void DIO_init(const DioConfig_t * const Config, size_t configSize)
@@ -393,9 +394,9 @@ void DIO_init(const DioConfig_t * const Config, size_t configSize)
             uint8_t extiBitPos = (Config[i].Exti % 4) * 4;
 
             /* Clear the previous port selection for the EXTI line */
-            *exticrRegister[extiRegIndex] &= ~(0x0FUL << extiBitPos);
+            *exticrRegister[extiRegIndex] &= ~(0x0FUL << (extiBitPos * 4));
             /* Set the new port selection for the EXTI line */
-            *exticrRegister[extiRegIndex] |= (Config[i].Port << extiBitPos);
+            *exticrRegister[extiRegIndex] |= (Config[i].Port << (extiBitPos * 4));
 
             /* Enable the EXTI line in the interrupt mask register */
             *imrRegister |= (1UL << Config[i].Exti);
@@ -459,6 +460,7 @@ void DIO_init(const DioConfig_t * const Config, size_t configSize)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
  * 
 **********************************************************************/
 DioPinState_t DIO_pinRead(const DioPinConfig_t * const PinConfig)
@@ -528,6 +530,7 @@ DioPinState_t DIO_pinRead(const DioPinConfig_t * const PinConfig)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
  * 
  **********************************************************************/
 void DIO_pinWrite(const DioPinConfig_t * const PinConfig, DioPinState_t State)
@@ -593,6 +596,7 @@ void DIO_pinWrite(const DioPinConfig_t * const PinConfig, DioPinState_t State)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
  * 
  **********************************************************************/
 void DIO_pinToggle(const DioPinConfig_t * const PinConfig)
@@ -641,6 +645,7 @@ void DIO_pinToggle(const DioPinConfig_t * const PinConfig)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
  * 
 **********************************************************************/ 
 void DIO_registerWrite(uint32_t address, uint32_t value)
@@ -681,6 +686,7 @@ void DIO_registerWrite(uint32_t address, uint32_t value)
  * @see DIO_pinToggle
  * @see DIO_registerWrite
  * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
  *
  **********************************************************************/ 
 uint32_t DIO_registerRead(uint32_t address)
@@ -688,4 +694,206 @@ uint32_t DIO_registerRead(uint32_t address)
     volatile uint32_t * const registerPointer = (uint32_t*)address;
 
     return *registerPointer;
+}
+
+/**********************************************************************
+ * Function: DIO_CallbackDispatcher()
+*//**
+ *\b Description:
+ * This function is used to dispatch the callback for a specific EXTI. 
+ * By default, the callback are initialized to a NULL pointer. The 
+ * driver may contain more than one possible callback, so the function
+ * will take a parameter to identify which callback to execute.
+ * 
+ * PRE-CONDITION: The channel is configured as input <br>
+ * PRE-CONDITION: The channel is configured as GPIO <br>
+ * PRE-CONDITION: The Exti is within the maximum DIO_MAX_EXTI. <br>
+ * 
+ * @param[in]   exti is the external interrupt line to register the 
+ * callback.
+ * @param[in]   callbackFunction is a pointer to the function to be
+ *              registered as callback.
+ * 
+ * @return  void
+ * 
+ * \b Example:
+ * @code
+ * typedef void (*exti_callback_ptr_t)(void);
+ * exti_callback_ptr_t exti1_callback_ptr = NULL;
+ * 
+ * DIO_callbackDispatcher(DIO_EXTI1, exti1_callback_ptr);
+ * @endcode
+ * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ *
+ **********************************************************************/ 
+void DIO_callbackDispatcher(DioExti_t exti, void (*callbackFunction)(void))
+{
+    if(exti == DIO_EXTI0)
+    {
+        exti0_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI1)
+    {
+        exti1_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI2)
+    {
+        exti2_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI3)
+    {
+        exti3_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI4)
+    {
+        exti4_callback_ptr = callbackFunction;
+    }
+    else if(exti >= DIO_EXTI5 && exti <= DIO_EXTI9)
+    {
+        exti9_5_callback_ptr = callbackFunction;
+    }
+    else if(exti >= DIO_EXTI10 && exti <= DIO_EXTI15)
+    {
+        exti15_10_callback_ptr = callbackFunction;
+    }
+    else
+    {
+        assert(exti < DIO_MAX_EXTI);
+    }
+}
+
+/**********************************************************************
+ * Function: EXTIx_IRQHandler()
+*//**
+    *\b Description:
+    * These functions are the interrupt handlers for the EXTI lines.
+    * Each handler checks if the corresponding callback function pointer
+    * is not NULL and invokes the callback if it is set.
+    * 
+    * PRE-CONDITION: The EXTI line is configured and enabled. <br>
+    * 
+    * POST-CONDITION: The registered callback function is executed. <br>
+    * 
+    * @return  void
+    * 
+    * \b Example:
+    * @code
+    * void EXTI0_IRQHandler(void)
+    * {
+    *     if(EXTI->PR & EXTI_PR_PR0)
+    *     {    
+    *         EXTI->PR |= EXTI_PR_PR0; 
+    *         if(exti0_callback_ptr != NULL)
+    *         {
+    *             exti0_callback_ptr();
+    *         }  
+    *     }
+    * }
+    * @endcode
+    * 
+**********************************************************************/
+void EXTI0_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR0)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR0; 
+        if(exti0_callback_ptr != NULL)
+        {
+            exti0_callback_ptr();
+        }  
+    }
+}
+
+void EXTI1_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR1)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR1; 
+        if(exti1_callback_ptr != NULL)
+        {
+            exti1_callback_ptr();
+        }  
+    }
+}
+
+void EXTI2_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR2)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR2; 
+        if(exti2_callback_ptr != NULL)
+        {
+            exti2_callback_ptr();
+        }  
+    }
+}
+
+void EXTI3_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR3)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR3; 
+        if(exti3_callback_ptr != NULL)
+        {
+            exti3_callback_ptr();
+        }  
+    }
+}
+
+void EXTI4_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR4)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR4; 
+        if(exti4_callback_ptr != NULL)
+        {
+            exti4_callback_ptr();
+        }  
+    }
+}
+
+void EXTI9_5_IRQHandler(void)
+{
+    for(uint8_t line = 5; line <= 9; line++)
+    {
+        if(EXTI->PR & (1UL << line))
+        {
+            /* Clear the interrupt flag*/
+            EXTI->PR |= (1UL << line); 
+            if(exti9_5_callback_ptr != NULL)
+            {
+                exti9_5_callback_ptr();
+            }  
+        }
+    }
+}
+
+void EXTI15_10_IRQHandler(void)
+{
+    for(uint8_t line = 10; line <= 15; line++)
+    {
+        if(EXTI->PR & (1UL << line))
+        {
+            /* Clear the interrupt flag*/
+            EXTI->PR |= (1UL << line); 
+            if(exti15_10_callback_ptr != NULL)
+            {
+                exti15_10_callback_ptr();
+            }  
+        }
+    }
 }
