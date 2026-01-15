@@ -387,21 +387,34 @@ void DIO_init(const DioConfig_t * const Config, size_t configSize)
             assert(Config[i].Function < DIO_MAX_FUNCTION);
        }
 
+       /* Set the external interrupt of the DIO pin defined in the configuration
+        * table. If no external interrupt is required, the external interrupt in
+        * not configured.
+       */
        if(Config[i].Exti != DIO_EXTI_NONE && Config[i].Exti < DIO_MAX_EXTI)
        {
-            /* Configure the SYSCFG external interrupt configuration register */
+            /* Disable global interrupts (ARM Cortex)*/
+            __disable_irq();
+
+            /* 
+             * Configure the SYSCFG external interrupt configuration register.
+            */ 
+            /* Determine the EXTI register index and bit position */
             uint8_t extiRegIndex = Config[i].Exti / 4;
             uint8_t extiBitPos = (Config[i].Exti % 4) * 4;
-
             /* Clear the previous port selection for the EXTI line */
             *exticrRegister[extiRegIndex] &= ~(0x0FUL << (extiBitPos * 4));
             /* Set the new port selection for the EXTI line */
             *exticrRegister[extiRegIndex] |= (Config[i].Port << (extiBitPos * 4));
 
-            /* Enable the EXTI line in the interrupt mask register */
+            /*
+             *Enable the EXTI line in the interrupt mask register 
+            */
             *imrRegister |= (1UL << Config[i].Exti);
 
-            /* Configure the trigger selection */
+            /*
+             *Configure the trigger selection 
+            */
             if(Config[i].Trigger == DIO_EXTI_RISING)
             {
                 *rtsrRegister |= (1UL << Config[i].Exti);
@@ -416,7 +429,52 @@ void DIO_init(const DioConfig_t * const Config, size_t configSize)
             {
                 assert(Config[i].Trigger < DIO_EXTI_MAX_TRIGGER);
             }
-       }
+
+            /*
+             * Configure the NVIC for the EXTI line (ARM Cortex-m)
+            */
+            if(Config[i].Exti == DIO_EXTI0)
+            {
+                NVIC_EnableIRQ((EXTI0_IRQn));
+            }
+            else if(Config[i].Exti == DIO_EXTI1)
+            {
+                NVIC_EnableIRQ(EXTI1_IRQn);
+            }
+            else if(Config[i].Exti == DIO_EXTI2)
+            {
+                NVIC_EnableIRQ(EXTI2_IRQn);
+            }
+            else if(Config[i].Exti == DIO_EXTI3)
+            {
+                NVIC_EnableIRQ(EXTI3_IRQn);
+            }
+            else if(Config[i].Exti == DIO_EXTI4)
+            {
+                NVIC_EnableIRQ(EXTI4_IRQn);
+            }
+            else if(Config[i].Exti >= DIO_EXTI5 && Config[i].Exti <= DIO_EXTI9)
+            {
+                NVIC_EnableIRQ(EXTI9_5_IRQn);
+            }
+            else if(Config[i].Exti >= DIO_EXTI10 && Config[i].Exti <= DIO_EXTI15)
+            {
+                NVIC_EnableIRQ(EXTI15_10_IRQn);
+            }
+
+            /* Enable global interrupts (ARM Cortex) */
+            __enable_irq();
+        }
+        /* Handle the case where no external interrupt is configured */
+        else if (Config[i].Exti == DIO_EXTI_NONE)
+        {
+            assert(Config[i].Exti == DIO_EXTI_NONE);
+        }
+        /* Handle invalid EXTI line */
+        else
+        {
+            assert(Config[i].Exti < DIO_MAX_EXTI);      
+        }
     }
 }
 
