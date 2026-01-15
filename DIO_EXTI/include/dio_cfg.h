@@ -118,7 +118,7 @@ typedef enum
 */
 typedef enum
 {
-    DIO_EXTI_NONE = -1,   /**< No external interrupt line selected */
+    DIO_EXTI_NONE = -1, /**< No external interrupt line selected */
     DIO_EXTI0,          /**< External interrupt line 0 */
     DIO_EXTI1,          /**< External interrupt line 1 */
     DIO_EXTI2,          /**< External interrupt line 2 */

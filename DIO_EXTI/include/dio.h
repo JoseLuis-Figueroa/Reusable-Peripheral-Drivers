@@ -44,9 +44,20 @@ typedef struct
     DioPin_t Pin;               /**< The I/O pin */
 }DioPinConfig_t;
 
+/* Define a pointer to the EXTI callback function */
+typedef void (*exti_callback_ptr_t)(void);
+
 /*****************************************************************************
 * Variables
 *****************************************************************************/
+/* EXTI callback function pointer */
+exti_callback_ptr_t exti0_callback_ptr = NULL;
+exti_callback_ptr_t exti1_callback_ptr = NULL;
+exti_callback_ptr_t exti2_callback_ptr = NULL;
+exti_callback_ptr_t exti3_callback_ptr = NULL;
+exti_callback_ptr_t exti4_callback_ptr = NULL;
+exti_callback_ptr_t exti9_5_callback_ptr = NULL;
+exti_callback_ptr_t exti15_10_callback_ptr = NULL;
 
 /*****************************************************************************
 * Function Prototypes
