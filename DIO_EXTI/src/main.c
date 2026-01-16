@@ -17,8 +17,49 @@
 #include <stdbool.h>
 #include "dio.h"
 
+
+/******************************************************************************
+* Variables
+******************************************************************************/
+/*Define the pin configuration for PC13 (User button)*/
+const DioPinConfig_t UserButton1= {DIO_PC, DIO_PC13};
+/*Define the pin configuration for PA5 (Embedded LED)*/
+const DioPinConfig_t UserLED1= {DIO_PA, DIO_PA5}; 
+
+/******************************************************************************
+* Main
+******************************************************************************/
 int main()
 {
+    /* Enable clock access to GPIOA, GPIOB and GPIOC*/
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+
+    /* Get the address of the configuration table*/
+    const DioConfig_t * const DioConfig = DIO_configGet();
+    /* Get the size of the configuration table*/
+    size_t configSizeDio = DIO_configSizeGet();
+    /* Initialize the GPIO according to the configuration table*/
+    DIO_init(DioConfig, configSizeDio);
+
+    /*Register the callback function for EXTI line 13 (PC13)*/
+    DIO_callbackDispatcher(DIO_EXTI13, toggle_led);
+
+    while(1)
+    {
+        /* Wait for interrupt*/
+        asm("nop");    
+    }
 
     return 0;
+}
+
+
+/*****************************************************************************
+* Function Definitions
+*****************************************************************************/
+void toggle_led(const DioPinConfig_t * const PinConfig)
+{
+    /*Toggle the specified LED pin*/
+    DIO_pinToggle(PinConfig);
 }
