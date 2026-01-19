@@ -24,6 +24,14 @@
 /*****************************************************************************
 * Module Typedefs
 *****************************************************************************/
+/* EXTI callback function pointer definitions */
+exti_callback_ptr_t exti0_callback_ptr = NULL;
+exti_callback_ptr_t exti1_callback_ptr = NULL;
+exti_callback_ptr_t exti2_callback_ptr = NULL;
+exti_callback_ptr_t exti3_callback_ptr = NULL;
+exti_callback_ptr_t exti4_callback_ptr = NULL;
+exti_callback_ptr_t exti9_5_callback_ptr = NULL;
+exti_callback_ptr_t exti15_10_callback_ptr = NULL;
 
 /*****************************************************************************
 * Module Variable Definitions
@@ -400,13 +408,16 @@ void DIO_init(const DioConfig_t * const Config, size_t configSize)
              * Configure the SYSCFG external interrupt configuration register.
             */ 
             /* Determine the EXTI register index and bit position */
-            uint8_t extiRegIndex = Config[i].Exti / 4;
-            uint8_t extiBitPos = (Config[i].Exti % 4) * 4;
+            uint8_t registerIndex = Config[i].Exti / 4;
+            /* Each EXTI line uses 4 bits in the EXTICR register. 
+            * BitPosition = (13 % 4) * 4 = (1) * 4 = 4
+            */
+            uint8_t bitPosition = (Config[i].Exti % 4) * 4;
             /* Clear the previous port selection for the EXTI line */
-            *exticrRegister[extiRegIndex] &= ~(0x0FUL << (extiBitPos * 4));
+            *exticrRegister[registerIndex] &= ~(0x0FUL << bitPosition);
             /* Set the new port selection for the EXTI line */
-            *exticrRegister[extiRegIndex] |= (Config[i].Port << (extiBitPos * 4));
-
+            *exticrRegister[registerIndex] |= (Config[i].Port << bitPosition);
+         
             /*
              *Enable the EXTI line in the interrupt mask register 
             */

@@ -48,18 +48,6 @@ typedef struct
 typedef void (*exti_callback_ptr_t)(void);
 
 /*****************************************************************************
-* Variables
-*****************************************************************************/
-/* EXTI callback function pointer */
-exti_callback_ptr_t exti0_callback_ptr = NULL;
-exti_callback_ptr_t exti1_callback_ptr = NULL;
-exti_callback_ptr_t exti2_callback_ptr = NULL;
-exti_callback_ptr_t exti3_callback_ptr = NULL;
-exti_callback_ptr_t exti4_callback_ptr = NULL;
-exti_callback_ptr_t exti9_5_callback_ptr = NULL;
-exti_callback_ptr_t exti15_10_callback_ptr = NULL;
-
-/*****************************************************************************
 * Function Prototypes
 *****************************************************************************/
 #ifdef __cplusplus
@@ -72,6 +60,7 @@ void DIO_pinWrite(const DioPinConfig_t * const PinConfig, DioPinState_t State);
 void DIO_pinToggle(const DioPinConfig_t * const PinConfig);
 void DIO_registerWrite(uint32_t address, uint32_t value);
 uint32_t DIO_registerRead(uint32_t address);
+void DIO_callbackDispatcher(DioExti_t exti, void (*callbackFunction)(void));
 
 #ifdef __cplusplus
 } // extern C
