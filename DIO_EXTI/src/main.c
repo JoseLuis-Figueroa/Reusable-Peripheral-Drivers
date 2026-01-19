@@ -17,7 +17,6 @@
 #include <stdbool.h>
 #include "dio.h"
 
-
 /******************************************************************************
 * Variables
 ******************************************************************************/
@@ -27,6 +26,11 @@ const DioPinConfig_t UserButton1= {DIO_PC, DIO_PC13};
 const DioPinConfig_t UserLED1= {DIO_PA, DIO_PA5}; 
 
 /******************************************************************************
+* function prototypes
+******************************************************************************/
+void toggle_led(void);
+
+/******************************************************************************
 * Main
 ******************************************************************************/
 int main()
@@ -34,6 +38,8 @@ int main()
     /* Enable clock access to GPIOA, GPIOB and GPIOC*/
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+    /*Enable clock access to SYSCFG*/
+    RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
 
     /* Get the address of the configuration table*/
     const DioConfig_t * const DioConfig = DIO_configGet();
@@ -58,8 +64,8 @@ int main()
 /*****************************************************************************
 * Function Definitions
 *****************************************************************************/
-void toggle_led(const DioPinConfig_t * const PinConfig)
+void toggle_led(void)
 {
     /*Toggle the specified LED pin*/
-    DIO_pinToggle(PinConfig);
+    DIO_pinToggle(&UserLED1);
 }
