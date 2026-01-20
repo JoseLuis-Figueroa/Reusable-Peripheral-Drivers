@@ -43,7 +43,9 @@ const DioConfig_t DioConfig[] =
 /*                                                          
  *  Port    Pin      Mode        Type           Speed          Resistor        Function      ExtI          Trigger
  *                
-*/
+*/ 
+   {DIO_PA, DIO_PA0, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0, DIO_EXTI_NONE, DIO_EXTI_NO_TRIGGER},
+   {DIO_PC, DIO_PC0, DIO_INPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0, DIO_EXTI0, DIO_EXTI_FALLING},
    {DIO_PA, DIO_PA5, DIO_OUTPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0, DIO_EXTI_NONE, DIO_EXTI_NO_TRIGGER},
    {DIO_PC, DIO_PC13, DIO_INPUT, DIO_PUSH_PULL, DIO_LOW_SPEED, DIO_NO_RESISTOR, DIO_AF0, DIO_EXTI13, DIO_EXTI_FALLING},
 };

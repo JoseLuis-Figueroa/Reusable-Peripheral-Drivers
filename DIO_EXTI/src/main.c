@@ -25,10 +25,16 @@ const DioPinConfig_t UserButton1= {DIO_PC, DIO_PC13};
 /*Define the pin configuration for PA5 (Embedded LED)*/
 const DioPinConfig_t UserLED1= {DIO_PA, DIO_PA5}; 
 
+/*Define the pin configuration for PC0 (external button)*/
+const DioPinConfig_t UserButton2= {DIO_PC, DIO_PC0};
+/*Define the pin configuration for PA0 (external LED)*/
+const DioPinConfig_t UserLED2= {DIO_PA, DIO_PA0}; 
+
 /******************************************************************************
 * function prototypes
 ******************************************************************************/
-void toggle_led(void);
+void toggle_led1(void);
+void toggle_led2(void);
 
 /******************************************************************************
 * Main
@@ -49,7 +55,9 @@ int main()
     DIO_init(DioConfig, configSizeDio);
 
     /*Register the callback function for EXTI line 13 (PC13)*/
-    DIO_callbackDispatcher(DIO_EXTI13, toggle_led);
+    DIO_callbackDispatcher(DIO_EXTI13, toggle_led1);
+    /*Register the callback function for EXTI line 0 (PC0)*/
+    DIO_callbackDispatcher(DIO_EXTI0, toggle_led2);
 
     while(1)
     {
@@ -64,8 +72,14 @@ int main()
 /*****************************************************************************
 * Function Definitions
 *****************************************************************************/
-void toggle_led(void)
+void toggle_led1(void)
 {
     /*Toggle the specified LED pin*/
     DIO_pinToggle(&UserLED1);
+}
+
+void toggle_led2(void)
+{
+    /*Toggle the specified LED pin*/
+    DIO_pinToggle(&UserLED2);
 }
