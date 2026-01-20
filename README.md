@@ -142,7 +142,7 @@ No separate installation needed firmware is flashed directly to the microcontrol
 ## Usage
 
 
-### General-Purpose Input/Output (GPIO)
+### General-Purpose Input/Output (DIO)
 
 1. The DIO codes configure the **user button (PC13)** as an input. 
 
@@ -167,6 +167,38 @@ This implementation serves as a **test and validation of the GPIO driver**. A vi
 
 Please refer to the Doxygen documentation available in the [Digital I/O Doxygen Documentation](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Drivers/main/Documentation/Doxygen/DIO/output_files/html/index.html) for further code information.
 
+### External Interrupt with Callback Functions (DIO_EXTI)
+
+The DIO_EXTI module extends the General-Purpose Input/Output (GPIO) driver by implementing **external interrupts** with **callback functions**. This allows the microcontroller to respond immediately to external events without polling, enabling efficient event-driven programming. When an interrupt occurs, a pre-registered callback function is invoked automatically by the interrupt handler. This application code implements the following routine:
+ 
+When PC13 (User Button) is Pressed:
+- EXTI Line 13 detects a falling edge.
+- `EXTI15_10_IRQHandler()` is invoked.
+- `toggle_led1()` callback is executed.
+- **PA5 LED toggles** (on ↔ off).
+
+When PC0 (External Button) is Pressed:
+- EXTI Line 0 detects a falling edge.
+- `EXTI0_IRQHandler()` is invoked.
+- `toggle_led2()` callback is executed.
+- **PA0 LED toggles** (on ↔ off).
+
+Simultaneous Button Presses:
+If both buttons are pressed simultaneously:
+- **EXTI0 (PC0) executes first** due to lower IRQ priority number.
+- **EXTI15_10 (PC13) executes after** EXTI0 completes.
+- Both LEDs will toggle in sequence.
+
+The benefits of this implementation can seen as follows:
+
+| Feature | Benefit |
+|---------|---------|
+| **Callback Functions** | Decoupled event handling; easy to modify response behavior |
+| **Hardware Interrupts** | No polling overhead; immediate response to events |
+| **Flexible Triggers** | Rising/falling edge detection for different button types |
+| **Multiple EXTI Lines** | Handle multiple simultaneous interrupt sources |
+| **Priority Support** | Control interrupt execution order via NVIC |
+| **Modular Configuration** | All settings defined in configuration table |
 
 ### Serial Peripheral Interface (SPI)
 
@@ -221,7 +253,7 @@ The master continuously transmits data to the logic analyzer, currently sending 
 Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/main/Documentation/Doxygen/SPI/output_files/html/index.html) for further code information.
 
 
-### Serial Peripheral Interface (Master-Slave)
+### Serial Peripheral Interface Master-Slave (SPI_Master && SPI slave)
 
 This implementation configures two **Nucleo-F401RE boards** for SPI communication:
 - One board acts as the **master**, and the other as the **slave**.
