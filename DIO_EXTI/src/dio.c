@@ -1,0 +1,968 @@
+/**
+ * @file dio.c
+ * @author Jose Luis Figueroa
+ * @brief The implementation for the DIO driver.
+ * @version 1.1
+ * @date 2025-03-11
+ * 
+ * @copyright Copyright (c) 2025 Jose Luis Figueroa. MIT License.
+ * 
+ */
+/*****************************************************************************
+* Module Includes
+*****************************************************************************/
+#include "dio.h"        /*For this modules definitions*/                                        
+
+/*****************************************************************************
+* Module Preprocessor Constants
+*****************************************************************************/
+
+/*****************************************************************************
+* Module Preprocessor Macros
+*****************************************************************************/
+
+/*****************************************************************************
+* Module Typedefs
+*****************************************************************************/
+/* EXTI callback function pointer definitions */
+exti_callback_ptr_t exti0_callback_ptr = NULL;
+exti_callback_ptr_t exti1_callback_ptr = NULL;
+exti_callback_ptr_t exti2_callback_ptr = NULL;
+exti_callback_ptr_t exti3_callback_ptr = NULL;
+exti_callback_ptr_t exti4_callback_ptr = NULL;
+exti_callback_ptr_t exti9_5_callback_ptr = NULL;
+exti_callback_ptr_t exti15_10_callback_ptr = NULL;
+
+/*****************************************************************************
+* Module Variable Definitions
+*****************************************************************************/
+/* Defines a array of pointers to the GPIO port mode register */
+static uint32_t volatile * const moderRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->MODER, (uint32_t*)&GPIOB->MODER, 
+    (uint32_t*)&GPIOC->MODER, (uint32_t*)&GPIOD->MODER,
+    (uint32_t*)&GPIOH->MODER
+};
+
+/* Defines a array of pointers to the GPIO port output type register. */
+static uint32_t volatile * const otyperRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->OTYPER, (uint32_t*)&GPIOB->OTYPER,
+    (uint32_t*)&GPIOC->OTYPER, (uint32_t*)&GPIOD->OTYPER, 
+    (uint32_t*)&GPIOH->OTYPER
+};
+
+/* Define a array of pointers to the GPIO port output speed register. */
+static uint32_t volatile * const ospeedrRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->OSPEEDR, (uint32_t*)&GPIOB->OSPEEDR,
+    (uint32_t*)&GPIOC->OSPEEDR, (uint32_t*)&GPIOD->OSPEEDR, 
+    (uint32_t*)&GPIOH->OSPEEDR
+};
+
+/* Defines a array of pointers to the GPIO port pull-up/pull-down register.*/
+static uint32_t volatile * const pupdrRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->PUPDR, (uint32_t*)&GPIOB->PUPDR,
+    (uint32_t*)&GPIOC->PUPDR, (uint32_t*)&GPIOD->PUPDR, 
+    (uint32_t*)&GPIOH->PUPDR
+};
+
+/* Defines a array of pointers to the GPIO port input data register. */
+static uint32_t volatile * const idrRegister[NUMBER_OF_PORTS] =  
+{
+    (uint32_t*)&GPIOA->IDR, (uint32_t*)&GPIOB->IDR, (uint32_t*)&GPIOC->IDR,
+    (uint32_t*)&GPIOD->IDR, (uint32_t*)&GPIOH->IDR
+};
+
+/* Defines a array of pointers to the GPIO port output data register. */
+static uint32_t volatile * const odrRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->ODR, (uint32_t*)&GPIOB->ODR, (uint32_t*)&GPIOC->ODR, 
+    (uint32_t*)&GPIOD->ODR, (uint32_t*)&GPIOH->ODR
+};
+
+/* Defines a array of pointers to the GPIO alternate function low register.
+ * This is compound for two 32 bits registers.
+*/
+static uint32_t volatile * const afrRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&GPIOA->AFR[0], (uint32_t*)&GPIOB->AFR[0], 
+    (uint32_t*)&GPIOC->AFR[0], (uint32_t*)&GPIOD->AFR[0], 
+    (uint32_t*)&GPIOH->AFR[0]
+};
+
+/* Defines a array of pointers to the SYSCFG external interrupt configuration
+ * register.
+*/
+static uint32_t volatile * const exticrRegister[NUMBER_OF_PORTS] =
+{
+    (uint32_t*)&SYSCFG->EXTICR[0], (uint32_t*)&SYSCFG->EXTICR[1],
+    (uint32_t*)&SYSCFG->EXTICR[2], (uint32_t*)&SYSCFG->EXTICR[3]
+};
+
+/* Define a pointer to the EXTI interrupt mask register */
+static uint32_t volatile * const imrRegister = (uint32_t*)&EXTI->IMR;
+
+/* Define a pointer to the EXTI interrupt rising trigger register */
+static uint32_t volatile * const rtsrRegister = (uint32_t*)&EXTI->RTSR;
+
+/* Define a pointer to the EXTI interrupt falling trigger register */
+static uint32_t volatile * const ftsrRegister = (uint32_t*)&EXTI->FTSR;
+
+/*****************************************************************************
+* Function Prototypes
+*****************************************************************************/
+
+/*****************************************************************************
+* Function Definitions
+*****************************************************************************/
+/*****************************************************************************
+ * Function: DIO_init()
+*//**
+*\b Description:
+ * This function is used to initialize the DIO based on the configuration  
+ * table defined in dio_cfg module.
+ * 
+ * PRE-CONDITION: The MCU clocks must be configured and enabled. <br>
+ * PRE-CONDITION: Configuration table needs to be populated (sizeof > 0) <br>
+ * PRE-CONDITION: NUMBER_OF_PORTS > 0 <br>
+ * PRE-CONDITION: The setting is within the maximum values (DIO_MAX). <br>
+ * 
+ * POST-CONDITION: The DIO peripheral is set up with the configuration 
+ * settings.
+ * 
+ * @param[in]   Config is a pointer to the configuration table that contains 
+ *               the initialization for the peripheral.
+ * @param[in]   configSize is the size of the configuration table.
+ * 
+ * @return  void
+ * 
+ * \b Example:
+ * @code
+ * const Dio_ConfigType_t * const DioConfig = DIO_configGet();
+ * size_t configSize = DIO_configSizeGet();
+ * 
+ * DIO_Init(DioConfig, configSize);
+ * @endcode
+ * 
+ * @see DIO_configGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ * 
+*****************************************************************************/
+void DIO_init(const DioConfig_t * const Config, size_t configSize)
+{
+    /* Loop through all the elements of the configuration table. */
+    for(uint8_t i=0; i<configSize; i++)
+    {
+        /* Prevent to assign a value out of the range of the port and pin.
+         * The registers arrays are limited to the NUMBER_OF_PORTS, higher 
+         * value can cause a memory violation.
+        */
+        assert(Config[i].Port < DIO_MAX_PORT);
+        assert(Config[i].Pin < DIO_MAX_PIN);
+
+        /* 
+         * Set the mode of the Dio pin on the GPIO port mode register. 
+         * Multiply the pin number (Config[i].Pin) by two as MODER uses two 
+         * bits to configure one pin.
+        */
+        if(Config[i].Mode == DIO_INPUT)
+        {
+            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin*2));
+
+        }
+        else if (Config[i].Mode == DIO_OUTPUT)
+        {
+            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] &=~ (2UL<<(Config[i].Pin*2));
+        }
+        else if (Config[i].Mode == DIO_FUNCTION)
+        {
+            *moderRegister[Config[i].Port] &=~ (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+        }
+        else if (Config[i].Mode == DIO_ANALOG)
+        {
+            *moderRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *moderRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+        }
+        else
+        {
+            assert(Config[i].Mode < DIO_MAX_MODE);
+        }
+
+        /*
+         * Set the output type of the Dio pin on the GPIO port output type 
+         * register.
+         */
+        if(Config[i].Type == DIO_PUSH_PULL)
+        {
+            *otyperRegister[Config[i].Port] &= ~(1UL<<Config[i].Pin);
+        }
+        else if (Config[i].Type == DIO_OPEN_DRAIN)
+        {
+            *otyperRegister[Config[i].Port] |= (1UL<<Config[i].Pin);
+        }
+        else
+        {
+            assert(Config[i].Type < DIO_MAX_TYPE);
+        }
+
+        /*
+         * Set the speed of the Dio pin on the GPIO port output speed 
+         * register. Multiply the pin number (Config[i].Pin) by two as 
+         * OSPEEDR uses two bits to configure one pin. 
+         */
+        if(Config[i].Speed == DIO_LOW_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+        }
+        else if (Config[i].Speed == DIO_MEDIUM_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+        }
+        else if (Config[i].Speed == DIO_HIGH_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+        }
+        else if(Config[i].Speed == DIO_VERY_SPEED)
+        {
+            *ospeedrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *ospeedrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+        }
+        else
+        {
+            assert(Config[i].Speed < DIO_MAX_SPEED);
+        }
+
+        /*
+         * Set the internal resistor of the Dio pin on the GPIO port 
+         * pull-up/pull-down register. Multiply the pin number 
+         * (Config[i].Pin) by two as PUPDR uses two bits to configure 
+         * one pin. 
+        */
+       if(Config[i].Resistor == DIO_NO_RESISTOR)
+       {
+            *pupdrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *pupdrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+       }
+       else if (Config[i].Resistor == DIO_PULLUP)
+       {
+            *pupdrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*2));
+            *pupdrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*2));
+       }
+       else if (Config[i].Resistor == DIO_PULLDOWN)
+       {
+            *pupdrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*2));
+            *pupdrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*2));
+       }
+       else
+       {
+            assert(Config[i].Resistor < DIO_MAX_RESISTOR);
+       }
+
+        /*
+         * Set the alternate function of the Dio pin on the GPIO alternate 
+         * function. Multiply the pin number (Config[i].Pin) by four as AFR 
+         * uses four bits to configure one pin. 
+        */
+       if(Config[i].Function == DIO_AF0)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF1)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF2)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF3)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF4)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF5)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF6)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF7)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF8)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF9)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF10)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF11)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF12)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF13)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] &= ~(2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF14)
+       {
+            *afrRegister[Config[i].Port] &= ~(1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else if(Config[i].Function == DIO_AF15)
+       {
+            *afrRegister[Config[i].Port] |= (1UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (2UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (4UL<<(Config[i].Pin*4));
+            *afrRegister[Config[i].Port] |= (8UL<<(Config[i].Pin*4));
+       }
+       else
+       {
+            assert(Config[i].Function < DIO_MAX_FUNCTION);
+       }
+
+       /* Set the external interrupt of the DIO pin defined in the configuration
+        * table. If no external interrupt is required, the external interrupt in
+        * not configured.
+       */
+       if(Config[i].Exti != DIO_EXTI_NONE && Config[i].Exti < DIO_MAX_EXTI)
+       {
+            /* Disable global interrupts (ARM Cortex)*/
+            __disable_irq();
+
+            /* 
+             * Configure the SYSCFG external interrupt configuration register.
+            */ 
+            /* Determine the EXTI register index and bit position */
+            uint8_t registerIndex = Config[i].Exti / 4;
+            /* Each EXTI line uses 4 bits in the EXTICR register. 
+            * BitPosition = (13 % 4) * 4 = (1) * 4 = 4
+            */
+            uint8_t bitPosition = (Config[i].Exti % 4) * 4;
+            /* Clear the previous port selection for the EXTI line */
+            *exticrRegister[registerIndex] &= ~(0x0FUL << bitPosition);
+            /* Set the new port selection for the EXTI line */
+            *exticrRegister[registerIndex] |= (Config[i].Port << bitPosition);
+         
+            /*
+             *Enable the EXTI line in the interrupt mask register 
+            */
+            *imrRegister |= (1UL << Config[i].Exti);
+
+            /*
+             *Configure the trigger selection 
+            */
+            if(Config[i].Trigger == DIO_EXTI_RISING)
+            {
+                *rtsrRegister |= (1UL << Config[i].Exti);
+                *ftsrRegister &= ~(1UL << Config[i].Exti);
+            }
+            else if(Config[i].Trigger == DIO_EXTI_FALLING)
+            {
+                *ftsrRegister |= (1UL << Config[i].Exti);
+                *rtsrRegister &= ~(1UL << Config[i].Exti);
+            }
+            else
+            {
+                assert(Config[i].Trigger < DIO_EXTI_MAX_TRIGGER);
+            }
+
+            /*
+             * Configure the NVIC for the EXTI line (ARM Cortex-m)
+            */
+            if(Config[i].Exti == DIO_EXTI0)
+            {
+                NVIC_EnableIRQ((EXTI0_IRQn));
+            }
+            else if(Config[i].Exti == DIO_EXTI1)
+            {
+                NVIC_EnableIRQ(EXTI1_IRQn);
+            }
+            else if(Config[i].Exti == DIO_EXTI2)
+            {
+                NVIC_EnableIRQ(EXTI2_IRQn);
+            }
+            else if(Config[i].Exti == DIO_EXTI3)
+            {
+                NVIC_EnableIRQ(EXTI3_IRQn);
+            }
+            else if(Config[i].Exti == DIO_EXTI4)
+            {
+                NVIC_EnableIRQ(EXTI4_IRQn);
+            }
+            else if(Config[i].Exti >= DIO_EXTI5 && Config[i].Exti <= DIO_EXTI9)
+            {
+                NVIC_EnableIRQ(EXTI9_5_IRQn);
+            }
+            else if(Config[i].Exti >= DIO_EXTI10 && Config[i].Exti <= DIO_EXTI15)
+            {
+                NVIC_EnableIRQ(EXTI15_10_IRQn);
+            }
+
+            /* Enable global interrupts (ARM Cortex) */
+            __enable_irq();
+        }
+        /* Handle the case where no external interrupt is configured */
+        else if (Config[i].Exti == DIO_EXTI_NONE)
+        {
+            assert(Config[i].Exti == DIO_EXTI_NONE);
+        }
+        /* Handle invalid EXTI line */
+        else
+        {
+            assert(Config[i].Exti < DIO_MAX_EXTI);      
+        }
+    }
+}
+
+/*****************************************************************************
+ * Function: DIO_pinRead()
+*//**
+ *\b Description:
+ * This function is used to reads the state of a specified pin.
+ * This function reads the state of a digital input/output pin specified by
+ * the DioPinConfig_t structure, which contains the port and pin information.
+ * 
+ * PRE-CONDITION: The pin is configured as INPUT <br>
+ * PRE-CONDITION: The pin is configured as GPIO <br>
+ * PRE-CONDITION: DioPinConfig_t needs to be populated (sizeof > 0) <br>
+ * PRE-CONDITION: The Port is within the maximum DioPort_t. <br>
+ * PRE-CONDITION: The Pin is within the maximum DioPin_t. 
+ * definition. <br>
+ * 
+ * POST-CONDITION: The channel state is returned. <br>
+ * 
+ * @param[in] PinConfig A pointer to a structure containing the port and pin 
+ * to be read.
+ * 
+ * @return    DioPinState_t The state of the pin (high or low).
+ * 
+ * \b Example:
+ * @code
+ * const DioPinConfig_t  UserButton1= 
+ * {
+ *      .Port = DIO_PC, 
+ *      .Pin = DIO_PC13
+ * };
+ *  bool pin = DIO_pinRead(&UserButton1);
+ * @endcode
+ * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ * 
+**********************************************************************/
+DioPinState_t DIO_pinRead(const DioPinConfig_t * const PinConfig)
+{
+    /* Prevent to assign a value out of the range of the port and pin.
+     * The registers arrays are limited to the NUMBER_OF_PORTS, higher 
+     * value can cause a memory violation.
+    */
+    assert(PinConfig->Port < DIO_MAX_PORT);
+    assert(PinConfig->Pin < DIO_MAX_PIN);
+
+    /* Read the port associated with the desired pin */
+    uint16_t portState = *idrRegister[PinConfig->Port];
+    /* Determinate the Port bit associated with this pin*/
+    uint16_t pinMask = (1UL<<(PinConfig->Pin));
+
+    return ((portState & pinMask) ? DIO_HIGH : DIO_LOW); 
+}
+
+/**********************************************************************
+ * Function: DIO_pinWrite()
+*//**
+ *\b Description:
+ * This function is used to write the state of a pin as either logic 
+ * high or low. it reads the state of a digital input/output pin 
+ * specified by the DioPinConfig_t structure and the DioPinState_t to 
+ * define the desired state, which contains the port and pin 
+ * information.
+ * 
+ * PRE-CONDITION: The pin is configured as OUTPUT <br>
+ * PRE-CONDITION: The pin is configured as GPIO <br>
+ * PRE-CONDITION: DioPinConfig_t needs to be populated (sizeof > 0) <br>
+ * PRE-CONDITION: The Port is within the maximum DioPort_t. <br>
+ * PRE-CONDITION: The Pin is within the maximum DioPin_t. <br>
+ * PRE-CONDITION: The State is within the maximum DioPinState_t. <br>
+ * 
+ * POST-CONDITION: The channel state is Stated. <br>
+ * 
+ * @param[in]   pinConfig A pointer to a structure containing the port 
+ *              and pin to be written.
+ * @param[in]   State is HIGH or LOW as defined in the DioPinState_t 
+ *              enum. 
+ * 
+ * @return      void
+ * 
+ * \b Example:
+ * @code
+ * const DioPinConfig_t  UserLED1= 
+ * {
+ *      .Port = DIO_PA, 
+ *      .Pin = DIO_PA5
+ * };
+ * const DioPinConfig_t  UserLED2= 
+ * {
+ *      .Port = DIO_PA, 
+ *      .Pin = DIO_PA6
+ * };
+ * DIO_pinWrite(&UserLED1, LOW);    //Set the pin low
+ * DIO_pinWrite(&UserLED2, HIGH);   //Set the pin high
+ * @endcode
+ * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ * 
+ **********************************************************************/
+void DIO_pinWrite(const DioPinConfig_t * const PinConfig, DioPinState_t State)
+{
+    /* Prevent to assign a value out of the range of the port and pin.
+     * The registers arrays are limited to the NUMBER_OF_PORTS, higher 
+     * value can cause a memory violation.
+    */
+    assert(PinConfig->Port < DIO_MAX_PORT);
+    assert(PinConfig->Pin < DIO_MAX_PIN);
+
+    if(State == DIO_HIGH)
+    {
+        *odrRegister[PinConfig->Port] |= (1UL<<(PinConfig->Pin));
+    }
+    else if (State == DIO_LOW)
+    {
+        *odrRegister[PinConfig->Port] &= ~(1UL<<(PinConfig->Pin));
+    }
+    else
+    {
+        assert(State < DIO_PIN_STATE_MAX);
+    }
+}
+
+/**********************************************************************
+ * Function: DIO_pinToggle()
+*//**
+ *\b Description:
+ * This function is used to toggle the current state of a pin. 
+ * This function reads the state of a digital input/output pin 
+ * specified by the DioPinConfig_t structure, which contains the port 
+ * and pin information.
+ * 
+ * PRE-CONDITION: The channel is configured as output <br>
+ * PRE-CONDITION: The channel is configured as GPIO <br>
+ * PRE-CONDITION: DioPinConfig_t needs to be populated (sizeof > 0) <br>
+ * PRE-CONDITION: The Port is within the maximum DioPort_t. <br>
+ * PRE-CONDITION: The Pin is within the maximum DioPin_t. <br>
+ *
+ * POST-CONDITION: The channel state is toggled. <br>
+ * 
+ * @param[in]   pinConfig A pointer to a structure containing the port 
+ *              and pin to be toggled.
+ * 
+ * @return  void
+ * 
+ * \b Example:
+ * @code
+ * const DioPinConfig_t  UserLED1= 
+ * {
+ *      .Port = DIO_PA, 
+ *      .Pin = DIO_PA5
+ * };
+ * DIO_pinToggle(&UserLED1);
+ * @endcode
+ * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ * 
+ **********************************************************************/
+void DIO_pinToggle(const DioPinConfig_t * const PinConfig)
+{
+    /* Prevent to assign a value out of the range of the port and pin.
+     * The registers arrays are limited to the NUMBER_OF_PORTS, higher 
+     * value can cause a memory violation.
+    */
+    assert(PinConfig->Port < DIO_MAX_PORT);
+    assert(PinConfig->Pin < DIO_MAX_PIN);
+
+    *odrRegister[PinConfig->Port] ^= (1UL<<(PinConfig->Pin));
+}
+
+/**********************************************************************
+ * Function: DIO_registerWrite()
+*//**
+ *\b Description:
+ * This function is used to directly address and modify a GPIO register.
+ * The function should be used to access specialized functionality in 
+ * the DIO peripheral that is not exposed by any other function of the
+ * interface.
+ * 
+ * PRE-CONDITION: Address is within the boundaries of the DIO register
+ * address space. <br>
+ * 
+ * POST-CONDITION: The register located at address with be updated with
+ * value. <br>
+ * 
+ * @param[in]   address is a register address within the DIO peripheral
+ *              map.
+ * @param[in]   value is the value to set the DIO register. 
+ * 
+ * @return void
+ * 
+ * \b Example
+ * @code
+ *  DIO_registerWrite(0x1000, 0x15);
+ * @endcode
+ * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ * 
+**********************************************************************/ 
+void DIO_registerWrite(uint32_t address, uint32_t value)
+{
+    volatile uint32_t * const registerPointer = (uint32_t*)address;
+    *registerPointer = value;
+}
+
+/**********************************************************************
+ * Function: DIO_registerRead()
+*//**
+ *\b Description:
+ * This function is used to directly address a Dio register. The 
+ * function should be used to access specialized functionality in the 
+ * Dio peripheral that is not exposed by any other function of the 
+ * interface.
+ * 
+ * PRE-CONDITION: Address is within the boundaries of the Dio register 
+ * address space. <br>
+ * 
+ * POST-CONDITION: The value stored in the register is returned to the 
+ * caller. <br>
+ * 
+ * @param[in]   address is the address of the Dio register to read.
+ * 
+ * @return  The current value of the Dio register.
+ * 
+ * \b Example:
+ * @code
+ * type dioValue = DIO_registerRead(0x1000);
+ * @endcode
+ * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ *
+ **********************************************************************/ 
+uint32_t DIO_registerRead(uint32_t address)
+{
+    volatile uint32_t * const registerPointer = (uint32_t*)address;
+
+    return *registerPointer;
+}
+
+/**********************************************************************
+ * Function: DIO_CallbackDispatcher()
+*//**
+ *\b Description:
+ * This function is used to dispatch the callback for a specific EXTI. 
+ * By default, the callback are initialized to a NULL pointer. The 
+ * driver may contain more than one possible callback, so the function
+ * will take a parameter to identify which callback to execute.
+ * 
+ * PRE-CONDITION: The channel is configured as input <br>
+ * PRE-CONDITION: The channel is configured as GPIO <br>
+ * PRE-CONDITION: The Exti is within the maximum DIO_MAX_EXTI. <br>
+ * 
+ * @param[in]   exti is the external interrupt line to register the 
+ * callback.
+ * @param[in]   callbackFunction is a pointer to the function to be
+ *              registered as callback.
+ * 
+ * @return  void
+ * 
+ * \b Example:
+ * @code
+ * typedef void (*exti_callback_ptr_t)(void);
+ * exti_callback_ptr_t exti1_callback_ptr = NULL;
+ * 
+ * DIO_callbackDispatcher(DIO_EXTI1, exti1_callback_ptr);
+ * @endcode
+ * 
+ * @see DIO_ConfigGet
+ * @see DIO_configSizeGet
+ * @see DIO_init
+ * @see DIO_pinRead
+ * @see DIO_pinWrite
+ * @see DIO_pinToggle
+ * @see DIO_registerWrite
+ * @see DIO_registerRead
+ * @see DIO_callbackDispatcher
+ *
+ **********************************************************************/ 
+void DIO_callbackDispatcher(DioExti_t exti, void (*callbackFunction)(void))
+{
+    if(exti == DIO_EXTI0)
+    {
+        exti0_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI1)
+    {
+        exti1_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI2)
+    {
+        exti2_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI3)
+    {
+        exti3_callback_ptr = callbackFunction;
+    }
+    else if(exti == DIO_EXTI4)
+    {
+        exti4_callback_ptr = callbackFunction;
+    }
+    else if(exti >= DIO_EXTI5 && exti <= DIO_EXTI9)
+    {
+        exti9_5_callback_ptr = callbackFunction;
+    }
+    else if(exti >= DIO_EXTI10 && exti <= DIO_EXTI15)
+    {
+        exti15_10_callback_ptr = callbackFunction;
+    }
+    else
+    {
+        assert(exti < DIO_MAX_EXTI);
+    }
+}
+
+/**********************************************************************
+ * Function: EXTIx_IRQHandler()
+*//**
+    *\b Description:
+    * These functions are the interrupt handlers for the EXTI lines.
+    * Each handler checks if the corresponding callback function pointer
+    * is not NULL and invokes the callback if it is set.
+    * 
+    * PRE-CONDITION: The EXTI line is configured and enabled. <br>
+    * 
+    * POST-CONDITION: The registered callback function is executed. <br>
+    * 
+    * @return  void
+    * 
+    * \b Example:
+    * @code
+    * void EXTI0_IRQHandler(void)
+    * {
+    *     if(EXTI->PR & EXTI_PR_PR0)
+    *     {    
+    *         EXTI->PR |= EXTI_PR_PR0; 
+    *         if(exti0_callback_ptr != NULL)
+    *         {
+    *             exti0_callback_ptr();
+    *         }  
+    *     }
+    * }
+    * @endcode
+    * 
+**********************************************************************/
+void EXTI0_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR0)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR0; 
+        if(exti0_callback_ptr != NULL)
+        {
+            exti0_callback_ptr();
+        }  
+    }
+}
+
+void EXTI1_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR1)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR1; 
+        if(exti1_callback_ptr != NULL)
+        {
+            exti1_callback_ptr();
+        }  
+    }
+}
+
+void EXTI2_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR2)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR2; 
+        if(exti2_callback_ptr != NULL)
+        {
+            exti2_callback_ptr();
+        }  
+    }
+}
+
+void EXTI3_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR3)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR3; 
+        if(exti3_callback_ptr != NULL)
+        {
+            exti3_callback_ptr();
+        }  
+    }
+}
+
+void EXTI4_IRQHandler(void)
+{
+    if(EXTI->PR & EXTI_PR_PR4)
+    {
+        /* Clear the interrupt flag*/
+        EXTI->PR |= EXTI_PR_PR4; 
+        if(exti4_callback_ptr != NULL)
+        {
+            exti4_callback_ptr();
+        }  
+    }
+}
+
+void EXTI9_5_IRQHandler(void)
+{
+    for(uint8_t line = 5; line <= 9; line++)
+    {
+        if(EXTI->PR & (1UL << line))
+        {
+            /* Clear the interrupt flag*/
+            EXTI->PR |= (1UL << line); 
+            if(exti9_5_callback_ptr != NULL)
+            {
+                exti9_5_callback_ptr();
+            }  
+        }
+    }
+}
+
+void EXTI15_10_IRQHandler(void)
+{
+    for(uint8_t line = 10; line <= 15; line++)
+    {
+        if(EXTI->PR & (1UL << line))
+        {
+            /* Clear the interrupt flag*/
+            EXTI->PR |= (1UL << line); 
+            if(exti15_10_callback_ptr != NULL)
+            {
+                exti15_10_callback_ptr();
+            }  
+        }
+    }
+}
