@@ -191,14 +191,40 @@ If both buttons are pressed simultaneously:
 
 The benefits of this implementation can seen as follows:
 
-| Feature | Benefit |
-|---------|---------|
-| **Callback Functions** | Decoupled event handling; easy to modify response behavior |
-| **Hardware Interrupts** | No polling overhead; immediate response to events |
-| **Flexible Triggers** | Rising/falling edge detection for different button types |
-| **Multiple EXTI Lines** | Handle multiple simultaneous interrupt sources |
-| **Priority Support** | Control interrupt execution order via NVIC |
-| **Modular Configuration** | All settings defined in configuration table |
+<div align="center">
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>Benefit</th>
+  </tr>
+  <tr>
+    <td>Callback Functions</td>
+    <td>ecoupled event handling; easy to modify response behavior.</td>
+  </tr>
+  <tr>
+    <td>Hardware Interrupts</td>
+    <td>No polling overhead; immediate response to events.</td>
+  </tr>
+  <tr>
+    <td>Flexible Triggers</td>
+    <td>Rising/falling edge detection for different button types.</td>
+  </tr>
+  <tr>
+    <td>Multiple EXTI Lines</td>
+    <td>Handle multiple simultaneous interrupt sources.</td>
+  </tr>
+  <tr>
+    <td>Priority Support</td>
+    <td>Control interrupt execution order via NVIC.</td>
+  </tr>
+  <tr>
+    <td>Modular Configuration</td>
+    <td>All settings defined in configuration table.</td>
+  </tr>
+</table>
+</div>
+
+<p align="center">Table 1. EXTI Benefit.</p>
 
 This implementation serves as a **test and validation of the external interrupt**. A video demonstration provides a visual representation of the physical implementation.
 
@@ -319,6 +345,50 @@ The **slave device continuously transmits** a **0x66 value**, which the master r
 
 Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/main/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for further code information.
 
+
+**[Back to top](#table-of-contents)**
+
+### Universal Synchronous/Asynchronous Receiver Transmitter (USART)
+
+The USART driver is configured to establish **serial communication** between the **Nucleo-F401RE** board and a **personal computer** via the ST-Link debugger interface. The implementation demonstrates a complete two-way communication system with the following characteristics:
+- **Port:** USART2
+- **Baud rate:** 9600 bps
+- **Data frame format:** 8-bit
+- **Stop bits:** 1
+- **Parity:** Disabled
+- **Communication mode:** Full-duplex (simultaneous transmit and receive)
+
+The following diagram shows how the system connected.
+
+```
+Nucleo-F401RE          ST-Link Debugger          PC Terminal Emulator
+┌─────────────┐        ┌──────────────┐          ┌──────────────────┐
+│   PA2 (TX)  ├───────→│    TX        │─────────→│  RX (Input)      │
+│             │        │              │          │                  │
+│   PA3 (RX)  │←───────│    RX        │←─────────│  TX (Output)     │
+└─────────────┘        └──────────────┘          └──────────────────┘
+```
+<p align="center">Image 5. USART Connection.</p>
+
+The application code perform a data Reception and LED Control.
+   - The application enters an infinite loop, continuously receiving data from the PC.
+   - When character `'1'` is received: PA5 embedded LED turns **ON**.
+   - When any other character is received: PA5 embedded LED turns **OFF**
+   - This demonstrates real-time control of hardware via serial communication
+
+The serial connection operates at **9600 baud** and can be accessed using any terminal emulator (e.g., PuTTY, Tera Term, minicom, or VS Code Serial Monitor) with the following settings:
+- Port: Virtual COM Port (from ST-Link)
+- Baud Rate: 9600
+- Data Bits: 8
+- Stop Bits: 1
+- Parity: None
+- Flow Control: None
+
+This implementation serves as a **test and validation of the USART driver** and provides a foundation for more complex communication applications such as:
+- Remote device monitoring.
+- Firmware updates over serial.
+- Data logging to PC.
+- Interactive embedded system configuration.
 
 **[Back to top](#table-of-contents)**
 
