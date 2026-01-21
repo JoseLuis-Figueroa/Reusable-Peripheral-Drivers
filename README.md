@@ -200,6 +200,14 @@ The benefits of this implementation can seen as follows:
 | **Priority Support** | Control interrupt execution order via NVIC |
 | **Modular Configuration** | All settings defined in configuration table |
 
+This implementation serves as a **test and validation of the external interrupt**. A video demonstration provides a visual representation of the physical implementation.
+
+<p align="center">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/blob/main/Documentation/Doxygen/DIO/images/EXTI_Implementation.gif" alt="EXTI_Implementation" width="20%">
+</p>
+
+<p align="center">Image 2. External Interrupt Hardware Test.</p>
+
 ### Serial Peripheral Interface (SPI)
 
 The SPI codes configure **SPI1 as a master device** with the following settings:
@@ -248,7 +256,7 @@ The master continuously transmits data to the logic analyzer, currently sending 
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI/imagens/SPI%20Master%20Screen.png" alt="[SPI Protocol" width="100%">
 </p>
 
-<p align="center">Image 2. SPI Protocol.</p>
+<p align="center">Image 3. SPI Protocol.</p>
 
 Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/main/Documentation/Doxygen/SPI/output_files/html/index.html) for further code information.
 
@@ -307,7 +315,7 @@ The **slave device continuously transmits** a **0x66 value**, which the master r
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Drivers/blob/main/Documentation/Doxygen/SPI_Master_Slave/imagens/SPI_Master_Slave_v2.png" alt="[SPI Protocol" width="100%">
 </p>
 
-<p align="center">Image 3. Master-Slave SPI Protocol.</p>
+<p align="center">Image 4. Master-Slave SPI Protocol.</p>
 
 Please refer to the Doxygen documentation available in the [Serial Peripheral Interface Reusable Driver](https://raw.githack.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/main/Documentation/Doxygen/SPI_Master_Slave/output_files/html/index.html) for further code information.
 
@@ -355,6 +363,8 @@ The test results of the `test_dio.c` code can be seen as follow:
 <p align="center">
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/blob/main/Documentation/Doxygen/DIO/images/DIO-Tests.png" alt="[DIO Unit Testing" width="100%">
 </p>
+
+<p align="center">Image 5. Unit Testing Results.</p>
 
 
 **[Back to top](#table-of-contents)**
