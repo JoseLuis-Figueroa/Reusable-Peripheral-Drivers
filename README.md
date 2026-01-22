@@ -440,7 +440,7 @@ The test results of the `test_dio.c` code can be seen as follow:
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/blob/main/Documentation/Doxygen/DIO/images/DIO-Tests.png" alt="[DIO Unit Testing" width="100%">
 </p>
 
-<p align="center">Image 5. Unit Testing Results.</p>
+<p align="center">Image 7. Unit Testing Results.</p>
 
 
 **[Back to top](#table-of-contents)**
@@ -461,6 +461,7 @@ Latest release: **v1.2**
 - `v1.0`: Initial release. GPIO and SPI drivers.  
 - `v1.1`: Updated documentation, structural improvements, and design by contract enhancements.
 - `V1.2`: Implement unit testing on the target.
+- `V1.3`: Implement USART and external interrupt (EXTI).
 
 **[Back to top](#table-of-contents)**
 
