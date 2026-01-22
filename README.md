@@ -274,7 +274,7 @@ A **KY-57 logic analyzer** is connected to the master device for data reception 
 </table>
 </div>
 
-<p align="center">Table 1. SPI Pin Connections.</p>
+<p align="center">Table 2. SPI Pin Connections.</p>
 
 The master continuously transmits data to the logic analyzer, currently sending **0x56**. Below is a screenshot of the captured data:
 
@@ -333,7 +333,7 @@ This implementation configures two **Nucleo-F401RE boards** for SPI communicatio
 </table>
 </div>
 
-<p align="center">Table 2. Master-Slave Pin Connections.</p>
+<p align="center">Table 3. Master-Slave Pin Connections.</p>
 
 The **slave device continuously transmits** a **0x66 value**, which the master receives and echoes back to the slave. A KY-57 logic analyzer is used to monitor the data exchange.
 
@@ -394,7 +394,7 @@ This implementation serves as a **test and validation of the USART driver** and 
     <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/blob/main/Documentation/Doxygen/USART/images/USART.gif" alt="USART_Implementation" width="20%">
 </p>
 
-<p align="center">Image 2. USART Hardware Test.</p>
+<p align="center">Image 6. USART Hardware Test.</p>
 
 **[Back to top](#table-of-contents)**
 
