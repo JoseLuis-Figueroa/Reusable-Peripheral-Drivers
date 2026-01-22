@@ -62,12 +62,13 @@ It aims to abstract hardware-dependent functionality while keeping the codebase 
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 
-Current Version: `v1.2`  
+Current Version: `v1.3`  
 Tested on: `Nucleo-F401RE`  
 - ✅ SPI Master.  
 - ✅ SPI Master-Slave.  
 - ✅ GPIO Button/LED Control.  
-- ✅  Unit Testing (DIO).
+- ✅ Unit Testing (DIO).
+- ✅ USART and external interrupt (DIO_EXTI).
 
 **[Back to top](#table-of-contents)**
 
@@ -454,7 +455,7 @@ New features and updates are pushed under versioned tags.
 ### Versioning
 
 We use [Semantic Versioning](http://semver.org/).  
-Latest release: **v1.2**
+Latest release: **v1.3**
 
 ### Payload
 
