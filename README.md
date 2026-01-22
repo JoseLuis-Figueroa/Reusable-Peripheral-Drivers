@@ -390,6 +390,12 @@ This implementation serves as a **test and validation of the USART driver** and 
 - Data logging to PC.
 - Interactive embedded system configuration.
 
+<p align="center">
+    <img src="https://github.com/JoseLuis-Figueroa/Reusable-Peripheral-Drivers/blob/main/Documentation/Doxygen/USART/images/USART.gif" alt="USART_Implementation" width="20%">
+</p>
+
+<p align="center">Image 2. USART Hardware Test.</p>
+
 **[Back to top](#table-of-contents)**
 
 ---
